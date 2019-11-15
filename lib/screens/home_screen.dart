@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -112,8 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               accountEmail: Text("souloiramesmo@hotmail.com"),
               accountName: Text("Loira"),
 
-              currentAccountPicture: CircleAvatar(backgroundImage: NetworkImage("https://avatars1.githubusercontent.com/u/25815971?s=460&v=4"),
-              ),
+              currentAccountPicture: CircleAvatar(child: Text("oi"),),
 
 
               otherAccountsPictures: <Widget>[
@@ -161,9 +160,18 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(child: Align(
               alignment: FractionalOffset.bottomCenter,
               child: ListTile(
+                leading: Icon(Icons.report_problem),
+                title: Text("Report"),
+              ),
+            ),
+            ),
+            Expanded(child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Configurações'),
               ),
+
             ),
             ),
 
@@ -173,8 +181,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
       ),
+    backgroundColor: HexColor('#212121'),
     appBar: AppBar(
-        backgroundColor: HexColor('#000000'),
+        backgroundColor: HexColor('000000'),
         elevation: 0.0,
         title: Image(
           image: AssetImage('assets/images/netflix_logo.png'

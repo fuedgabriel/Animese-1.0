@@ -16,7 +16,7 @@ class _MovieScreenState extends State<MovieScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: HexColor('#212121'),
       body: ListView(
         children: <Widget>[
           Stack(
@@ -45,7 +45,7 @@ class _MovieScreenState extends State<MovieScreen> {
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(Icons.arrow_back),
                     iconSize: 30.0,
-                    color: Colors.black,
+                    color: Colors.red,
                   ),
                   Image(
                     image: AssetImage('assets/images/netflix_logo.png'),
@@ -54,10 +54,13 @@ class _MovieScreenState extends State<MovieScreen> {
                   ),
                   IconButton(
                     padding: EdgeInsets.only(left: 30.0),
-                    onPressed: () => print('Add to Favorites'),
                     icon: Icon(Icons.favorite_border),
                     iconSize: 30.0,
-                    color: Colors.black,
+                    color: Colors.red,
+                    onPressed: () => {
+
+                    },
+
                   ),
                 ],
               ),
@@ -70,11 +73,11 @@ class _MovieScreenState extends State<MovieScreen> {
                     elevation: 12.0,
                     onPressed: () => print('Play Video'),
                     shape: CircleBorder(),
-                    fillColor: Colors.white,
+                    fillColor: Colors.black,
                     child: Icon(
                       Icons.play_arrow,
                       size: 60.0,
-                      color: Colors.red,
+                      color: Colors.redAccent,
                     ),
                   ),
                 ),
@@ -84,9 +87,9 @@ class _MovieScreenState extends State<MovieScreen> {
                 left: 20.0,
                 child: IconButton(
                   onPressed: () => print('Add to My List'),
-                  icon: Icon(Icons.add),
-                  iconSize: 40.0,
-                  color: Colors.black,
+                  icon: Icon(Icons.assistant_photo),
+                  iconSize: 35.0,
+                  color: Colors.white,
                 ),
               ),
               Positioned(
@@ -96,7 +99,7 @@ class _MovieScreenState extends State<MovieScreen> {
                   onPressed: () => print('Share'),
                   icon: Icon(Icons.share),
                   iconSize: 35.0,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -109,6 +112,7 @@ class _MovieScreenState extends State<MovieScreen> {
                 Text(
                   widget.movie.title.toUpperCase(),
                   style: TextStyle(
+                    color: Colors.white,
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -118,13 +122,13 @@ class _MovieScreenState extends State<MovieScreen> {
                 Text(
                   widget.movie.categories,
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Colors.white70,
                     fontSize: 16.0,
                   ),
                 ),
                 SizedBox(height: 12.0),
                 Text(
-                  '⭐ ⭐ ⭐ ⭐',
+                  '⭐ ⭐ ⭐ ⭐ ⭐',
                   style: TextStyle(fontSize: 25.0),
                 ),
                 SizedBox(height: 15.0),
@@ -136,7 +140,7 @@ class _MovieScreenState extends State<MovieScreen> {
                         Text(
                           'Year',
                           style: TextStyle(
-                            color: Colors.black54,
+                            color: Colors.white70,
                             fontSize: 16.0,
                           ),
                         ),
@@ -144,6 +148,7 @@ class _MovieScreenState extends State<MovieScreen> {
                         Text(
                           widget.movie.year.toString(),
                           style: TextStyle(
+                            color: Colors.white54,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -155,14 +160,15 @@ class _MovieScreenState extends State<MovieScreen> {
                         Text(
                           'Country',
                           style: TextStyle(
-                            color: Colors.black54,
+                            color: Colors.white70,
                             fontSize: 16.0,
                           ),
                         ),
-                        SizedBox(height: 2.0),
+                        SizedBox(height: 10.0),
                         Text(
                           widget.movie.country.toUpperCase(),
                           style: TextStyle(
+                            color: Colors.white54,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -174,7 +180,7 @@ class _MovieScreenState extends State<MovieScreen> {
                         Text(
                           'Length',
                           style: TextStyle(
-                            color: Colors.black54,
+                            color: Colors.white70,
                             fontSize: 16.0,
                           ),
                         ),
@@ -182,6 +188,7 @@ class _MovieScreenState extends State<MovieScreen> {
                         Text(
                           '${widget.movie.length} min',
                           style: TextStyle(
+                            color: Colors.white54,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -192,12 +199,12 @@ class _MovieScreenState extends State<MovieScreen> {
                 ),
                 SizedBox(height: 25.0),
                 Container(
-                  height: 120.0,
+                  //height: 120.0,
                   child: SingleChildScrollView(
                     child: Text(
                       widget.movie.description,
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.white70,
                       ),
                     ),
                   ),

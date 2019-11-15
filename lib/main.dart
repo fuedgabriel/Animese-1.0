@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/screens/home_screen.dart';
-import 'package:flutter_netflix_ui_redesign/widgets/MenuDashboardPage.dart';
 
 import 'screens/home_screen.dart';
 void main() => runApp(MyApp());

@@ -1,3 +1,5 @@
+
+
 class Movie {
   String imageUrl;
   String title;

@@ -1,5 +1,6 @@
 //import 'dart:html';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/models/movie_model.dart';
@@ -14,6 +15,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String Title = '';
+  String url = 'http://127.0.0.1:444/api/anime/';
+  getdata() async{
+    var res = await http.get(url);
+    var resBody = jsonDecode(res.body);
+    Title = resBody['Title'];
+    setState(() {
+      print("Success");
+    });
+  }
+
+
   PageController _pageController;
 
   @override
@@ -235,9 +248,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
           ),
           //SizedBox(height: 10.0),
+          new RaisedButton(
+              onPressed: ()=> {
+                getdata(),},
+            child: new Text("Get info"),
+          ),
+          new Text("Name : $Title",style: TextStyle(fontSize: 22.0),),
+
           ContentScroll(
             images: popular,
-            title: 'Minha lista',
+            title: "Minha lista",
             imageHeight: 250.0,
             imageWidth: 150.0,
           ),

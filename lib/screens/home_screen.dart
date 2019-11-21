@@ -1,12 +1,19 @@
 //import 'dart:html';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/models/movie_model.dart';
-import 'package:flutter_netflix_ui_redesign/screens/movie_screen.dart';
-import 'package:flutter_netflix_ui_redesign/widgets/content_scroll.dart';
+
+//routes
+import 'package:flutter_netflix_ui_redesign/routes.dart';
+
+
+//widget
 import '../widgets/content_scroll.dart';
+import 'package:flutter_netflix_ui_redesign/widgets/content_scroll.dart';
+import 'package:flutter_netflix_ui_redesign/models/movie_model.dart';
+
+//request
+import '../requetions/requestion.dart';
+import 'dart:convert';
+import 'package:flutter_netflix_ui_redesign/requetions/Animes.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,18 +22,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String Title = '';
-  String url = 'http://127.0.0.1:444/api/anime/';
-  getdata() async{
-    var res = await http.get(url);
-    var resBody = jsonDecode(res.body);
-    Title = resBody['Title'];
-    setState(() {
-      print("Success");
-    });
-  }
-
-
   PageController _pageController;
 
   @override
@@ -34,6 +29,19 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _pageController = PageController(initialPage: 1, viewportFraction: 0.8);
   }
+
+//  var animeList = new List<animes>();
+
+//  getAnimes(){
+//    API.getAnimes().then((response){
+//      Iterable lista = json.decode(response.body);
+//      animeList = lista.map((model) => animes.fromJson(model)).toList();
+//
+//    });
+//  }
+
+
+
 
   _movieSelector(int index) {
     return AnimatedBuilder(
@@ -56,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => MovieScreen(movie: movies[index]),
+            builder: (_) => Routes.MovieScreenR(movies, index),
           ),
         ),
 
@@ -117,83 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      drawer: Drawer(
-        child: Column(
-          children: <Widget>[
-
-            UserAccountsDrawerHeader(
-              accountEmail: Text("souloiramesmo@hotmail.com"),
-              accountName: Text("Loira"),
-
-              currentAccountPicture: CircleAvatar(child: Text("oi"),),
-
-
-              otherAccountsPictures: <Widget>[
-                GestureDetector(
-                  onTap: () =>{
-                    showDialog(
-                        context: context,
-                        builder: (context){
-                          return AlertDialog(
-                              title: Text("Adicionar uma nova conta..."));})},
-                  child: CircleAvatar(
-                    child: Icon(Icons.add),
-                  ),
-                ),
-              ],
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(top: 20),
-
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Inicio'),
-            ),
-            ListTile(
-              leading: Icon(Icons.pageview),
-              title: Text('Lista'),
-            ),
-            ListTile(
-              leading: Icon(Icons.add),
-              title: Text('Categorias'),
-            ),
-            ListTile(
-              leading: Icon(Icons.favorite),
-              title: Text('Favoritos'),
-              trailing: Chip(label: Text("11", style: TextStyle(
-                fontWeight: FontWeight.bold,
-                backgroundColor: Colors.blue[100],
-              ),
-              )
-              ),
-            ),
-            Divider(),
-            Expanded(child: Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: ListTile(
-                leading: Icon(Icons.report_problem),
-                title: Text("Report"),
-              ),
-            ),
-            ),
-            Expanded(child: Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Configurações'),
-              ),
-
-            ),
-            ),
-
-          ],
-        ),
-
-
-
-      ),
+      drawer: Routes.Menu('Inicio'),
     backgroundColor: HexColor('#212121'),
     appBar: AppBar(
         backgroundColor: HexColor('000000'),
@@ -202,19 +134,12 @@ class _HomeScreenState extends State<HomeScreen> {
           image: AssetImage('assets/images/netflix_logo.png'
           ),
         ),
-//        leading: IconButton(
-//          padding: EdgeInsets.only(left: 30.0),
-//          onPressed: () => print('Menu'),
-//          icon: Icon(Icons.menu),
-//          iconSize: 30.0,
-//          color: Colors.green,
-//    ),
-
-
         actions: <Widget>[
           IconButton(
             padding: EdgeInsets.only(right: 30.0),
-            onPressed: () => print('Search'),
+            onPressed: () => {
+              API.getAnimes(),
+            },
             icon: Icon(Icons.search),
             iconSize: 30.0,
             color: Colors.white,
@@ -237,8 +162,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          //SizedBox(height: 20.0),
-
           ContentScroll(
             images: myList,
             title: 'Lançamentos',
@@ -247,13 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
           ),
-          //SizedBox(height: 10.0),
-          new RaisedButton(
-              onPressed: ()=> {
-                getdata(),},
-            child: new Text("Get info"),
-          ),
-          new Text("Name : $Title",style: TextStyle(fontSize: 22.0),),
+
 
           ContentScroll(
             images: popular,

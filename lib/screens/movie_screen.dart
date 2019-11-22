@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/models/movie_model.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/circular_clipper.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/content_scroll.dart';
-
+import 'package:flutter_netflix_ui_redesign/routes.dart';
 
 class MovieScreen extends StatefulWidget {
   final Movie movie;

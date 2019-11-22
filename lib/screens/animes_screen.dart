@@ -2,10 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/models/movie_model.dart';
-import 'package:flutter_netflix_ui_redesign/requetions/Animes.dart';
-import 'package:flutter_netflix_ui_redesign/screens/home_screen.dart';
 import '../routes.dart';
+import 'package:flutter_netflix_ui_redesign/widgets/gridViwer_play.dart';
 
 class AnimesScreen extends StatefulWidget {
   @override
@@ -20,11 +18,10 @@ class _AnimesScreenState extends State<AnimesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[600],
+      backgroundColor: HexColor('000000'),
       drawer: Routes.Menu('Lista'),
       appBar: AppBar(
-        
-        backgroundColor: Colors.transparent,
+        backgroundColor: HexColor('#212121'),
         elevation: 0,
         title: Text("Lista"),
         actions: <Widget>[
@@ -37,6 +34,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
                   color: Colors.grey[800],
                   borderRadius: BorderRadius.circular(10)
               ),
+
               child: Center(child: Text("2900")),
             ),
           )
@@ -44,7 +42,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
               Container(
@@ -62,7 +60,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
                             filled: true,
                             hintStyle: new TextStyle(color: Colors.grey[500]),
                             hintText: "Digite o nome do anime...",
-                            fillColor: Colors.black.withOpacity(.2)
+                            fillColor: Colors.white
                         ),
                       ),
                     ],
@@ -70,14 +68,12 @@ class _AnimesScreenState extends State<AnimesScreen> {
                 ),
               ),
               SizedBox(height: 10,),
-
-
-
-
+              AnimeList('oioi'),
             ],
           ),
         ),
       ),
     );
   }
+
 }

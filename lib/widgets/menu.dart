@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_netflix_ui_redesign/screens/animes_screen.dart';
 import 'package:flutter_netflix_ui_redesign/screens/home_screen.dart';
+import 'package:flutter_netflix_ui_redesign/screens/config/config.dart';
 
 class MenuWidget extends StatelessWidget{
   String page;
@@ -88,7 +89,7 @@ class MenuWidget extends StatelessWidget{
             alignment: FractionalOffset.bottomCenter,
             child: ListTile(
               leading: Icon(Icons.report_problem),
-              title: Text("Report"),
+              title: Text("Suporte"),
             ),
           ),
           ),
@@ -97,7 +98,19 @@ class MenuWidget extends StatelessWidget{
             child: ListTile(
               leading: Icon(Icons.settings),
               title: Text('Configurações'),
-            ),
+                onTap: () => {
+                if (page == 'Config') {
+                  Navigator.pop(context)
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => config(),
+                    ),
+                  ),
+                },
+                },
+                ),
           ),
           ),
         ],

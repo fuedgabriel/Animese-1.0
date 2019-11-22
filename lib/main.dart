@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/screens/home_screen.dart';
-
+import 'screens/config/config.dart';
 import 'screens/home_screen.dart';
 void main() => runApp(MyApp());
 
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Netflix UI Redesign',
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: config(),
     );
   }
 }

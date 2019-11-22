@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 
 
 class Movie {
@@ -91,3 +92,15 @@ final List<String> popular = [
   'assets/images/oitnb.jpg',
   'assets/images/daredevil.jpg',
 ];
+
+class Video {
+  Video({
+    @required this.title,
+    @required this.thumbnail,
+    @required this.url,
+  });
+
+  final String title;
+  final String thumbnail;
+  final String url;
+}

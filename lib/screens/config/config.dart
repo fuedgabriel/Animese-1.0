@@ -3,6 +3,7 @@ import 'package:flutter_netflix_ui_redesign/screens/home_page/home_screen.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_netflix_ui_redesign/main.dart';
+import 'preference_page.dart';
 
 
 class config extends StatefulWidget {
@@ -162,6 +163,15 @@ class _config extends State<config> {
             ),
           ),
           Divider(),
+          FlatButton(
+            onPressed: () {},
+            child: Text("temas",
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 16,
+              ),
+            ),
+          ),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -177,7 +187,7 @@ class _config extends State<config> {
                     fontSize: 16,
                   ),
                 ),
-              )
+              ),
           ),),
         ],
       ),

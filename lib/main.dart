@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/screens/config/config.dart';
-
+import 'screens/config/theme/bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'screens/config/preference_page.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      builder: (context) => ThemeBloc(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: _buildWithTheme,
+      ),
+    );
+  }
+
+  Widget _buildWithTheme(BuildContext context, ThemeState state) {
     return MaterialApp(
-      theme: ThemeData.light(),
-      title: 'Flutter Netflix UI Redesign',
       debugShowCheckedModeBanner: false,
-      home: config(),
+      title: 'Material App',
+      theme: state.themeData,
+      home: PreferencePage(),
     );
   }
 }

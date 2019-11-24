@@ -1,5 +1,5 @@
 import 'widgets/menu.dart';
-import 'package:flutter_netflix_ui_redesign/screens/movie_screen.dart';
+import 'package:flutter_netflix_ui_redesign/screens/movie/movie_screen.dart';
 import 'package:flutter/material.dart';
 
 class Routes {

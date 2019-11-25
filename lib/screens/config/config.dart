@@ -80,29 +80,26 @@ class _config extends State<config> {
             child: Align(
               alignment: Alignment.centerLeft,
               child:Text(
-                '  Tema:',
+                '  Escolha seu tema:',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.lightGreenAccent,
                 ),
               )
             ),
           ),
-          
-          SwitchListTile(
-            value: _theme,
-            onChanged: (bool value) {
-              setState(() {
-                _theme = value;
-              }
-              );
-              save('theme', value);
 
-              },
-            secondary: const Icon(Icons.swap_horiz),
-            title: Text(
-              'Escuro',
+          FlatButton(
+            onPressed: ()
+            {
+              Navigator.pop(context);
+
+            },
+            child: Text("temas",
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 16,
+              ),
             ),
           ),
           Divider(),
@@ -117,7 +114,6 @@ class _config extends State<config> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.lightGreenAccent,
                   ),
                 )
             ),
@@ -163,15 +159,7 @@ class _config extends State<config> {
             ),
           ),
           Divider(),
-          FlatButton(
-            onPressed: () {},
-            child: Text("temas",
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 16,
-              ),
-            ),
-          ),
+
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,

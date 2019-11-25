@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'theme/app_themes.dart';
 import 'theme/bloc/bloc.dart';
-
+import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
 class PreferencePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MenuWidget(),
       appBar: AppBar(
         title: Text('Preferences'),
       ),

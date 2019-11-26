@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/screens/config/config.dart';
 import 'screens/config/theme/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'screens/config/preference_page.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       theme: state.themeData,
-      home: PreferencePage(),
+      home: config(),
     );
   }
 }

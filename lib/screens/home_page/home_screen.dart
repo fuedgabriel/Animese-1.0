@@ -124,9 +124,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
 
       drawer: Routes.Menu('Inicio'),
-    backgroundColor: HexColor('#212121'),
+//    backgroundColor: HexColor('#212121'),
     appBar: AppBar(
-        backgroundColor: HexColor('000000'),
+//        backgroundColor: HexColor('000000'),
         elevation: 0.0,
         title: Image(
           image: AssetImage('assets/images/netflix_logo.png'

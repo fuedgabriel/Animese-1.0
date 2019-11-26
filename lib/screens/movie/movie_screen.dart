@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_netflix_ui_redesign/screens/animes_list/animes_screen.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/circular_clipper.dart';
 import 'package:flutter_netflix_ui_redesign/screens/home_page/widgets/content_scroll.dart';
@@ -55,7 +56,7 @@ class _MovieScreenState extends State<MovieScreen> {
                   ),
                   IconButton(
                     padding: EdgeInsets.only(left: 30.0),
-                    icon: Icon(Icons.favorite_border),
+                    icon: Icon(Icons.favorite),
                     iconSize: 30.0,
                     color: Colors.red,
                     onPressed: () => {
@@ -87,7 +88,22 @@ class _MovieScreenState extends State<MovieScreen> {
                 bottom: 0.0,
                 left: 20.0,
                 child: IconButton(
-                  onPressed: () => print('Add to My List'),
+                  onPressed: () =>
+                  {
+//                    Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//
+//
+//
+//
+//
+//
+//
+//                        builder: (context) => Routes.SuporteAnimeScreenR(),
+//                      ),
+//                    ),
+                  },
                   icon: Icon(Icons.assistant_photo),
                   iconSize: 35.0,
                   color: Colors.white,
@@ -128,10 +144,19 @@ class _MovieScreenState extends State<MovieScreen> {
                   ),
                 ),
                 SizedBox(height: 12.0),
-                Text(
-                  '⭐ ⭐ ⭐ ⭐ ⭐',
-                  style: TextStyle(fontSize: 25.0),
+                Row(
+
+                  children: <Widget>[
+                    SizedBox(width: 80.0),
+                    Icon(Icons.star),
+                    Icon(Icons.star),
+                    Icon(Icons.star),
+                    Icon(Icons.star_half),
+                    Icon(Icons.star_border),
+                  ],
                 ),
+
+
                 SizedBox(height: 15.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

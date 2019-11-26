@@ -1,7 +1,9 @@
+import 'package:flutter_netflix_ui_redesign/screens/animes_list/animes_screen.dart';
+
 import 'widgets/menu.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/movie_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'screens/suporte_anime/suporteAnime.dart';
 class Routes {
   static Menu(String pagina){
     return new MenuWidget(page: pagina);
@@ -12,6 +14,11 @@ class Routes {
     return new MovieScreen(movie: movies[index]);
 
   }
+  static SuporteAnimeScreenR(movies,int index){
+    return new suporteAnime(movie: movies[index]);
+
+  }
+
 }
 
 class HexColor extends Color {

@@ -1,9 +1,12 @@
 
-
-import 'package:flutter/cupertino.dart';
+import 'widgets/content_scroll_list.dart';
 import 'package:flutter/material.dart';
 import '../../routes.dart';
-import 'package:flutter_netflix_ui_redesign/screens/animes_list/gridViwer_play.dart';
+import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
+
+
+
+
 
 class AnimesScreen extends StatefulWidget {
   @override
@@ -18,10 +21,8 @@ class _AnimesScreenState extends State<AnimesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor('000000'),
       drawer: Routes.Menu('Lista'),
       appBar: AppBar(
-        backgroundColor: HexColor('#212121'),
         elevation: 0,
         title: Text("Lista"),
         actions: <Widget>[
@@ -34,46 +35,38 @@ class _AnimesScreenState extends State<AnimesScreen> {
                   color: Colors.grey[800],
                   borderRadius: BorderRadius.circular(10)
               ),
-
-              child: Center(child: Text("2900")),
+              child: Center(child: Text("2900")
+              ),
             ),
           )
         ],
       ),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      //Text("Lifestyle Sale", style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),),
-                      TextField(
-                        decoration: new InputDecoration(
-                            border: new OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(30.0),
-                              ),
-                            ),
-                            filled: true,
-                            hintStyle: new TextStyle(color: Colors.grey[500]),
-                            hintText: "Digite o nome do anime...",
-                            fillColor: Colors.white
-                        ),
-                      ),
-                    ],
+      body: Container(
+        //padding: EdgeInsets.all(10.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              decoration: new InputDecoration(
+                  border: new OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(30.0),
+                    ),
                   ),
-                ),
+                  filled: true,
+                  hintStyle: new TextStyle(color: Colors.grey[500]),
+                  hintText: "Digite o nome do anime...",
+                  fillColor: Colors.white
               ),
-              SizedBox(height: 10,),
-              AnimeList('oioi'),
-            ],
-          ),
+            ),
+              ContentScroll(
+                images: popular,
+                title: "Minha lista",
+                imageHeight: 250.0,
+                imageWidth: 150.0,
+              ),
+          ],
         ),
       ),
     );
   }
-
 }

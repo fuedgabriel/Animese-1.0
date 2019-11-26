@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/screens/home_page/home_screen.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_netflix_ui_redesign/main.dart';
-import 'preference_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'theme/app_themes.dart';
+import 'theme/bloc/bloc.dart';
+
 
 
 class config extends StatefulWidget {
@@ -89,17 +90,31 @@ class _config extends State<config> {
             ),
           ),
 
-          FlatButton(
-            onPressed: ()
-            {
-              Navigator.pop(context);
-
-            },
-            child: Text("temas",
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 16,
-              ),
+          Container(
+            width: 300,
+            height: 100,
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.all(8),
+              itemCount: AppTheme.values.length,
+              itemBuilder: (context, index) {
+                final itemAppTheme = AppTheme.values[index];
+                return Card(
+                  color: appThemeData[itemAppTheme].primaryColor,
+                  child: ListTile(
+                    title: Text(
+                      itemAppTheme.toString(),
+                      style: appThemeData[itemAppTheme].textTheme.body1,
+                    ),
+                    onTap: () {
+                      BlocProvider.of<ThemeBloc>(context).dispatch(
+                        ThemeChanged(theme: itemAppTheme),
+                      );
+                    },
+                  ),
+                );
+              },
+              scrollDirection: Axis.vertical,
             ),
           ),
           Divider(),
@@ -166,7 +181,6 @@ class _config extends State<config> {
               child: FlatButton(
                 onPressed: () {
                   print(_theme);
-
                   _nameRetriever();
                   },
                 child: Text("Sair",

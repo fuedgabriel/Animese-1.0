@@ -14,8 +14,8 @@ class Routes {
     return new MovieScreen(movie: movies[index]);
 
   }
-  static SuporteAnimeScreenR(movies,int index){
-    return new suporteAnime(movie: movies[index]);
+  static SuporteAnimeScreenR(movies){
+    return new suporteAnime(movieA: movies);
 
   }
 

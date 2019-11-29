@@ -74,53 +74,57 @@ class _config extends State<config> {
       appBar: AppBar(
         title: Text('Configurações'),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Padding(padding: EdgeInsets.all(5.0),),
-          Container(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child:Text(
-                '  Escolha seu tema:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+          Stack(
+            children: <Widget>[
+              Container(
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child:Text(
+                      '  Escolha seu tema:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
                 ),
-              )
-            ),
+              ),
+            ],
           ),
-
-          Container(
-            width: 300,
-            height: 100,
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(8),
-              itemCount: AppTheme.values.length,
-              itemBuilder: (context, index) {
-                final itemAppTheme = AppTheme.values[index];
-                return Card(
-                  color: appThemeData[itemAppTheme].primaryColor,
-                  child: ListTile(
-                    title: Text(
-                      itemAppTheme.toString(),
-                      style: appThemeData[itemAppTheme].textTheme.body1,
-                    ),
-                    onTap: () {
-                      BlocProvider.of<ThemeBloc>(context).dispatch(
-                        ThemeChanged(theme: itemAppTheme),
-                      );
-                    },
-                  ),
-                );
-              },
-              scrollDirection: Axis.vertical,
-            ),
+          Stack(
+            children: <Widget>[
+              Container(
+//                width: 300,
+//                height: 100,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.all(8),
+                  itemCount: AppTheme.values.length,
+                  itemBuilder: (context, index) {
+                    final itemAppTheme = AppTheme.values[index];
+                    return Card(
+                      color: appThemeData[itemAppTheme].primaryColor,
+                      child: ListTile(
+                        title: Text(
+                          itemAppTheme.toString(),
+                          style: appThemeData[itemAppTheme].textTheme.body1,
+                        ),
+                        onTap: () {
+                          BlocProvider.of<ThemeBloc>(context).dispatch(
+                            ThemeChanged(theme: itemAppTheme),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  scrollDirection: Axis.vertical,
+                ),
+              ),
+            ],
           ),
           Divider(),
-
-
-
           Container(
             child: Align(
                 alignment: Alignment.centerLeft,
@@ -133,66 +137,84 @@ class _config extends State<config> {
                 )
             ),
           ),
-          //new Switch(value: _value1, onChanged: _onChanged1),
-          SwitchListTile(
-            value: _notifications,
-            onChanged: (bool value) {
-              setState(() {
-                _notifications = value;
-              });
-              save('notifications', value);
-              },
-            secondary: const Icon(Icons.notifications),
-            title: Text(
-              'Ativar/Desativar',
-            ),
-          ),
-          SwitchListTile(
-            value: _alertAnimes,
-            onChanged: (bool value) {
-              setState(() {
-                _alertAnimes = value;
-              });
-              save('alertAnimes', value);
-            },
-            secondary: const Icon(Icons.notifications),
-            title: Text(
-              'Alerta de animes',
-            ),
-          ),
-          SwitchListTile(
-            value: _alertMenssages,
-            onChanged: (bool value) {
-              setState(() {
-                _alertMenssages = value;
-              });
-              save('alertMenssages', value);
-            },
-            secondary: const Icon(Icons.message),
-            title: Text(
-              'Alerta de mensagens',
-            ),
-          ),
-          Divider(),
-
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: FlatButton(
-                onPressed: () {
-                  print(_theme);
-                  _nameRetriever();
-                  },
-                child: Text("Sair",
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 16,
-                  ),
+          Stack(
+            children: <Widget>[
+              //new Switch(value: _value1, onChanged: _onChanged1),
+              SwitchListTile(
+                value: _notifications,
+                onChanged: (bool value) {
+                  setState(() {
+                    _notifications = value;
+                  });
+                  save('notifications', value);
+                },
+                secondary: const Icon(Icons.notifications),
+                title: Text(
+                  'Ativar/Desativar',
                 ),
               ),
-          ),),
+            ],
+          ),
+          Stack(
+            children: <Widget>[
+              SwitchListTile(
+                value: _alertAnimes,
+                onChanged: (bool value) {
+                  setState(() {
+                    _alertAnimes = value;
+                  });
+                  save('alertAnimes', value);
+                },
+                secondary: const Icon(Icons.notifications),
+                title: Text(
+                  'Alerta de animes',
+                ),
+              ),
+            ],
+          ),
+          Stack(
+            children: <Widget>[
+              SwitchListTile(
+                value: _alertMenssages,
+                onChanged: (bool value) {
+                  setState(() {
+                    _alertMenssages = value;
+                  });
+                  save('alertMenssages', value);
+                },
+                secondary: const Icon(Icons.message),
+                title: Text(
+                  'Alerta de mensagens',
+                ),
+              ),
+            ],
+          ),
+          Divider(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: FlatButton(
+              onPressed: () {
+                print(_theme);
+                _nameRetriever();
+              },
+              child: Text("Sair",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+
+
+
+
+
         ],
-      ),
+      )
     );
   }
 }
+
+
+

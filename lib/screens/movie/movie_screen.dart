@@ -4,6 +4,8 @@ import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dar
 import 'package:flutter_netflix_ui_redesign/screens/movie/circular_clipper.dart';
 import 'package:flutter_netflix_ui_redesign/screens/home_page/widgets/content_scroll.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
+import 'package:share/share.dart';
+
 
 class MovieScreen extends StatefulWidget {
   final Movie movie;
@@ -90,19 +92,12 @@ class _MovieScreenState extends State<MovieScreen> {
                 child: IconButton(
                   onPressed: () =>
                   {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//
-//
-//
-//
-//
-//
-//
-//                        builder: (context) => Routes.SuporteAnimeScreenR(),
-//                      ),
-//                    ),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Routes.SuporteAnimeScreenR(widget.movie),
+                      ),
+                    ),
                   },
                   icon: Icon(Icons.assistant_photo),
                   iconSize: 35.0,
@@ -113,7 +108,9 @@ class _MovieScreenState extends State<MovieScreen> {
                 bottom: 0.0,
                 right: 25.0,
                 child: IconButton(
-                  onPressed: () => print('Share'),
+                  onPressed: () => {
+                    Share.share('https://example.com')
+                  },
                   icon: Icon(Icons.share),
                   iconSize: 35.0,
                   color: Colors.white,

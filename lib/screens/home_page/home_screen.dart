@@ -10,7 +10,7 @@ import 'widgets/content_scroll.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
 
 //request
-import '../../requetions/requestion.dart';
+import '../../request//requestion.dart';
 
 
 class HomeScreen extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:flutter_netflix_ui_redesign/screens/movie/circular_clipper.dart'
 import 'package:flutter_netflix_ui_redesign/screens/home_page/widgets/content_scroll.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
 import 'package:share/share.dart';
-
+import 'package:android_intent/android_intent.dart';
 
 class MovieScreen extends StatefulWidget {
   final Movie movie;
@@ -61,7 +61,8 @@ class _MovieScreenState extends State<MovieScreen> {
                     icon: Icon(Icons.favorite),
                     iconSize: 30.0,
                     color: Colors.red,
-                    onPressed: () => {
+                    onPressed: () =>
+                    {
 
                     },
 
@@ -75,7 +76,11 @@ class _MovieScreenState extends State<MovieScreen> {
                   child: RawMaterialButton(
                     padding: EdgeInsets.all(10.0),
                     elevation: 12.0,
-                    onPressed: () => print('Play Video'),
+                    onPressed: () =>
+                    {
+
+
+                    },
                     shape: CircleBorder(),
                     fillColor: Colors.black,
                     child: Icon(
@@ -108,9 +113,7 @@ class _MovieScreenState extends State<MovieScreen> {
                 bottom: 0.0,
                 right: 25.0,
                 child: IconButton(
-                  onPressed: () => {
-                    Share.share('https://example.com')
-                  },
+                  onPressed: () => Share.share('check out my website https://example.com'),
                   icon: Icon(Icons.share),
                   iconSize: 35.0,
                   color: Colors.white,
@@ -145,11 +148,11 @@ class _MovieScreenState extends State<MovieScreen> {
 
                   children: <Widget>[
                     SizedBox(width: 80.0),
-                    Icon(Icons.star),
-                    Icon(Icons.star),
-                    Icon(Icons.star),
-                    Icon(Icons.star_half),
-                    Icon(Icons.star_border),
+                    Icon(Icons.star, color: Colors.white,),
+                    Icon(Icons.star, color: Colors.white,),
+                    Icon(Icons.star, color: Colors.white,),
+                    Icon(Icons.star_half, color: Colors.white,),
+                    Icon(Icons.star_border, color: Colors.white,),
                   ],
                 ),
 

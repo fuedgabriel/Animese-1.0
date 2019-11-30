@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
+import 'package:http/http.dart';
+
+
+
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPage createState() => _LoginPage();
@@ -67,7 +72,14 @@ class _LoginPage extends State<LoginPage> {
                       child: Text(
                         'Cadastre-se         ',
                       ),
-                      onPressed: () {},
+                      onPressed: ()
+                      {
+
+
+
+
+
+                      },
                     ),
                   ),
                   Container(

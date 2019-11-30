@@ -5,7 +5,9 @@ import 'package:flutter_netflix_ui_redesign/screens/movie/circular_clipper.dart'
 import 'package:flutter_netflix_ui_redesign/screens/home_page/widgets/content_scroll.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
 import 'package:share/share.dart';
-import 'package:android_intent/android_intent.dart';
+import '../player/video.dart';
+
+//import 'package:android_intent/android_intent.dart';
 
 class MovieScreen extends StatefulWidget {
   final Movie movie;
@@ -17,6 +19,7 @@ class MovieScreen extends StatefulWidget {
 }
 
 class _MovieScreenState extends State<MovieScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +66,12 @@ class _MovieScreenState extends State<MovieScreen> {
                     color: Colors.red,
                     onPressed: () =>
                     {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoApp(),
+                        ),
+                      ),
 
                     },
 
@@ -78,6 +87,7 @@ class _MovieScreenState extends State<MovieScreen> {
                     elevation: 12.0,
                     onPressed: () =>
                     {
+
 
 
                     },

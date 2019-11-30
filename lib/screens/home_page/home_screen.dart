@@ -10,7 +10,8 @@ import 'widgets/content_scroll.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
 
 //request
-import '../../request//requestion.dart';
+//import '../../request/requestion.dart';
+//import '../../request/requestion.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -136,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             padding: EdgeInsets.only(right: 30.0),
             onPressed: () => {
-              API.getAnimes(),
+//              API.getAnimes(),
             },
             icon: Icon(Icons.search),
             iconSize: 30.0,

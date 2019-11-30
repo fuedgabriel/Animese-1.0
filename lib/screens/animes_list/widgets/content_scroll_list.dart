@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 
 class ContentScroll extends StatelessWidget {

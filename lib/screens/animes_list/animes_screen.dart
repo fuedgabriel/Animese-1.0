@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../routes.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
 //import 'widgets/content_scroll_list.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 
 

@@ -1,6 +1,5 @@
 //import 'dart:html';
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
 import '../movie/models/movie_model.dart';
 
 

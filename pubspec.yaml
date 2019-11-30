@@ -19,12 +19,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.12.0+2
-  shared_preferences: ^0.5.4+5
-  flutter_bloc: ^0.20.0
+  http: ^0.12.0+2 #Request
+  shared_preferences: ^0.5.4+5 #SAlvar arq
+  flutter_bloc: ^0.20.0 #Salvar preferences
   equatable: ^0.4.0
-  share: ^0.6.2+1
-  flutter_staggered_grid_view: "^0.2.7"
+
+  share: ^0.6.2+1 #Compartilhar com as pessoas
+  flutter_staggered_grid_view: "^0.2.7" #GridViwer de bosta
+  android_intent: ^0.3.4+7 #Aplicativos externos
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

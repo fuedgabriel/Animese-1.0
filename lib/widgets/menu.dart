@@ -3,6 +3,7 @@ import 'package:flutter_netflix_ui_redesign/screens/animes_list/animes_screen.da
 import 'package:flutter_netflix_ui_redesign/screens/home_page/home_screen.dart';
 import 'package:flutter_netflix_ui_redesign/screens/config/config.dart';
 import 'package:flutter_netflix_ui_redesign/screens/suporte/suporte.dart';
+import '../screens/login/LoginPage.dart';
 
 
 class MenuWidget extends StatelessWidget{
@@ -24,12 +25,19 @@ class MenuWidget extends StatelessWidget{
             currentAccountPicture: CircleAvatar(child: Text("oi"),),
             otherAccountsPictures: <Widget>[
               GestureDetector(
-                onTap: () =>{
-                  showDialog(
-                      context: context,
-                      builder: (context){
-                        return AlertDialog(
-                            title: Text("Adicionar uma nova conta..."));})},
+                onTap: () =>
+                {
+                  if (page == 'Login') {
+                    Navigator.pop(context)
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    ),
+                  },
+                },
                 child: CircleAvatar(
                   child: Icon(Icons.add),
                 ),

@@ -3,7 +3,8 @@ import 'widgets/content_scroll_list.dart';
 import 'package:flutter/material.dart';
 import '../../routes.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
-
+//import 'widgets/content_scroll_list.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 
 
@@ -42,30 +43,18 @@ class _AnimesScreenState extends State<AnimesScreen> {
         ],
       ),
       body: Container(
-        //padding: EdgeInsets.all(10.0),
-        child: Column(
+          padding: EdgeInsets.only(top: 10),
+        child: ListView(
           children: <Widget>[
-            TextField(
-              decoration: new InputDecoration(
-                  border: new OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(30.0),
-                    ),
-                  ),
-                  filled: true,
-                  hintStyle: new TextStyle(color: Colors.grey[500]),
-                  hintText: "Digite o nome do anime...",
-                  fillColor: Colors.white
-              ),
+            ContentScroll(images: myList,),
+            Container(
+              alignment: Alignment.centerRight,
+              child: ContentScroll(images: myList,),
             ),
-              ContentScroll(
-                images: popular,
-                title: "Minha lista",
-                imageHeight: 250.0,
-                imageWidth: 150.0,
-              ),
+
+
           ],
-        ),
+        )
       ),
     );
   }

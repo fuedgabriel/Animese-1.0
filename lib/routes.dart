@@ -4,6 +4,7 @@ import 'widgets/menu.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/movie_screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/suporte_anime/suporteAnime.dart';
+
 class Routes {
   static Menu(String pagina){
     return new MenuWidget(page: pagina);

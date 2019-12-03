@@ -1,13 +1,25 @@
-class ListHomePage {
+class ListAnime {
   String sId;
   String title;
+  String english;
+  int seasons;
+  int episodes;
   String url;
 
-  ListHomePage({this.sId, this.title, this.url});
+  ListAnime(
+      {this.sId,
+        this.title,
+        this.english,
+        this.seasons,
+        this.episodes,
+        this.url});
 
-  ListHomePage.fromJson(Map<String, dynamic> json) {
+  ListAnime.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['Title'];
+    english = json['English'];
+    seasons = json['Seasons'];
+    episodes = json['Episodes'];
     url = json['url'];
   }
 
@@ -15,6 +27,9 @@ class ListHomePage {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
     data['Title'] = this.title;
+    data['English'] = this.english;
+    data['Seasons'] = this.seasons;
+    data['Episodes'] = this.episodes;
     data['url'] = this.url;
     return data;
   }

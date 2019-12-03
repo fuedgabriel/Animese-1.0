@@ -7,7 +7,6 @@ class ContentScroll extends StatelessWidget {
 
   ContentScroll({
     this.images,
-
   });
 
 

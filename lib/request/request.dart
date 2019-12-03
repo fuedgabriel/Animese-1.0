@@ -2,7 +2,6 @@ import 'dart:async';
 //import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'Animes.dart';
 const baseUrl = "http://192.168.0.191:7844";
 
 class API {

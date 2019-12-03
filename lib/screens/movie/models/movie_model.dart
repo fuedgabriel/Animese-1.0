@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
 
@@ -78,8 +79,11 @@ final List<String> labels = [
   'New',
 ];
 
+//final List<Image> myList = [
+//  Image.network('https://cdn.myanimelist.net/images/anime/5/64449.jpg'),
+//];
+
 final List<String> myList = [
-  'assets/images/shigatsu_wa_kimi_no_uso.jpg',
   'assets/images/plastic_memories.png',
   'assets/images/erased.jpg',
   'assets/images/seven_deadly_sins.jpg',

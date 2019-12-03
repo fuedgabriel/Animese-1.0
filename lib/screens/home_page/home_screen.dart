@@ -25,13 +25,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController;
 
-  var list = new List<ListHomePage>();
+  var list = new List<ListAnime>();
+  var ado = new List<String>();
 
   _getAnime(){
     API.getAnimes().then((response){
       setState(() {
         Iterable lista = json.decode(response.body);
-        list = lista.map((model) => ListHomePage.fromJson(model)).toList();
+        list = lista.map((model) => ListAnime.fromJson(model)).toList();
+        ado = list.map((model) => ado.add(model.url)).toList();
       });
     });
   }
@@ -43,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _pageController = PageController(initialPage: 1, viewportFraction: 0.8);
   }
+
 
 //  var animeList = new List<animes>();
 
@@ -154,7 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => {
 //              API.getAnimes(),
 //              API.getData(),
-              print(list[3].url),
+              print(list[0].url),
+              print(list[0].title),
+              print(list[0].sId)
+
             },
             icon: Icon(Icons.search),
             iconSize: 30.0,
@@ -183,12 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Lançamentos',
             imageHeight: 250.0,
             imageWidth: 150.0,
-
-
           ),
 
           ContentScroll(
-            images: popular,
+            images: ado,
             title: "Minha lista",
             imageHeight: 250.0,
             imageWidth: 150.0,

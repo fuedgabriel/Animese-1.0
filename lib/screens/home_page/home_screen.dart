@@ -1,4 +1,6 @@
 //import 'dart:html';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 //routes
@@ -10,9 +12,9 @@ import 'widgets/content_scroll.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
 
 //request
-//import '../../request/requestion.dart';
-//import '../../request/requestion.dart';
-
+//import '../../request/request.dart';
+import '../../request/request.dart';
+import '../../request/Animes.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,6 +25,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController;
 
+  var list = new List<ListHomePage>();
+
+  _getAnime(){
+    API.getAnimes().then((response){
+      setState(() {
+        Iterable lista = json.decode(response.body);
+        list = lista.map((model) => ListHomePage.fromJson(model)).toList();
+      });
+    });
+  }
+  _HomeScreenState(){
+    _getAnime();
+  }
   @override
   void initState() {
     super.initState();
@@ -138,6 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.only(right: 30.0),
             onPressed: () => {
 //              API.getAnimes(),
+//              API.getData(),
+              print(list[3].url),
             },
             icon: Icon(Icons.search),
             iconSize: 30.0,
@@ -169,7 +186,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
           ),
-
 
           ContentScroll(
             images: popular,

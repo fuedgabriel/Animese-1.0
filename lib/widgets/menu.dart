@@ -6,7 +6,8 @@ import 'package:flutter_netflix_ui_redesign/screens/suporte/suporte.dart';
 import '../screens/login/LoginPage.dart';
 import '../screens/player/video.dart';
 
-
+// text: isso tira um erro
+// ignore: must_be_immutable
 class MenuWidget extends StatelessWidget{
   String page;
 
@@ -123,7 +124,7 @@ class MenuWidget extends StatelessWidget{
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => suporte(),
+                      builder: (context) => Suporte(),
                     ),
                   ),
                 },
@@ -143,7 +144,7 @@ class MenuWidget extends StatelessWidget{
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => config(),
+                      builder: (context) => Config(),
                     ),
                   ),
                 },

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
-import 'package:http/http.dart';
 import 'createcount.dart';
 import 'recoverpassword.dart';
 
@@ -79,7 +78,7 @@ class _LoginPage extends State<LoginPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => createcount(),
+                            builder: (context) => CreateCount(),
                           ),
                         );
 
@@ -100,7 +99,7 @@ class _LoginPage extends State<LoginPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => recoverpassword(),
+                            builder: (context) => RecoverPassword(),
                           ),
                         );
 

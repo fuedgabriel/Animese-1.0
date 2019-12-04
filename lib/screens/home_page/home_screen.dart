@@ -1,4 +1,3 @@
-//import 'dart:html';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -26,14 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController;
 
   var list = new List<ListAnime>();
-  var ado = new List<String>();
+  var ado = new List<ListAnime>();
+
 
   _getAnime(){
     API.getAnimes().then((response){
       setState(() {
         Iterable lista = json.decode(response.body);
         list = lista.map((model) => ListAnime.fromJson(model)).toList();
-        ado = list.map((model) => ado.add(model.url)).toList();
+        ado = list.map((model) => ado.add(model)).toList();
       });
     });
   }
@@ -45,18 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _pageController = PageController(initialPage: 1, viewportFraction: 0.8);
   }
-
-
-//  var animeList = new List<animes>();
-
-//  getAnimes(){
-//    API.getAnimes().then((response){
-//      Iterable lista = json.decode(response.body);
-//      animeList = lista.map((model) => animes.fromJson(model)).toList();
-//
-//    });
-//  }
-
 
 
 
@@ -81,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => Routes.MovieScreenR(movies, index),
+            builder: (_) => Routes.movieScreenR(movies, index),
           ),
         ),
 
@@ -142,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      drawer: Routes.Menu('Inicio'),
+      drawer: Routes.menu('Inicio'),
 //    backgroundColor: HexColor('#212121'),
     appBar: AppBar(
 //        backgroundColor: HexColor('000000'),
@@ -157,10 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => {
 //              API.getAnimes(),
 //              API.getData(),
-              print(list[0].url),
-              print(list[0].title),
-              print(list[0].sId)
-
             },
             icon: Icon(Icons.search),
             iconSize: 30.0,
@@ -185,14 +169,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           ContentScroll(
-            images: myList,
+            images: ado,
             title: 'Lançamentos',
             imageHeight: 250.0,
             imageWidth: 150.0,
           ),
 
-          ContentScroll(
-            images: ado,
+          ContentScrollFavorite(
+            images: myList,
             title: "Minha lista",
             imageHeight: 250.0,
             imageWidth: 150.0,

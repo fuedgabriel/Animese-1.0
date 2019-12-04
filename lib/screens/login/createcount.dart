@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class createcount extends StatefulWidget {
+class CreateCount extends StatefulWidget {
   @override
-  _createcount createState() => _createcount();
+  _CreateCount createState() => _CreateCount();
 }
 
-class _createcount extends State<createcount> {
+class _CreateCount extends State<CreateCount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

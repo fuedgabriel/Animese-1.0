@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
 
-class suporte extends StatefulWidget {
+class Suporte extends StatefulWidget {
   @override
-  _suporte createState() => _suporte();
+  _Suporte createState() => _Suporte();
 }
 
-class _suporte extends State<suporte> {
+class _Suporte extends State<Suporte> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

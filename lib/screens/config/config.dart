@@ -7,13 +7,13 @@ import 'theme/bloc/bloc.dart';
 
 
 
-class config extends StatefulWidget {
+class Config extends StatefulWidget {
 
   @override
-_config createState() => _config();
+_Config createState() => _Config();
 }
 
-class _config extends State<config> {
+class _Config extends State<Config> {
   void initState() {
     super.initState();
     restore();

@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../movie/models/movie_model.dart';
 
 
-class suporteAnime extends StatefulWidget {
+class SuporteAnime extends StatefulWidget {
   final Movie movieA;
-  suporteAnime({this.movieA});
+  SuporteAnime({this.movieA});
   @override
-  _suporteAnime createState() => _suporteAnime();
+  _SuporteAnime createState() => _SuporteAnime();
 
 }
 
-class _suporteAnime extends State<suporteAnime> {
+class _SuporteAnime extends State<SuporteAnime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

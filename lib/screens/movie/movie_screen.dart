@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/screens/animes_list/animes_screen.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/circular_clipper.dart';
-import 'package:flutter_netflix_ui_redesign/screens/home_page/widgets/content_scroll.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
 import 'package:share/share.dart';
 import '../player/video.dart';
@@ -110,7 +108,7 @@ class _MovieScreenState extends State<MovieScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Routes.SuporteAnimeScreenR(widget.movie),
+                        builder: (context) => Routes.suporteAnimeScreenR(widget.movie),
                       ),
                     ),
                   },
@@ -248,12 +246,12 @@ class _MovieScreenState extends State<MovieScreen> {
               ],
             ),
           ),
-          ContentScroll(
-            images: widget.movie.screenshots,
-            title: 'Screenshots',
-            imageHeight: 200.0,
-            imageWidth: 250.0,
-          ),
+//          ContentScroll(
+//            images: widget.movie.screenshots,
+//            title: 'Screenshots',
+//            imageHeight: 200.0,
+//            imageWidth: 250.0,
+//          ),
         ],
       ),
     );

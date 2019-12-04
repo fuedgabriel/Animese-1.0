@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'screens/suporte_anime/suporteAnime.dart';
 
 class Routes {
-  static Menu(String pagina){
+  static menu(String pagina){
     return new MenuWidget(page: pagina);
   }
 
-  static MovieScreenR(movies,int index){
+  static movieScreenR(movies,int index){
 
     return new MovieScreen(movie: movies[index]);
 
   }
-  static SuporteAnimeScreenR(movies){
-    return new suporteAnime(movieA: movies);
+  static suporteAnimeScreenR(movies){
+    return new SuporteAnime(movieA: movies);
 
   }
 

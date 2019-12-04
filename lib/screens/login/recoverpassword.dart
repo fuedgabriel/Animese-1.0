@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class recoverpassword extends StatefulWidget {
+class RecoverPassword extends StatefulWidget {
   @override
-  _recoverpassword createState() => _recoverpassword();
+  _RecoverPassword createState() => _RecoverPassword();
 }
 
-class _recoverpassword extends State<recoverpassword> {
+class _RecoverPassword extends State<RecoverPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recuperar Senhas'),
+        title: Text('Recuperar Senha'),
       ),
 
 

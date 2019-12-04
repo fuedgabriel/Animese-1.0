@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class ListAnime {
   String sId;
   String title;
@@ -34,3 +36,20 @@ class ListAnime {
     return data;
   }
 }
+
+class  UrlList  {
+  NetworkImage url;
+
+  UrlList({this.url});
+
+  UrlList.fromJson(Map<NetworkImage, dynamic> json) {
+    url = json['url'];
+  }
+
+  Map<NetworkImage, dynamic> toJson() {
+    final Map<NetworkImage, dynamic>  data = new Map<NetworkImage, dynamic>();
+    data[url] = this.url;
+    return data;
+  }
+}
+

@@ -21,7 +21,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Routes.Menu('Lista'),
+      drawer: Routes.menu('Lista'),
       appBar: AppBar(
         elevation: 0,
         title: Text("Lista"),

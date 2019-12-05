@@ -1,14 +1,17 @@
 
 
 import 'package:flutter/material.dart';
-
+import 'package:flutter_netflix_ui_redesign/request/request.dart';
 class CreateCount extends StatefulWidget {
   @override
   _CreateCount createState() => _CreateCount();
 }
 
 class _CreateCount extends State<CreateCount> {
-  TextEditingController _textFieldController = TextEditingController();
+  TextEditingController _textFieldControllerNome = TextEditingController();
+  TextEditingController _textFieldControllerEmail = TextEditingController();
+  TextEditingController _textFieldControllerSenha1 = TextEditingController();
+  TextEditingController _textFieldControllerSenha2 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +23,7 @@ class _CreateCount extends State<CreateCount> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
           child: TextField(
-            controller: _textFieldController,
+            controller: _textFieldControllerNome,
             decoration: InputDecoration(
               hintText: "Nome",
               border: OutlineInputBorder(
@@ -33,7 +36,7 @@ class _CreateCount extends State<CreateCount> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
           child: TextField(
-            controller: _textFieldController,
+            controller: _textFieldControllerEmail,
             decoration: InputDecoration(
               hintText: "E-mail",
               border: OutlineInputBorder(
@@ -46,7 +49,7 @@ class _CreateCount extends State<CreateCount> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
           child: TextField(
-            controller: _textFieldController,
+            controller: _textFieldControllerSenha1,
             decoration: InputDecoration(
               hintText: "Senha",
               border: OutlineInputBorder(
@@ -59,7 +62,7 @@ class _CreateCount extends State<CreateCount> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
           child: TextField(
-            controller: _textFieldController,
+            controller: _textFieldControllerSenha2,
             decoration: InputDecoration(
               hintText: "Senha",
               border: OutlineInputBorder(
@@ -72,7 +75,19 @@ class _CreateCount extends State<CreateCount> {
         Container(
           height: 40,
           child: OutlineButton(
-            onPressed: () {},
+            onPressed: () {
+              if(_textFieldControllerSenha1.text == _textFieldControllerSenha2.text){
+                print(_textFieldControllerNome.text);
+                print(_textFieldControllerEmail.text);
+                print(_textFieldControllerSenha1.text);
+                POST.postContact(_textFieldControllerNome.text.toString(), _textFieldControllerEmail.text.toString(), _textFieldControllerSenha1.text.toString());
+
+              }else{
+                print('else');
+                Dialog(child: Text('aaa'),);
+              }
+
+            },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
             borderSide: BorderSide(),
             child: Padding(

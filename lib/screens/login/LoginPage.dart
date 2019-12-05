@@ -70,20 +70,6 @@ class _LoginPage extends State<LoginPage> {
                 ),
               ),
             ),
-//
-//            TextFormField(
-//              autofocus: false,
-//              obscureText: true,
-//              keyboardType: TextInputType.text,
-//              decoration: InputDecoration(
-//                  labelText: 'Senha',
-//                  labelStyle: TextStyle(
-////                    color: Colors.black38,
-//                    fontWeight: FontWeight.w400,
-//                    fontSize: 20,
-//                  )
-//              ),
-//            ),
 
             Container(
               child: Row(

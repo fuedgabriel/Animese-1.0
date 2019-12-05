@@ -1,10 +1,11 @@
 //import 'dart:html';
 import 'package:flutter/material.dart';
-import '../movie/models/movie_model.dart';
+import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
+
 
 
 class SuporteAnime extends StatefulWidget {
-  final Movie movieA;
+  ListAnime movieA;
   SuporteAnime({this.movieA});
   @override
   _SuporteAnime createState() => _SuporteAnime();

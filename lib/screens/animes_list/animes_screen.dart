@@ -1,9 +1,15 @@
 
-import 'widgets/content_scroll_list.dart';
+
 import 'package:flutter/material.dart';
+//woidget
+import 'widgets/content_scroll_list.dart';
+//rotas
 import '../../routes.dart';
-import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
-//import 'widgets/content_scroll_list.dart';
+import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
+import 'package:flutter_netflix_ui_redesign/request/request.dart';
+//biblioteca
+import 'dart:convert';
+
 
 
 
@@ -14,12 +20,23 @@ class AnimesScreen extends StatefulWidget {
   _AnimesScreenState createState() => _AnimesScreenState();
 }
 
-class _AnimesScreenState extends State<AnimesScreen> {
-  @override
 
+class _AnimesScreenState extends State<AnimesScreen> {
+  var list = new List<ListAnime>();
+
+
+  _getAnime(){
+    API.getAnimes().then((response){
+      setState(() {
+        Iterable lista = json.decode(response.body);
+        list = lista.map((model) => ListAnime.fromJson(model)).toList();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    _getAnime();
     return Scaffold(
       drawer: Routes.menu('Lista'),
       appBar: AppBar(
@@ -35,7 +52,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
                   color: Colors.grey[800],
                   borderRadius: BorderRadius.circular(10)
               ),
-              child: Center(child: Text("2900")
+              child: Center(child: Text(list.length.toString())
               ),
             ),
           )
@@ -43,13 +60,17 @@ class _AnimesScreenState extends State<AnimesScreen> {
       ),
       body: Container(
           padding: EdgeInsets.only(top: 10),
-        child: ListView(
+        child: Column(
           children: <Widget>[
-            ContentScroll(images: myList,),
             Container(
-              alignment: Alignment.centerRight,
-              child: ContentScroll(images: myList,),
-            ),
+
+              child: ContentScroll(images: list,),
+            )
+
+//            Container(
+//              alignment: Alignment.centerRight,
+//              child: ContentScroll(images: myList,),
+//            ),
 
 
           ],

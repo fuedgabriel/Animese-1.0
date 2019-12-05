@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //routes
@@ -7,8 +8,8 @@ import 'package:flutter_netflix_ui_redesign/routes.dart';
 
 
 //widget
+import '../../screens/video/movie_screen.dart';
 import 'widgets/content_scroll.dart';
-import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
 
 //request
 //import '../../request/request.dart';
@@ -69,10 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => Routes.movieScreenR(movies, index),
+            builder: (_) => Videoscreen(movie: ado[index]),
           ),
         ),
-
         child: Stack(
           children: <Widget>[
             Center(
@@ -90,28 +90,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Center(
                   child: Hero(
-                    tag: movies[index].imageUrl,
+                    tag: ado[index].title,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Image(
-                        image: AssetImage(movies[index].imageUrl),
+                        image: NetworkImage(ado[index].url),
                         height: 220.0,
-                        fit: BoxFit.cover,
+                        width: 267.0,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-
-
             Positioned(
               left: 30.0,
               bottom: 40.0,
               child: Container(
                 width: 250.0,
                 child: Text(
-                  movies[index].title.toUpperCase(),
+                  ado[index].title.toUpperCase(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,
@@ -143,9 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             padding: EdgeInsets.only(right: 30.0),
             onPressed: () => {
-//              API.getAnimes(),
-//              API.getData(),
-            print(ado[0].englishTitle)
+              showSearch(context: context, delegate: DataSearch())
             },
             icon: Icon(Icons.search),
             iconSize: 30.0,
@@ -161,8 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 280.0,
             width: double.infinity,
             child: PageView.builder(
+              scrollDirection: Axis.horizontal,
               controller: _pageController,
-              itemCount: movies.length,
+              itemCount: ado.length,
               itemBuilder: (BuildContext context, int index) {
                 return _movieSelector(index);
               },
@@ -176,8 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
             imageWidth: 150.0,
           ),
 
-          ContentScrollFavorite(
-            images: myList,
+          ContentScroll(
+            images: ado,
             title: "Minha lista",
             imageHeight: 250.0,
             imageWidth: 150.0,
@@ -186,4 +184,106 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+class DataSearch extends SearchDelegate<StreamBuilder>{
+  var list = new List<ListAnime>();
+  var ado = new List<ListAnime>();
+
+
+  _getAnime(){
+    API.getAnimes().then((response){
+        Iterable lista = json.decode(response.body);
+        list = lista.map((model) => ListAnime.fromJson(model)).toList();
+        ado = list.map((model) => ado.add(model)).toList();
+    });
+  }
+
+
+
+  List cities = [
+
+
+  ];
+  final recentCities = [
+    "canada",
+    "belem",
+    "vaca",
+    "salve"
+  ];
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    _getAnime();
+    for(int i = 0; i == ado.length.toInt(); i++){
+//      cities = cities + ado[i].title;
+    }
+    // TODO: implement buildActions
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: (){
+          query = "";
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+
+    // TODO: implement buildLeading
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: (){
+        close(context,null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    return Card(
+      color: Colors.red,
+      shape: StadiumBorder(),
+      child: Center(
+        child: Text(query),
+      ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    final suggestionList = query.isEmpty
+        ?ado.toList()
+        :ado.toList();
+
+    return ListView.builder(itemBuilder: (context, index)=>ListTile(
+      onTap: (){
+        showResults(context);
+      },
+      leading: Icon(Icons.location_city),
+      title: RichText(
+        text: TextSpan(
+          text: suggestionList[index].title.substring(0,query.length),
+          style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold
+          ),
+          children: [TextSpan(
+            text: suggestionList[index].title.substring(query.length),
+            style: TextStyle(color: Colors.grey
+            )
+          )
+          ]
+        ),
+      )
+    ),
+      itemCount: suggestionList.length,
+    );
+  }
+
 }

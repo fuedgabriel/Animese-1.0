@@ -1,17 +1,45 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/request.dart';
+import 'dart:async';
+import 'package:crypto/crypto.dart';
+
+
+
+
 class CreateCount extends StatefulWidget {
   @override
   _CreateCount createState() => _CreateCount();
 }
 
-class _CreateCount extends State<CreateCount> {
+
+
+class _CreateCount extends State<CreateCount>{
+
+  AnimationController controller;
+
+  String _validarEmail(String value) {
+    String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return "Informe o Email";
+    } else if(!regExp.hasMatch(value)){
+      return "Email inválido";
+    }else {
+      return null;
+    }
+  }
+
+
   TextEditingController _textFieldControllerNome = TextEditingController();
+  TextEditingController _textFieldControllerNick = TextEditingController();
   TextEditingController _textFieldControllerEmail = TextEditingController();
   TextEditingController _textFieldControllerSenha1 = TextEditingController();
   TextEditingController _textFieldControllerSenha2 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +64,20 @@ class _CreateCount extends State<CreateCount> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
           child: TextField(
+            controller: _textFieldControllerNick,
+            decoration: InputDecoration(
+              hintText: "Nick",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 45.0),
+          child: TextFormField(
+            validator: _validarEmail,
             controller: _textFieldControllerEmail,
             decoration: InputDecoration(
               hintText: "E-mail",
@@ -80,16 +122,51 @@ class _CreateCount extends State<CreateCount> {
           height: 40,
           child: OutlineButton(
             onPressed: () {
+
+
+
               if(_textFieldControllerSenha1.text == _textFieldControllerSenha2.text){
-                print(_textFieldControllerNome.text);
-                print(_textFieldControllerEmail.text);
-                print(_textFieldControllerSenha1.text);
-                POST.postContact(_textFieldControllerNome.text.toString(), _textFieldControllerEmail.text.toString(), _textFieldControllerSenha1.text.toString());
+                var key = utf8.encode(_textFieldControllerSenha1.text);
+                var hash = sha512.convert(key);
+                POST.postRequest(_textFieldControllerNome.text,_textFieldControllerNick.text, hash, _textFieldControllerEmail.text);
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            title: Text('Cadastro efetuado com sucesso',
+                            style: TextStyle(
+                              fontSize: 15.6,
+                            ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {});
+                Future.delayed(const Duration(milliseconds: 1200), () {
+                  Navigator.of(context).pop();
+
+                });
+                Timer(Duration(milliseconds: 1800), () {
+                  Navigator.of(context).pop();
+                });
                }
-              else{
+              else
+                {
                 print('else');
                 Dialog(child: Text('aaa'),);
               }
+
               },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
             borderSide: BorderSide(),
@@ -107,7 +184,7 @@ class _CreateCount extends State<CreateCount> {
                         fontSize: 18,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

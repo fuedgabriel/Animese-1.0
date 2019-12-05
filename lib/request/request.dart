@@ -38,17 +38,27 @@ class API {
 
 class POST
 {
-  static Future postContact(name,email,password) async {
-    String apiUrl = 'http://192.168.0.191:7844/api/User';
-    print(apiUrl);
-    http.Response response = await http.post(
-        apiUrl,
-        headers: {"Accept": "application/json",},
-        body:  {'Name':'$name','password':'$password','Email':'$email'}
-        );
+  static Future<http.Response> postRequest (nome, nick, senha, email) async {
+    var url ='http://192.168.0.191:7844/api/User';
 
-//    print("Result: ${response.body}");
-    return json.decode(response.body);
+    Map data = {
+      'Name': '$nome',
+      'Nick': '$nick',
+      'Password': '$senha',
+      'Email': '$email',
+    };
+    //encode Map to JSON
+    var body = json.encode(data);
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: body
+    );
+    print("${response.statusCode}");
+    print("${response.body}");
+    return response;
   }
 }
+
+
 

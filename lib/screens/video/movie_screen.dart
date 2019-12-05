@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
-import 'package:flutter_netflix_ui_redesign/screens/movie/circular_clipper.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
 import 'package:share/share.dart';
 import '../player/video.dart';
+import 'circular_clipper.dart';
 
 //import 'package:android_intent/android_intent.dart';
 

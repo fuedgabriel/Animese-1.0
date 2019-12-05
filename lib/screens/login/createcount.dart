@@ -18,7 +18,7 @@ class _CreateCount extends State<CreateCount> {
       appBar: AppBar(
         title: Text('Criar conta'),
       ),
-      body: Column(children: <Widget>[
+      body: ListView(children: <Widget>[
         SizedBox(height: 40,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
@@ -73,6 +73,10 @@ class _CreateCount extends State<CreateCount> {
         ),
         SizedBox(height: 20,),
         Container(
+          padding: EdgeInsets.only(
+            left: 40,
+            right: 40,
+          ),
           height: 40,
           child: OutlineButton(
             onPressed: () {
@@ -81,13 +85,12 @@ class _CreateCount extends State<CreateCount> {
                 print(_textFieldControllerEmail.text);
                 print(_textFieldControllerSenha1.text);
                 POST.postContact(_textFieldControllerNome.text.toString(), _textFieldControllerEmail.text.toString(), _textFieldControllerSenha1.text.toString());
-
-              }else{
+               }
+              else{
                 print('else');
                 Dialog(child: Text('aaa'),);
               }
-
-            },
+              },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
             borderSide: BorderSide(),
             child: Padding(
@@ -112,8 +115,6 @@ class _CreateCount extends State<CreateCount> {
         ),
       ],
       )
-
-
     );
   }
 }

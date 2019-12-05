@@ -13,6 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
+  TextEditingController _textFieldControllerEmail = TextEditingController();
+  TextEditingController _textFieldControllerSenha = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,32 +38,52 @@ class _LoginPage extends State<LoginPage> {
 
             SizedBox(height: 20,),
 
-            TextFormField(
-              autofocus: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: "E-mail",
-                labelStyle: TextStyle(
-//                  color: Colors.black38,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 20,
-                )
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0.0),
+              child: TextField(
+                autofocus: true,
+                obscureText: true,
+                keyboardType: TextInputType.text,
+                controller: _textFieldControllerEmail,
+                decoration: InputDecoration(
+                  hintText: "E-mail",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
               ),
             ),
            // title: 'My List',
-            TextFormField(
-              autofocus: false,
-              obscureText: true,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                  labelText: 'Senha',
-                  labelStyle: TextStyle(
-//                    color: Colors.black38,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  )
+            SizedBox(height: 5,),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0.0),
+              child: TextField(
+                autofocus: true,
+                obscureText: true,
+                keyboardType: TextInputType.text,
+                controller: _textFieldControllerSenha,
+                decoration: InputDecoration(
+                  hintText: "Senha",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
               ),
             ),
+//
+//            TextFormField(
+//              autofocus: false,
+//              obscureText: true,
+//              keyboardType: TextInputType.text,
+//              decoration: InputDecoration(
+//                  labelText: 'Senha',
+//                  labelStyle: TextStyle(
+////                    color: Colors.black38,
+//                    fontWeight: FontWeight.w400,
+//                    fontSize: 20,
+//                  )
+//              ),
+//            ),
 
             Container(
               child: Row(

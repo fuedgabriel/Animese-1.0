@@ -1,27 +1,40 @@
-import 'package:flutter/cupertino.dart';
-
 class ListAnime {
   String sId;
   String title;
-  String english;
+  String englishTitle;
+  String synopse;
   int seasons;
+  String status;
+  String category;
   int episodes;
+  double score;
+  String air;
   String url;
 
   ListAnime(
       {this.sId,
         this.title,
-        this.english,
+        this.englishTitle,
+        this.synopse,
         this.seasons,
+        this.status,
+        this.category,
         this.episodes,
+        this.score,
+        this.air,
         this.url});
 
   ListAnime.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['Title'];
-    english = json['English'];
+    englishTitle = json['English'];
+    synopse = json['Synopse'];
     seasons = json['Seasons'];
+    status = json['Status'];
+    category = json['Category'];
     episodes = json['Episodes'];
+    score = json['Score'];
+    air = json['air'];
     url = json['url'];
   }
 
@@ -29,27 +42,15 @@ class ListAnime {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
     data['Title'] = this.title;
-    data['English'] = this.english;
+    data['English'] = this.englishTitle;
+    data['Synopse'] = this.synopse;
     data['Seasons'] = this.seasons;
+    data['Status'] = this.status;
+    data['Category'] = this.category;
     data['Episodes'] = this.episodes;
+    data['Score'] = this.score;
+    data['air'] = this.air;
     data['url'] = this.url;
     return data;
   }
 }
-
-class  UrlList  {
-  NetworkImage url;
-
-  UrlList({this.url});
-
-  UrlList.fromJson(Map<NetworkImage, dynamic> json) {
-    url = json['url'];
-  }
-
-  Map<NetworkImage, dynamic> toJson() {
-    final Map<NetworkImage, dynamic>  data = new Map<NetworkImage, dynamic>();
-    data[url] = this.url;
-    return data;
-  }
-}
-

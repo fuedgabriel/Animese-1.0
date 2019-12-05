@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/screens/movie/models/movie_model.dart';
+import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 import 'package:flutter_netflix_ui_redesign/screens/movie/circular_clipper.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
 import 'package:share/share.dart';
@@ -7,19 +7,36 @@ import '../player/video.dart';
 
 //import 'package:android_intent/android_intent.dart';
 
-class MovieScreen extends StatefulWidget {
-  final Movie movie;
+class Cat{
+  static categoria(List categoria, int tamanho)  {
+    if(tamanho == 1){
+      return categoria[0];
+    }
+    if(tamanho == 0){
+      return categoria[0];
+    }
 
-  MovieScreen({this.movie});
-
-  @override
-  _MovieScreenState createState() => _MovieScreenState();
+}
 }
 
-class _MovieScreenState extends State<MovieScreen> {
+class Videoscreen extends StatefulWidget {
+  final ListAnime movie;
+
+  Videoscreen({this.movie});
+
+  @override
+  _VideoscreenState createState() => _VideoscreenState();
+}
+
+class _VideoscreenState extends State<Videoscreen> {
 
   @override
   Widget build(BuildContext context) {
+    String categoria;
+
+    categoria = widget.movie.category.replaceAll('5de1d75c43c6f33cf8f9331f', 'Ação').replaceAll('5de1d7a943c6f33cf8f93320', 'Aventura').replaceAll('5de1d7b143c6f33cf8f93321', 'Fantasia').replaceAll('5de1d7b743c6f33cf8f93322', 'Game').replaceAll('5de1d7c643c6f33cf8f93323', 'Romance');
+    categoria = categoria.replaceAll('|', ',  ');
+
     return Scaffold(
       backgroundColor: HexColor('#212121'),
       body: ListView(
@@ -29,7 +46,7 @@ class _MovieScreenState extends State<MovieScreen> {
               Container(
                 transform: Matrix4.translationValues(0.0, -50.0, 0.0),
                 child: Hero(
-                  tag: widget.movie.imageUrl,
+                  tag: widget.movie.url,
                   child: ClipShadowPath(
                     clipper: CircularClipper(),
                     shadow: Shadow(blurRadius: 20.0),
@@ -37,7 +54,7 @@ class _MovieScreenState extends State<MovieScreen> {
                       height: 400.0,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                      image: AssetImage(widget.movie.imageUrl),
+                      image: NetworkImage(widget.movie.url),
                     ),
                   ),
                 ),
@@ -143,9 +160,18 @@ class _MovieScreenState extends State<MovieScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 2.0),
                 Text(
-                  widget.movie.categories,
+                  widget.movie.englishTitle.toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(.6),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  categoria+ '.',
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 16.0,
@@ -172,27 +198,7 @@ class _MovieScreenState extends State<MovieScreen> {
                     Column(
                       children: <Widget>[
                         Text(
-                          'Year',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        SizedBox(height: 2.0),
-                        Text(
-                          widget.movie.year.toString(),
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          'Country',
+                          'Ano',
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 16.0,
@@ -200,7 +206,7 @@ class _MovieScreenState extends State<MovieScreen> {
                         ),
                         SizedBox(height: 10.0),
                         Text(
-                          widget.movie.country.toUpperCase(),
+                          widget.movie.air.substring(0,4),
                           style: TextStyle(
                             color: Colors.white54,
                             fontSize: 20.0,
@@ -212,15 +218,35 @@ class _MovieScreenState extends State<MovieScreen> {
                     Column(
                       children: <Widget>[
                         Text(
-                          'Length',
+                          'Episodeos',
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 16.0,
                           ),
                         ),
-                        SizedBox(height: 2.0),
+                        SizedBox(height: 10.0),
                         Text(
-                          '${widget.movie.length} min',
+                          widget.movie.episodes.toString(),
+                          style: TextStyle(
+                            color: Colors.white54,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          'Temporadas',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Text(
+                          widget.movie.seasons.toString(),
                           style: TextStyle(
                             color: Colors.white54,
                             fontSize: 20.0,
@@ -236,7 +262,7 @@ class _MovieScreenState extends State<MovieScreen> {
                   //height: 120.0,
                   child: SingleChildScrollView(
                     child: Text(
-                      widget.movie.description,
+                      widget.movie.synopse,
                       style: TextStyle(
                         color: Colors.white70,
                       ),
@@ -246,6 +272,12 @@ class _MovieScreenState extends State<MovieScreen> {
               ],
             ),
           ),
+//          ContentScroll(
+//            images: widget.movie.url,
+//            title: 'Screenshots',
+//            imageHeight: 200.0,
+//            imageWidth: 250.0,
+//          ),
         ],
       ),
     );

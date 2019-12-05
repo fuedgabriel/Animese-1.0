@@ -145,6 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => {
 //              API.getAnimes(),
 //              API.getData(),
+            print(ado[0].englishTitle)
             },
             icon: Icon(Icons.search),
             iconSize: 30.0,

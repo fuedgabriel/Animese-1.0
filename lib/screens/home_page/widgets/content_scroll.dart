@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
-
+import '../../../screens/video/movie_screen.dart';
 
 class ContentScroll extends StatelessWidget {
   final List<ListAnime> images;
@@ -22,7 +22,6 @@ class ContentScroll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(images[2]);
     return Column(
       children: <Widget>[
         Padding(
@@ -49,6 +48,7 @@ class ContentScroll extends StatelessWidget {
             ],
           ),
         ),
+
         Container(
           height: imageHeight,
           child: ListView.builder(
@@ -72,16 +72,20 @@ class ContentScroll extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network(
-                    images[index].toString(),
-                    fit: BoxFit.cover,
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Videoscreen(movie: images[index]),
+                    ),
                   ),
-//                  Image(
-//                    image: AssetImage(images[index].url),
-//                    fit: BoxFit.cover,
-//                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.network(
+                      images[index].url,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               );
             },

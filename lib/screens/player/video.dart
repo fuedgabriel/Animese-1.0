@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 void main() => runApp(VideoApp());
 
 class VideoApp extends StatefulWidget {
+  final String videoUrl;
+
+  VideoApp({this.videoUrl});
   @override
   _VideoAppState createState() => _VideoAppState();
 }

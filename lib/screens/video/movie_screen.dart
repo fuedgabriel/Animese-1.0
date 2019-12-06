@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
+import 'package:native_video_view/native_video_view.dart';
 import 'package:share/share.dart';
-import '../player/video.dart';
+//import '../player/video.dart';
 import 'circular_clipper.dart';
-
+import '../video_native/player.dart';
 //import 'package:android_intent/android_intent.dart';
 
 class Cat{
@@ -84,7 +85,7 @@ class _VideoscreenState extends State<Videoscreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VideoApp(),
+                          builder: (context) => MyApp(),
                         ),
                       ),
 
@@ -102,9 +103,12 @@ class _VideoscreenState extends State<Videoscreen> {
                     elevation: 12.0,
                     onPressed: () =>
                     {
-
-
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyApp(),
+                        ),
+                      ),
                     },
                     shape: CircleBorder(),
                     fillColor: Colors.black,

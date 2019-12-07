@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_netflix_ui_redesign/request/request.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
 import 'createcount.dart';
 import 'recoverpassword.dart';
@@ -42,7 +43,7 @@ class _LoginPage extends State<LoginPage> {
               padding: EdgeInsets.symmetric(horizontal: 0.0),
               child: TextField(
                 autofocus: true,
-                obscureText: true,
+                obscureText: false,
                 keyboardType: TextInputType.text,
                 controller: _textFieldControllerEmail,
                 decoration: InputDecoration(
@@ -59,7 +60,7 @@ class _LoginPage extends State<LoginPage> {
               padding: EdgeInsets.symmetric(horizontal: 0.0),
               child: TextField(
                 autofocus: true,
-                obscureText: true,
+                obscureText: false,
                 keyboardType: TextInputType.text,
                 controller: _textFieldControllerSenha,
                 decoration: InputDecoration(
@@ -124,7 +125,9 @@ class _LoginPage extends State<LoginPage> {
             Container(
               height: 40,
               child: OutlineButton(
-                onPressed: () {},
+                onPressed: () {
+                  GET.getRequest(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
+                },
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                 borderSide: BorderSide(),
                 child: Padding(

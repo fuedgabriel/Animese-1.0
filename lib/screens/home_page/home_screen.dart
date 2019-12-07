@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //        backgroundColor: HexColor('000000'),
         elevation: 0.0,
         title: Image(
-          image: AssetImage('assets/images/netflix_logo.png'
+          image: AssetImage('assets/animese/animese_vermelho.svg'
           ),
         ),
         actions: <Widget>[

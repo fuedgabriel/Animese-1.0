@@ -4,7 +4,6 @@ import 'package:flutter_netflix_ui_redesign/screens/home_page/home_screen.dart';
 import 'package:flutter_netflix_ui_redesign/screens/config/config.dart';
 import 'package:flutter_netflix_ui_redesign/screens/suporte/suporte.dart';
 import '../screens/login/LoginPage.dart';
-import '../screens/player/video.dart';
 
 // text: isso tira um erro
 // ignore: must_be_immutable
@@ -88,17 +87,7 @@ class MenuWidget extends StatelessWidget{
             leading: Icon(Icons.add),
             title: Text('Categorias'),
             onTap: () => {
-              if (page == 'Video') {
-                Navigator.pop(context)
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => VideoApp(),
-                  ),
-                ),
               },
-            },
           ),
           Divider(),
           ListTile(

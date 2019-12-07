@@ -1,45 +1,89 @@
+
 import 'package:flutter/material.dart';
-import 'package:native_video_view/native_video_view.dart';
+import 'video_player_demo.dart';
+import 'videos.dart';
+import 'change_video_src.dart';
+import 'list_video.dart';
+import 'one_video_ctrl.dart';
+import 'pro.dart';
 
-void main() => runApp(MaterialApp(home: MyApp()));
+void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: <String, WidgetBuilder>{
+        '/oneVideoCtrl': (BuildContext context) => OneVideoCtrl(),
+        '/listVideo': (BuildContext context) => ListVideo(),
+        '/change_video_src': (BuildContext context) => ChangeVideoSrc(),
+        '/videos': (BuildContext context) => Videos(),
+        '/pro': (BuildContext context) => pro(),
+        VideoPlayerDemo.routeName: (BuildContext context) => VideoPlayerDemo(),
+      },
+      home: HomePage(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Plugin example app'),
+        title: Text('video_box example'),
       ),
-      body: _buildVideoPlayerWidget(),
-    );
-  }
-
-  Widget _buildVideoPlayerWidget() {
-    return Container(
-      alignment: Alignment.center,
-      child: NativeVideoView(
-        keepAspectRatio: true,
-        showMediaController: true,
-        onCreated: (controller) {
-          controller.setVideoSource(
-            'assets/videos/5mb.mp4',
-            sourceType: VideoSourceType.file,
-          );
-        },
-        onPrepared: (controller, info) {
-          controller.play();
-        },
-        onError: (controller, what, extra, message) {
-          print('Player Error ($what | $extra | $message)');
-        },
-        onCompletion: (controller) {
-          print('Video completed');
-        },
+      body: Center(
+        child: IntrinsicWidth(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              RaisedButton(
+                child: Text('one video ctrl'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/oneVideoCtrl');
+                },
+              ),
+              RaisedButton(
+                child: Text('list video'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/listVideo');
+                },
+              ),
+              RaisedButton(
+                child: Text('change video src'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/change_video_src');
+                },
+              ),
+              RaisedButton(
+                child: Text('videos'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/videos');
+                },
+              ),
+              RaisedButton(
+                child: Text('VideoPlayerDemo'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(VideoPlayerDemo.routeName);
+                },
+              ),
+              RaisedButton(
+                child: Text('Pro'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/pro');
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

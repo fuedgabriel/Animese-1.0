@@ -1,5 +1,6 @@
 
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,22 +24,31 @@ class LoginPage extends StatefulWidget {
 class _LoginPage extends State<LoginPage> {
   var user = new List<User>();
   _getUser(senha, email){
-    POST.postLogin(senha,email).then((response){
-      Iterable lista = json.decode(response.body);
-      user = lista.map((model) => User.fromJson(model)).toList();
-    });
+    try
+    {
+      POST.postLogin(senha,email).then((response){
+        Iterable lista = json.decode(response.body);
+        user = lista.map((model) => User.fromJson(model)).toList();
+
+      }
+      );
+      if(user[0].name != null) {
+      print(user[0].name);
+      _saveLogin(user[0].email, user[0].password, user[0].sId);
+      return true;
+    }
+    else {
+      return false;
+      }
+    }catch (error) {
+      return false;
+    }
   }
-  _saveLogin(email,senha) async {
+  _saveLogin(email,senha, id) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('Email', email);
     prefs.setString('Password', senha);
-  }
-  _getLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    final Email = prefs.getString('Email');
-    final Password = prefs.getString('Password');
-    print(Email);
-    print(Password);
+    prefs.setString('_id', id);
   }
 
 
@@ -158,21 +168,67 @@ class _LoginPage extends State<LoginPage> {
               height: 40,
               child: OutlineButton(
                 onPressed: () {
-//                  var a = POST.postLogin(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
-//                  var b = jsonDecode(a);
-//                _getUser(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
-//                _saveLogin(user[0].email, user[0].password);
-//                print(user[0].email);
-                _getLogin();
-
-
-
-
-//                  print(validador);
-                  
-
-
-
+                  var request = _getUser(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
+                  print(request);
+                  print("_______________________________________");
+                  if(request==true){
+                    showGeneralDialog(
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        transitionBuilder: (context, a1, a2, widget) {
+                          return Transform.scale(
+                            scale: a1.value,
+                            child: Opacity(
+                              opacity: a1.value,
+                              child: AlertDialog(
+                                shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.0)),
+                                title: Text('Login efetuado com sucesso',
+                                  style: TextStyle(
+                                    fontSize: 15.6,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 500),
+                        barrierDismissible: true,
+                        barrierLabel: '',
+                        context: context,
+                        pageBuilder: (context, animation1, animation2) {var a; return a; });
+                    Future.delayed(const Duration(milliseconds: 1200), () {
+                      Navigator.of(context).pop();
+                    });
+                    Timer(Duration(milliseconds: 1400), () {
+                      Navigator.of(context).pop();
+                    });
+                  }
+                  else {
+                    showGeneralDialog(
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        transitionBuilder: (context, a1, a2, widget) {
+                          return Transform.scale(
+                            scale: a1.value,
+                            child: Opacity(
+                              opacity: a1.value,
+                              child: AlertDialog(
+                                shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.0)),
+                                title: Text('Login ou senha está incorreto',
+                                  style: TextStyle(
+                                    fontSize: 15.6,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 500),
+                        barrierDismissible: true,
+                        barrierLabel: '',
+                        context: context,
+                        pageBuilder: (context, animation1, animation2) {var a; return a; });
+                  }
 
                 },
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),

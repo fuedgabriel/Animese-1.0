@@ -1,10 +1,8 @@
 import 'dart:async';
-
-//import 'package:flutter/cupertino.dart';
-import 'package:flutter_netflix_ui_redesign/request/Usuario.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 const baseUrl = "http://192.168.0.191:7844";
 
 class API {
@@ -38,8 +36,8 @@ class API {
 
 class POST
 {
-
   static Future postLogin (senha, email) async {
+    try{
     var url ='http://192.168.0.191:7844/api/User/id';
     var key = utf8.encode(senha);
     var hash = sha512.convert(key);
@@ -48,18 +46,12 @@ class POST
       'Email': '$email',
       'Password': '$hash'
     };
-    //encode Map to JSON
     var body = json.encode(data);
-
-//    var response = await http.post(url,
-//        headers: {"Content-Type": "application/json"},
-//        body: body
-//    );
-
     return await http.post(url, headers: {"Content-Type": "application/json"}, body: body);
-
-//    print(info.toString());
-//    return "True";
+    }
+    catch (error) {
+      return false;
+    }
   }
 
   static Future<http.Response> postcreate (nome, nick, senha, email) async {
@@ -89,3 +81,15 @@ class POST
 
 
 
+class Shared{
+  static getLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    final email = prefs.getString('Email');
+    final password = prefs.getString('Password');
+    final id = prefs.getString('_id');
+    print(email);
+    print(password);
+    print(id);
+  }
+
+}

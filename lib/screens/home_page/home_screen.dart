@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var ado = new List<ListAnime>();
 
 
+
   _getAnime(){
     API.getAnimes().then((response){
       setState(() {
@@ -40,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   _HomeScreenState(){
     _getAnime();
+    Shared.getLogin();
   }
   @override
   void initState() {
@@ -127,11 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
 
+    return Scaffold(
       drawer: Routes.menu('Inicio'),
 //    backgroundColor: HexColor('#212121'),
-    appBar: AppBar(
+      appBar: AppBar(
 //        backgroundColor: HexColor('000000'),
         elevation: 0.0,
         title: Image(

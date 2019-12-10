@@ -193,9 +193,16 @@ class _Config extends State<Config> {
           Align(
             alignment: Alignment.bottomCenter,
             child: FlatButton(
-              onPressed: () {
-                print(_theme);
-                _nameRetriever();
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                prefs.remove('Email');
+                prefs.remove('Name');
+                prefs.remove('Nick');
+                prefs.remove('Password');
+                prefs.remove('_id');
+
+//                print(_theme);
+//                _nameRetriever();
               },
               child: Text("Sair",
                 style: TextStyle(

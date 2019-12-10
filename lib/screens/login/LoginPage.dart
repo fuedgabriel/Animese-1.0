@@ -34,7 +34,7 @@ class _LoginPage extends State<LoginPage> {
       );
       if(user[0].name != null) {
       print(user[0].name);
-      _saveLogin(user[0].email, user[0].password, user[0].sId);
+      _saveLogin(user[0].email,user[0].name,user[0].nick ,user[0].password, user[0].sId);
       return true;
     }
     else {
@@ -44,9 +44,11 @@ class _LoginPage extends State<LoginPage> {
       return false;
     }
   }
-  _saveLogin(email,senha, id) async {
+  _saveLogin(email,nome,nick,senha, id) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('Email', email);
+    prefs.setString('Name', nome);
+    prefs.setString('Nick', nick);
     prefs.setString('Password', senha);
     prefs.setString('_id', id);
   }

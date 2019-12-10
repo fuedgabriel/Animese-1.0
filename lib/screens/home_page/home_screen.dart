@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_netflix_ui_redesign/request/Usuario.dart';
 
 //routes
 import 'package:flutter_netflix_ui_redesign/routes.dart';
@@ -25,8 +26,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController;
 
+
+
   var list = new List<ListAnime>();
   var ado = new List<ListAnime>();
+  var user = new List<User>();
+
+
 
 
 
@@ -39,15 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
   }
+
+
   _HomeScreenState(){
     _getAnime();
-    Shared.getLogin();
   }
   @override
-  void initState() {
+  void initState(){
     super.initState();
     _pageController = PageController(initialPage: 1, viewportFraction: 0.8);
+
   }
+
 
 
 
@@ -137,8 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
 //        backgroundColor: HexColor('000000'),
         elevation: 0.0,
         title: Image(
-          image: AssetImage('assets/animese/animese_vermelho.svg'
-          ),
+          image: AssetImage('assets/animese/name.png',),
+          fit: BoxFit.cover,
+
         ),
         actions: <Widget>[
           IconButton(
@@ -232,7 +242,6 @@ class DataSearch extends SearchDelegate<StreamBuilder>{
 
   @override
   Widget buildLeading(BuildContext context) {
-
     // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(

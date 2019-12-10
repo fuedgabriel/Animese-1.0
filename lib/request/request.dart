@@ -82,14 +82,42 @@ class POST
 
 
 class Shared{
-  static getLogin() async {
+  static Future getLogin(id,nome,nick,email,senha) async {
     final prefs = await SharedPreferences.getInstance();
-    final email = prefs.getString('Email');
-    final password = prefs.getString('Password');
-    final id = prefs.getString('_id');
-    print(email);
-    print(password);
-    print(id);
+    if(id == 1){
+      final prefs = await SharedPreferences.getInstance();
+      final _id = prefs.getString('_id') ?? 'convidado';
+      return _id;
+    }
+    else if(nome == 1){
+      final name = prefs.getString('Name') ?? 'convidado';
+      return name;
+    }
+    else if(nick == 1){
+      final nick = prefs.getString('Nick') ?? 'convidado';
+      return nick;
+    }
+    else if(email == 1){
+      final emaill = prefs.getString('Email') ?? 'convidado';
+      return emaill;
+    }
+    else if(senha == 1){
+      final password = prefs.getString('Password') ?? 'convidado';
+      return password;
+    }
+
+
+
+
+
+
+//    final prefs = await SharedPreferences.getInstance();
+//    final email = prefs.getString('Email');
+//    final password = prefs.getString('Password');
+//
+//    print(email);
+//    print(password);
+//    print(id);
   }
 
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'screens/suporte_anime/suporteAnime.dart';
 
 class Routes {
-  static menu(String pagina){
+  static menu(pagina){
     return new MenuWidget(page: pagina);
   }
 

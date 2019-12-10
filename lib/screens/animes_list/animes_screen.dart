@@ -58,23 +58,10 @@ class _AnimesScreenState extends State<AnimesScreen> {
           )
         ],
       ),
-      body: Container(
-          padding: EdgeInsets.only(top: 10),
-        child: Column(
-          children: <Widget>[
-            Container(
-
-              child: ContentScroll(images: list,),
-            )
-
-//            Container(
-//              alignment: Alignment.centerRight,
-//              child: ContentScroll(images: myList,),
-//            ),
-
-
-          ],
-        )
+      body: Stack(
+        children: <Widget>[
+          ContentScroll(images: list,),
+        ],
       ),
     );
   }

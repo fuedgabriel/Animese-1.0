@@ -84,7 +84,7 @@ class _VideoscreenState extends State<Videoscreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => pro(title: widget.movie.title.toString(), ep: widget.movie.episodes.toString()),
+                          builder: (context) => Pro(title: widget.movie.title.toString(), ep: widget.movie.episodes.toString()),
                         ),
                       ),
 
@@ -105,7 +105,7 @@ class _VideoscreenState extends State<Videoscreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => pro(title: widget.movie.title.toString(), ep: widget.movie.episodes.toString()),
+                          builder: (context) => Pro(title: widget.movie.title.toString(), ep: widget.movie.episodes.toString()),
                         ),
                       ),
                     },

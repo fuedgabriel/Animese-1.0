@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         '/listVideo': (BuildContext context) => ListVideo(),
         '/change_video_src': (BuildContext context) => ChangeVideoSrc(),
         '/videos': (BuildContext context) => Videos(),
-        '/pro': (BuildContext context) => pro(),
+        '/pro': (BuildContext context) => Pro(),
         VideoPlayerDemo.routeName: (BuildContext context) => VideoPlayerDemo(),
       },
       home: HomePage(),

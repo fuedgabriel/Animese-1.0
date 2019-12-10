@@ -5,17 +5,17 @@ import 'package:video_player/video_player.dart';
 
 import 'globals.dart';
 
-class pro extends StatefulWidget {
+class Pro extends StatefulWidget {
   final String title;
   final String ep;
-  pro({this.title, this.ep});
+  Pro({this.title, this.ep});
 
 
   @override
-  _proSrcState createState() => _proSrcState();
+  _ProSrcState createState() => _ProSrcState();
 }
 
-class _proSrcState extends State<pro> {
+class _ProSrcState extends State<Pro> {
   List<String> source = [src1, src2, src3];
 
   int index = 0;

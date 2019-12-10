@@ -14,6 +14,7 @@ class ContentScroll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: 551,
       alignment: Alignment.bottomLeft,
@@ -112,6 +113,7 @@ class ContentScroll extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
+
                   ),
                 ),
               ],

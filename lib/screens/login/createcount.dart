@@ -1,11 +1,7 @@
-
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/request.dart';
 import 'dart:async';
-import 'package:crypto/crypto.dart';
+
 
 
 
@@ -126,9 +122,7 @@ class _CreateCount extends State<CreateCount>{
 
 
               if(_textFieldControllerSenha1.text == _textFieldControllerSenha2.text){
-                var key = utf8.encode(_textFieldControllerSenha1.text);
-                var hash = sha512.convert(key);
-                POST.postRequest(_textFieldControllerNome.text,_textFieldControllerNick.text, hash, _textFieldControllerEmail.text);
+                POST.postcreate(_textFieldControllerNome.text,_textFieldControllerNick.text, _textFieldControllerSenha1.text, _textFieldControllerEmail.text);
                 showGeneralDialog(
                     barrierColor: Colors.black.withOpacity(0.5),
                     transitionBuilder: (context, a1, a2, widget) {
@@ -152,7 +146,7 @@ class _CreateCount extends State<CreateCount>{
                     barrierDismissible: true,
                     barrierLabel: '',
                     context: context,
-                    pageBuilder: (context, animation1, animation2) {});
+                    pageBuilder: (context, animation1, animation2) {var a; return a; });
                 Future.delayed(const Duration(milliseconds: 1200), () {
                   Navigator.of(context).pop();
 

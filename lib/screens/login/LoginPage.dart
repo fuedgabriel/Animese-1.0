@@ -1,5 +1,10 @@
+
+
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_netflix_ui_redesign/request/Usuario.dart';
 import 'package:flutter_netflix_ui_redesign/request/request.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
 import 'createcount.dart';
@@ -8,12 +13,39 @@ import 'recoverpassword.dart';
 
 
 
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPage createState() => _LoginPage();
+
 }
 
 class _LoginPage extends State<LoginPage> {
+  var user = new List<User>();
+  _getUser(senha, email){
+    POST.postLogin(senha,email).then((response){
+      Iterable lista = json.decode(response.body);
+      user = lista.map((model) => User.fromJson(model)).toList();
+    });
+  }
+  _saveLogin(email,senha) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('Email', email);
+    prefs.setString('Password', senha);
+  }
+  _getLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    final Email = prefs.getString('Email');
+    final Password = prefs.getString('Password');
+    print(Email);
+    print(Password);
+  }
+
+
+
+
+
+
   TextEditingController _textFieldControllerEmail = TextEditingController();
   TextEditingController _textFieldControllerSenha = TextEditingController();
   @override
@@ -126,7 +158,22 @@ class _LoginPage extends State<LoginPage> {
               height: 40,
               child: OutlineButton(
                 onPressed: () {
-                  GET.getRequest(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
+//                  var a = POST.postLogin(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
+//                  var b = jsonDecode(a);
+//                _getUser(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
+//                _saveLogin(user[0].email, user[0].password);
+//                print(user[0].email);
+                _getLogin();
+
+
+
+
+//                  print(validador);
+                  
+
+
+
+
                 },
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                 borderSide: BorderSide(),

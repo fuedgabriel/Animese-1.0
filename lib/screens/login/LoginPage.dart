@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/request/Usuario.dart';
 import 'package:flutter_netflix_ui_redesign/request/request.dart';
 import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
 import 'createcount.dart';
@@ -22,25 +21,30 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  var user = new List<User>();
+  var user;
+  bool answer = false;
   _getUser(senha, email){
     try
     {
       POST.postLogin(senha,email).then((response){
-        Iterable lista = json.decode(response.body);
-        user = lista.map((model) => User.fromJson(model)).toList();
-
+        print(response.body);
+        var user = json.decode(response.body);
+        print("+++++++++++++++++++++++++++++++++++++++");
+        print(user[0]['Nick']);
+        print("+++++++++++++++++++++++++++++++++++++++");
+        if((user[0]['Name']) != null) {
+          _saveLogin(
+              user[0]['Email'], user[0]['Name'], user[0]['Nick'], user[0]['Password'],
+              user[0]['_id']);
+          answer = true;
+        }
+        else{
+          answer = false;
+      }
       }
       );
-      if(user[0].name != null) {
-      print(user[0].name);
-      _saveLogin(user[0].email,user[0].name,user[0].nick ,user[0].password, user[0].sId);
-      return true;
-    }
-    else {
-      return false;
-      }
-    }catch (error) {
+      return answer;
+      }catch (error) {
       return false;
     }
   }
@@ -104,7 +108,7 @@ class _LoginPage extends State<LoginPage> {
               padding: EdgeInsets.symmetric(horizontal: 0.0),
               child: TextField(
                 autofocus: true,
-                obscureText: false,
+                obscureText: true,
                 keyboardType: TextInputType.text,
                 controller: _textFieldControllerSenha,
                 decoration: InputDecoration(
@@ -134,9 +138,6 @@ class _LoginPage extends State<LoginPage> {
                             builder: (context) => CreateCount(),
                           ),
                         );
-
-
-
                       },
                     ),
                   ),
@@ -155,11 +156,9 @@ class _LoginPage extends State<LoginPage> {
                             builder: (context) => RecoverPassword(),
                           ),
                         );
-
                       },
                     ),
                   )
-
                 ],
               ),
             ),
@@ -170,6 +169,8 @@ class _LoginPage extends State<LoginPage> {
               height: 40,
               child: OutlineButton(
                 onPressed: () {
+                  print(_textFieldControllerEmail.text+ '  '  + _textFieldControllerSenha.text);
+
                   var request = _getUser(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
                   print(request);
                   print("_______________________________________");
@@ -198,7 +199,7 @@ class _LoginPage extends State<LoginPage> {
                         barrierLabel: '',
                         context: context,
                         pageBuilder: (context, animation1, animation2) {var a; return a; });
-                    Future.delayed(const Duration(milliseconds: 1200), () {
+                    Future.delayed(Duration(milliseconds: 1200), () {
                       Navigator.of(context).pop();
                     });
                     Timer(Duration(milliseconds: 1400), () {

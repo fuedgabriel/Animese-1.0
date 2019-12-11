@@ -1,10 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
 import 'package:share/share.dart';
-//import '../player/video.dart';
+import '../../screens/video_native/player.dart';
 import 'circular_clipper.dart';
-import '../video_native/pro.dart';
 //import 'package:android_intent/android_intent.dart';
 import 'episodios.dart';
 
@@ -71,7 +71,7 @@ class _VideoscreenState extends State<Videoscreen> {
                     color: Colors.red,
                   ),
                   Image(
-                    image: AssetImage('assets/images/netflix_logo.png'),
+                    image: AssetImage('assets/animese/name.png'),
                     height: 60.0,
                     width: 150.0,
                   ),
@@ -85,7 +85,7 @@ class _VideoscreenState extends State<Videoscreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Pro(title: widget.movie.title.toString(), ep: widget.movie.episodes.toString()),
+                          builder: (context) => MyApp(),
                         ),
                       ),
 
@@ -182,17 +182,19 @@ class _VideoscreenState extends State<Videoscreen> {
                   ),
                 ),
                 SizedBox(height: 12.0),
-                Row(
-
-                  children: <Widget>[
-                    SizedBox(width: 80.0),
-                    Icon(Icons.star, color: Colors.white,),
-                    Icon(Icons.star, color: Colors.white,),
-                    Icon(Icons.star, color: Colors.white,),
-                    Icon(Icons.star_half, color: Colors.white,),
-                    Icon(Icons.star_border, color: Colors.white,),
-                  ],
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.star, color: Colors.white,),
+                      Icon(Icons.star, color: Colors.white,),
+                      Icon(Icons.star, color: Colors.white,),
+                      Icon(Icons.star_half, color: Colors.white,),
+                      Icon(Icons.star_border, color: Colors.white,),
+                    ],
+                  ),
                 ),
+
 
 
                 SizedBox(height: 15.0),

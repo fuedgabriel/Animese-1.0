@@ -106,21 +106,27 @@ class _Suporte extends State<Suporte> {
           ),
           Stack(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 290.0, top: 190.0),
-                child: IconButton(
-                  //padding: EdgeInsets.only(left: 300.0, top: 400.0),
-                  icon: Icon(Icons.send),
-                  iconSize: 30.0,
-                  onPressed: () =>{
-                    showDialog(
-                        context: context,
-                        builder: (context){
-                          return AlertDialog(
-                              title: Text("Mensagem enviada"));})
-                  },
+              Align(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    IconButton(
+                      //padding: EdgeInsets.only(left: 300.0, top: 400.0),
+                      icon: Icon(Icons.send),
+                      iconSize: 30.0,
+                      onPressed: () =>{
+                        showDialog(
+                            context: context,
+                            builder: (context){
+                              return AlertDialog(
+                                  title: Text("Mensagem enviada"));})
+                      },
+                    ),
+                  ],
                 ),
               ),
+
             ],
           )
         ],

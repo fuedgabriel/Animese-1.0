@@ -159,10 +159,15 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
 //        backgroundColor: HexColor('000000'),
 //        elevation: 10.0,
-        title: Image(
-          image: AssetImage('assets/animese/name.png',),
-          fit: BoxFit.cover,
-
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(
+              image: AssetImage('assets/animese/name.png',),
+              height: 120.0,
+              width: 300.0,
+            ),
+          ],
         ),
         actions: <Widget>[
           IconButton(

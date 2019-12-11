@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //    backgroundColor: HexColor('#212121'),
       appBar: AppBar(
 //        backgroundColor: HexColor('000000'),
-        elevation: 0.0,
+//        elevation: 10.0,
         title: Image(
           image: AssetImage('assets/animese/name.png',),
           fit: BoxFit.cover,

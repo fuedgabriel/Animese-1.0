@@ -10,6 +10,10 @@ class API {
     var url = baseUrl + "/api/anime/";
     return await http.get(url);
   }
+  static Future getVideos() async{
+    var url = baseUrl + "/api/video";
+    return await http.get(url);
+  }
   
   static Future<String> getData() async{
     http.Response response =await http.get(

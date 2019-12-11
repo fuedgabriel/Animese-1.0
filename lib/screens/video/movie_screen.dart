@@ -106,7 +106,7 @@ class _VideoscreenState extends State<Videoscreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Episodios(id: widget.movie.sId),
+                          builder: (context) => Episodios(id: widget.movie.sId, title: widget.movie.title,),
                         ),
                       ),
                     },

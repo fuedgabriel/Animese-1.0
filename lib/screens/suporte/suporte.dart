@@ -19,16 +19,6 @@ class _Suporte extends State<Suporte> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size; //get the screen size
-    double aspect = 1;
-
-    if((size.width / size.height) > 1.76){
-      aspect = 16 / 9;
-    }else if((size.width / size.height) < 1.77 && (size.width / size.height) >= 1.6){
-      aspect = 16 / 10;
-    }else{
-      aspect = 4 /3;
-    }
     return Scaffold(
       drawer: new MenuWidget(page: 'Suporte'),
       appBar: AppBar(

@@ -8,7 +8,8 @@ import 'globals.dart';
 class Pro extends StatefulWidget {
   final String title;
   final String ep;
-  Pro({this.title, this.ep});
+  final String link;
+  Pro({this.title, this.ep, this.link});
 
 
   @override
@@ -41,7 +42,7 @@ class _ProSrcState extends State<Pro> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('change src'),
+        title: Text(widget.title),
       ),
       body: ListView(
         children: <Widget>[
@@ -87,7 +88,7 @@ class _ProSrcState extends State<Pro> {
                       setState(() {
                         index = newindex;
                       });
-                      vc.setAutoplay(false);
+                      vc.setAutoplay(true);
                       vc.showVideoCtrl(true);
                       vc.setSource(VideoPlayerController.network(src));
                       vc.initialize();

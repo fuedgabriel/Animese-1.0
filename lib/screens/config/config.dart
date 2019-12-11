@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'theme/app_themes.dart';
 import 'theme/bloc/bloc.dart';
-
+import '../../request/request.dart';
 
 
 class Config extends StatefulWidget {
@@ -14,56 +14,38 @@ _Config createState() => _Config();
 }
 
 class _Config extends State<Config> {
-  void initState() {
-    super.initState();
-    restore();
-}
+  bool _notifications = true;
+  bool _alertAnimes = true;
+  bool _alertMenssages = true;
 
-  restore() async {
-    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-    setState(() {
-      _notifications = (sharedPrefs.getBool('notifications') ?? false);
-      //TODO: More restoring of settings would go here...
+  Future _getConfig()async{
+    Shared.getConfig(1, 0, 0).then((resp){
+      setState(() {
+        _notifications = resp;
+      });
+    });
+    Shared.getConfig(0, 1, 0).then((resp){
+      setState(() {
+        _alertAnimes = resp;
+      });
+    });
+    Shared.getConfig(0, 0, 1).then((resp){
+      setState(() {
+        _alertMenssages = resp;
+      });
     });
   }
-
-  //Email address
-  //String _email;
-  //theme
-  bool _theme = true;
-  //Notifications actives
-  bool _notifications = true;
-  //Alert of the animes
-  bool _alertAnimes = true;
-  //Alert of the messages
-  bool _alertMenssages = true;
-  //dar theme enable
-
-  _nameRetriever() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(){
-      _theme = prefs.getBool('theme') ?? '';
-    }
-
-    print(_theme);
-  }
-  
-
+  void initState() {
+    super.initState();
+}
+_Config(){
+    _getConfig();
+}
 
 
   save(String key, dynamic value) async {
-    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-    if (value is bool) {
-      sharedPrefs.setBool(key, value);
-    } else if (value is String) {
-      sharedPrefs.setString(key, value);
-    } else if (value is int) {
-      sharedPrefs.setInt(key, value);
-    } else if (value is double) {
-      sharedPrefs.setDouble(key, value);
-    } else if (value is List<String>) {
-      sharedPrefs.setStringList(key, value);
-    }
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, value);
   }
 
   @override
@@ -96,11 +78,11 @@ class _Config extends State<Config> {
           Stack(
             children: <Widget>[
               Container(
-//                width: 300,
-//                height: 100,
+//                width: 400,
+                height: 275,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(9),
                   itemCount: AppTheme.values.length,
                   itemBuilder: (context, index) {
                     final itemAppTheme = AppTheme.values[index];
@@ -108,13 +90,17 @@ class _Config extends State<Config> {
                       color: appThemeData[itemAppTheme].primaryColor,
                       child: ListTile(
                         title: Text(
-                          itemAppTheme.toString(),
+                          itemAppTheme.toString().replaceAll('AppTheme.', '').replaceAll('__', ': ').replaceAll('_', ' '),
                           style: appThemeData[itemAppTheme].textTheme.body1,
                         ),
-                        onTap: () {
+                        onTap: () async {
                           BlocProvider.of<ThemeBloc>(context).dispatch(
                             ThemeChanged(theme: itemAppTheme),
                           );
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setString('Thema', itemAppTheme.toString());
+                          print(itemAppTheme);
+
                         },
                       ),
                     );
@@ -125,17 +111,21 @@ class _Config extends State<Config> {
             ],
           ),
           Divider(),
-          Container(
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child:Text(
-                  '  Notificações:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-            ),
+          Stack(
+            children: <Widget>[
+              Container(
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child:Text(
+                      '  Notificações:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                ),
+              ),
+            ],
           ),
           Stack(
             children: <Widget>[
@@ -146,7 +136,7 @@ class _Config extends State<Config> {
                   setState(() {
                     _notifications = value;
                   });
-                  save('notifications', value);
+                  save('Notifications', value);
                 },
                 secondary: const Icon(Icons.notifications),
                 title: Text(
@@ -157,13 +147,14 @@ class _Config extends State<Config> {
           ),
           Stack(
             children: <Widget>[
+              //new Switch(value: _value1, onChanged: _onChanged1),
               SwitchListTile(
                 value: _alertAnimes,
                 onChanged: (bool value) {
                   setState(() {
                     _alertAnimes = value;
                   });
-                  save('alertAnimes', value);
+                  save('AlertaAnimes', value);
                 },
                 secondary: const Icon(Icons.notifications),
                 title: Text(
@@ -180,7 +171,7 @@ class _Config extends State<Config> {
                   setState(() {
                     _alertMenssages = value;
                   });
-                  save('alertMenssages', value);
+                  save('AlertaMessages', value);
                 },
                 secondary: const Icon(Icons.message),
                 title: Text(
@@ -200,7 +191,9 @@ class _Config extends State<Config> {
                 prefs.remove('Nick');
                 prefs.remove('Password');
                 prefs.remove('_id');
-
+                prefs.remove('Notifications');
+                prefs.remove('AlertaAnimes');
+                prefs.remove('AlertaMessages');
 //                print(_theme);
 //                _nameRetriever();
               },
@@ -212,11 +205,6 @@ class _Config extends State<Config> {
               ),
             ),
           ),
-
-
-
-
-
         ],
       )
     );

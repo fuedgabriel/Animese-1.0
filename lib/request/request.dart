@@ -85,7 +85,6 @@ class Shared{
   static Future getLogin(id,nome,nick,email,senha) async {
     final prefs = await SharedPreferences.getInstance();
     if(id == 1){
-      final prefs = await SharedPreferences.getInstance();
       final _id = prefs.getString('_id') ?? 'convidado';
       return _id;
     }
@@ -105,19 +104,26 @@ class Shared{
       final password = prefs.getString('Password') ?? 'convidado';
       return password;
     }
-
-
-
-
-
-
-//    final prefs = await SharedPreferences.getInstance();
-//    final email = prefs.getString('Email');
-//    final password = prefs.getString('Password');
-//
-//    print(email);
-//    print(password);
-//    print(id);
+  }
+  static Future getConfig(notifications, alertaAnimes, alertaMessages) async {
+    final prefs = await SharedPreferences.getInstance();
+    if(notifications == 1){
+      final not = prefs.getBool('Notifications') ?? true;
+      return not;
+    }
+    else if(alertaAnimes == 1){
+      final alert = prefs.getBool('AlertaAnimes') ?? true;
+      return alert;
+    }
+    else if(alertaMessages == 1){
+      final messa = prefs.getBool('AlertaMessages') ?? true;
+      return messa;
+    }
+  }
+  static Future getTheme() async{
+    final prefs = await SharedPreferences.getInstance();
+    var theme = prefs.getString('Thema') ?? 'AppTheme.Original';
+    return theme;
   }
 
 }

@@ -6,6 +6,7 @@ import 'package:share/share.dart';
 import 'circular_clipper.dart';
 import '../video_native/pro.dart';
 //import 'package:android_intent/android_intent.dart';
+import 'episodios.dart';
 
 class Cat{
   static categoria(List categoria, int tamanho)  {
@@ -105,7 +106,7 @@ class _VideoscreenState extends State<Videoscreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Pro(title: widget.movie.title.toString(), ep: widget.movie.episodes.toString()),
+                          builder: (context) => Episodios(id: widget.movie.sId),
                         ),
                       ),
                     },

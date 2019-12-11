@@ -21,9 +21,9 @@ class MenuWidget extends StatefulWidget{
 
 class _MenuWidgetState extends State<MenuWidget> {
 
-  var nome;
-  var email;
-  var nick;
+  var nome = '';
+  var email = '';
+  var nick = '';
   Future _getUser()async{
     Shared.getLogin(0, 1, 0, 0, 0).then((resp){
       setState(() {
@@ -54,7 +54,7 @@ class _MenuWidgetState extends State<MenuWidget> {
           UserAccountsDrawerHeader(
             accountEmail: Text(email),
             accountName: Text(nick),
-            currentAccountPicture: CircleAvatar(child: Text(nome.toString().substring(0,1)),),
+            currentAccountPicture: CircleAvatar(child: Text(nome.toString().substring(0,0)),),
             otherAccountsPictures: <Widget>[
               GestureDetector(
                 onTap: () =>
@@ -141,13 +141,6 @@ class _MenuWidgetState extends State<MenuWidget> {
                   ),
                 },
               }
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.add),
-            title: Text('Categorias'),
-            onTap: () => {
-              },
           ),
           Divider(),
           ListTile(

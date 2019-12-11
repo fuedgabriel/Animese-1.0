@@ -17,6 +17,11 @@ import 'widgets/content_scroll.dart';
 import '../../request/request.dart';
 import '../../request/Animes.dart';
 
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../config/theme/app_themes.dart';
+import '../config/theme/bloc/bloc.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
 
@@ -26,29 +31,39 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController;
 
-
-
   var list = new List<ListAnime>();
-  var ado = new List<ListAnime>();
   var user = new List<User>();
-
-
-
-
+  String theme;
+  final itemAppTheme = AppTheme.values;
 
   _getAnime(){
     API.getAnimes().then((response){
       setState(() {
         Iterable lista = json.decode(response.body);
         list = lista.map((model) => ListAnime.fromJson(model)).toList();
-        ado = list.map((model) => ado.add(model)).toList();
       });
+    });
+  }
+
+  _thema()async{
+    Shared.getTheme().then((resp){
+      setState(() {
+        theme = resp;
+      });
+      for(int i=0;i< itemAppTheme.length; i++){
+        if(itemAppTheme[i].toString() == theme){
+          BlocProvider.of<ThemeBloc>(context).dispatch(
+            ThemeChanged(theme: itemAppTheme[i]),
+          );
+        }
+      }
     });
   }
 
 
   _HomeScreenState(){
     _getAnime();
+    _thema();
   }
   @override
   void initState(){
@@ -81,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => Videoscreen(movie: ado[index]),
+            builder: (_) => Videoscreen(movie: list[index]),
           ),
         ),
         child: Stack(
@@ -101,11 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Center(
                   child: Hero(
-                    tag: ado[index].title,
+                    tag: list[index].title,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Image(
-                        image: NetworkImage(ado[index].url),
+                        image: NetworkImage(list[index].url),
                         height: 220.0,
                         width: 267.0,
                         fit: BoxFit.fill,
@@ -121,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 width: 250.0,
                 child: Text(
-                  ado[index].title.toUpperCase(),
+                  list[index].title.toUpperCase(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,
@@ -138,7 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       drawer: Routes.menu('Inicio'),
 //    backgroundColor: HexColor('#212121'),
@@ -172,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: PageView.builder(
               scrollDirection: Axis.horizontal,
               controller: _pageController,
-              itemCount: ado.length,
+              itemCount: list.length,
               itemBuilder: (BuildContext context, int index) {
                 return _movieSelector(index);
               },
@@ -180,14 +194,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           ContentScroll(
-            images: ado,
+            images: list,
             title: 'Lançamentos',
             imageHeight: 250.0,
             imageWidth: 150.0,
           ),
 
           ContentScroll(
-            images: ado,
+            images: list,
             title: "Minha lista",
             imageHeight: 250.0,
             imageWidth: 150.0,

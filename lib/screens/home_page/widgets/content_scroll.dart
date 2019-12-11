@@ -34,14 +34,12 @@ class ContentScroll extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
                 ),
               ),
               GestureDetector(
                 onTap: () => print('View $title'),
                 child: Icon(
                   Icons.arrow_forward,
-                  color: Colors.white,
                   size: 30.0,
                 ),
               ),
@@ -126,14 +124,12 @@ class ContentScrollFavorite extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
                 ),
               ),
               GestureDetector(
                 onTap: () => print('View $title'),
                 child: Icon(
                   Icons.arrow_forward,
-                  color: Colors.white,
                   size: 30.0,
                 ),
               ),

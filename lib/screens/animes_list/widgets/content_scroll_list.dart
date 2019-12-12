@@ -30,92 +30,152 @@ class ContentScroll extends StatelessWidget {
                 vertical: 5.0,
               ),
 
-              child: Row(children: <Widget>[
-
-                Container(
-                  width: 100.0,
-                  height: 150.0,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(images[index].url)
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    color: Colors.redAccent,
-                  ),
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => Videoscreen(movie: images[index]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        width: 100.0,
+                        height: 150.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(images[index].url)
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          color: Colors.redAccent,
+                        ),
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Videoscreen(movie: images[index]),
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              images[index].url,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.network(
-                        images[index].url,
-                        fit: BoxFit.cover,
+                      Positioned(
+                        left: 5.0,
+                        right: 5.0,
+                        bottom: 5.0,
+                        child: Container(
+                          width: 250.0,
+                          child: Text(
+                            images[index].title.toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
                 Container(margin: EdgeInsets.symmetric(horizontal: 3.0)),
-                Container(
-                  width: 100.0,
-                  height: 150.0,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(images[index+1].url)
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    color: Colors.redAccent,
-                  ),
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => Videoscreen(movie: images[index+1]),
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        width: 100.0,
+                        height: 150.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(images[index+1].url)
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          color: Colors.redAccent,
+                        ),
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Videoscreen(movie: images[index+1]),
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              images[index+1].url,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.network(
-                        images[index+1].url,
-                        fit: BoxFit.cover,
+                      Positioned(
+                        left: 5.0,
+                        right: 5.0,
+                        bottom: 5.0,
+                        child: Container(
+                          width: 250.0,
+                          child: Text(
+                            images[index+1].title.toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
                 Container(margin: EdgeInsets.symmetric(horizontal: 3.0)),
-                Container(
-                  width: 100.0,
-                  height: 150.0,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(images[index+2].url)
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    color: Colors.redAccent,
-                  ),
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => Videoscreen(movie: images[index+2]),
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        width: 100.0,
+                        height: 150.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(images[index+2].url)
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          color: Colors.redAccent,
+                        ),
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Videoscreen(movie: images[index+2]),
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              images[index+2].url,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.network(
-                        images[index+2].url,
-                        fit: BoxFit.cover,
+                      Positioned(
+                        left: 5.0,
+                        right: 5.0,
+                        bottom: 5.0,
+                        child: Container(
+                          width: 250.0,
+                          child: Text(
+                            images[index+2].title.toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-
+                    ],
                   ),
-                ),
               ],
               )
           );

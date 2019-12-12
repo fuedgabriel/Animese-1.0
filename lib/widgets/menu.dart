@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/screens/animes_list/animes_screen.dart';
-import 'package:flutter_netflix_ui_redesign/screens/home_page/home_screen.dart';
-//import 'package:flutter_netflix_ui_redesign/screens/config/config.dart';
-import 'package:flutter_netflix_ui_redesign/screens/suporte/suporte.dart';
-import '../screens/login/LoginPage.dart';
+import 'package:flutter/widgets.dart';
 import '../request/request.dart';
 
 
-// text: isso tira um erro
-// ignore: must_be_immutable
 class MenuWidget extends StatefulWidget{
   String page;
 
@@ -46,8 +40,8 @@ class _MenuWidgetState extends State<MenuWidget> {
 
   _MenuWidgetState(){
     _getUser();
-
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -58,7 +52,17 @@ class _MenuWidgetState extends State<MenuWidget> {
           UserAccountsDrawerHeader(
             accountEmail: Text(email),
             accountName: Text(nick),
-            currentAccountPicture: CircleAvatar(child: Text(nome.toString().substring(0,0)),),
+            currentAccountPicture: GestureDetector(
+              onTap: (){
+
+
+
+
+              },
+              child: CircleAvatar(
+                child: Text(nome.toString().substring(0,0)),
+              ),
+            ),
             otherAccountsPictures: <Widget>[
               GestureDetector(
                 onTap: () =>
@@ -68,8 +72,16 @@ class _MenuWidgetState extends State<MenuWidget> {
                       Navigator.pop(context),
                     }
                     else{
-                      Navigator.pop(context),
-                      Navigator.of(context).pushNamed('/Login'),
+                      if(widget.page == 'Inicio'){
+                        Navigator.pop(context),
+                        Navigator.of(context).pushNamed('/Login'),
+
+                      }
+                      else{
+                        Navigator.pop(context),
+                        Navigator.of(context).pushReplacementNamed('/Login'),
+                      }
+
                     }
 
                   }
@@ -117,10 +129,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                 Navigator.pop(context);
               }
               else{
-                Navigator.pop(context);
-                Navigator.of(context).pushNamed('/Home');
+                Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
               }
-
             }
           ),
           Divider(),
@@ -132,10 +142,15 @@ class _MenuWidgetState extends State<MenuWidget> {
                   Navigator.pop(context);
                 }
                 else{
-                  Navigator.pop(context);
-                  Navigator.of(context).pushNamed('/Animes');
+                  if(widget.page == 'Inicio'){
+                    Navigator.pop(context);
+                    Navigator.of(context).pushNamed('/Animes');
+                  }
+                  else{
+                    Navigator.pop(context);
+                    Navigator.of(context).pushReplacementNamed('/Animes');
+                  }
                 }
-
               }
           ),
           Divider(),
@@ -160,8 +175,14 @@ class _MenuWidgetState extends State<MenuWidget> {
                   Navigator.pop(context);
                 }
                 else{
-                  Navigator.pop(context);
-                  Navigator.of(context).pushNamed('/Suporte');
+                  if(widget.page == 'Inicio'){
+                    Navigator.pop(context);
+                    Navigator.of(context).pushNamed('/Suporte');
+                  }
+                  else{
+                    Navigator.pop(context);
+                    Navigator.of(context).pushReplacementNamed('/Suporte');
+                  }
                 }
               },
             ),
@@ -178,10 +199,15 @@ class _MenuWidgetState extends State<MenuWidget> {
                     Navigator.pop(context);
                   }
                   else{
-                    Navigator.pop(context);
-                    Navigator.of(context).pushNamed('/Config');
+                    if(widget.page == 'Inicio'){
+                      Navigator.pop(context);
+                      Navigator.of(context).pushNamed('/Config');
+                    }
+                    else{
+                      Navigator.pop(context);
+                      Navigator.of(context).pushReplacementNamed('/Config');
+                    }
                   }
-
                 },
                 ),
           ),

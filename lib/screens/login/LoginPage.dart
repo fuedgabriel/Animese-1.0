@@ -181,7 +181,7 @@ class _LoginPage extends State<LoginPage> {
                         Navigator.of(context).pop();
                       });
                       Timer(Duration(milliseconds: 1400), () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
                       });
                     }
                     else{

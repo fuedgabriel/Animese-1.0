@@ -23,11 +23,13 @@ dependencies:
   shared_preferences: ^0.5.4+5 #SAlvar arq
   flutter_bloc: ^0.20.0 #Salvar preferences
   equatable: ^0.4.0
-  crypto: ^2.1.3
+  crypto: ^2.1.3 #Criptografia
   share: ^0.6.2+1 #Compartilhar com as pessoas
   video_box: ^0.7.2 #video player mmelhor
-
-  #android_intent: ^0.3.4+7 #Aplicativos externos
+  get: ^1.4.0+7 # Navigation
+#  android_intent: ^0.3.4+7 #Aplicativos externos
+#  image_picker: ^0.4.5
+#  image_cropper: ^0.0.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

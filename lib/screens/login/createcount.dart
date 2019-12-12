@@ -14,6 +14,15 @@ class CreateCount extends StatefulWidget {
 
 
 class _CreateCount extends State<CreateCount>{
+  String birthDateInString;
+  String initValue="Select your Birth Date";
+  bool isDateSelected= false;
+  DateTime birthDate; // instance of DateTime
+  String dia = '0';
+  String mes = '00';
+  String ano = '0000';
+
+
 
   AnimationController controller;
 
@@ -28,6 +37,8 @@ class _CreateCount extends State<CreateCount>{
       return null;
     }
   }
+
+
 
 
   TextEditingController _textFieldControllerNome = TextEditingController();
@@ -87,6 +98,7 @@ class _CreateCount extends State<CreateCount>{
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
           child: TextField(
+            obscureText: true,
             controller: _textFieldControllerSenha1,
             decoration: InputDecoration(
               hintText: "Senha",
@@ -100,6 +112,7 @@ class _CreateCount extends State<CreateCount>{
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
           child: TextField(
+            obscureText: true,
             controller: _textFieldControllerSenha2,
             decoration: InputDecoration(
               hintText: "Senha",
@@ -110,6 +123,91 @@ class _CreateCount extends State<CreateCount>{
           ),
         ),
         SizedBox(height: 20,),
+        Padding(padding: EdgeInsets.symmetric(horizontal: 45.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+                child: new Icon(Icons.calendar_today,size: 48,),
+                onTap: ()async{
+                  final datePick= await showDatePicker(
+                      context: context,
+                      initialDate: new DateTime.now(),
+                      firstDate: new DateTime(1940),
+                      lastDate: new DateTime(2020)
+                  );
+                  if(datePick!=null && datePick!=birthDate){
+                    setState(() {
+                      birthDate=datePick;
+                      isDateSelected=true;
+                      birthDateInString = "${birthDate.month}/${birthDate.day}/${birthDate.year}";
+                      dia = birthDate.day.toString();
+                      mes = birthDate.month.toString();
+                      ano = birthDate.year.toString();
+
+                    });
+                  }
+                }
+            ),
+            GestureDetector(
+              child: Text('      '+dia.toString()+' / '+mes.toString()+' / '+ano.toString(),
+                style: TextStyle(
+                    fontSize: 18
+                ),
+              ),
+                onTap: ()async{
+                  final datePick= await showDatePicker(
+                      context: context,
+                      initialDate: new DateTime.now(),
+                      firstDate: new DateTime(1940),
+                      lastDate: new DateTime(2020)
+                  );
+                  if(datePick!=null && datePick!=birthDate){
+                    setState(() {
+                      birthDate=datePick;
+                      isDateSelected=true;
+                      birthDateInString = "${birthDate.month}/${birthDate.day}/${birthDate.year}";
+                      dia = birthDate.day.toString();
+                      mes = birthDate.month.toString();
+                      ano = birthDate.year.toString();
+
+                    });
+                  }
+                }
+            ),
+            GestureDetector(
+                child: Text('  (DD/MM/AAAA)',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontStyle: FontStyle.italic,
+                  ),),
+                onTap: ()async{
+                  final datePick= await showDatePicker(
+                      context: context,
+                      initialDate: new DateTime.now(),
+                      firstDate: new DateTime(1940),
+                      lastDate: new DateTime(2020)
+                  );
+                  if(datePick!=null && datePick!=birthDate){
+                    setState(() {
+                      birthDate=datePick;
+                      isDateSelected=true;
+                      birthDateInString = "${birthDate.month}/${birthDate.day}/${birthDate.year}";
+                      dia = birthDate.day.toString();
+                      mes = birthDate.month.toString();
+                      ano = birthDate.year.toString();
+
+                    });
+                  }
+                }
+            ),
+
+
+          ],
+        ),
+        ),
+
+        SizedBox(height: 20,),
         Container(
           padding: EdgeInsets.only(
             left: 40,
@@ -118,11 +216,7 @@ class _CreateCount extends State<CreateCount>{
           height: 40,
           child: OutlineButton(
             onPressed: () {
-
-
-
-              if(_textFieldControllerSenha1.text == _textFieldControllerSenha2.text){
-                POST.postcreate(_textFieldControllerNome.text,_textFieldControllerNick.text, _textFieldControllerSenha1.text, _textFieldControllerEmail.text);
+              if(_textFieldControllerNome.text.isEmpty || _textFieldControllerNick.text.isEmpty || _textFieldControllerEmail.text.isEmpty || _textFieldControllerSenha1.text.isEmpty || _textFieldControllerSenha2.text.isEmpty){
                 showGeneralDialog(
                     barrierColor: Colors.black.withOpacity(0.5),
                     transitionBuilder: (context, a1, a2, widget) {
@@ -131,12 +225,18 @@ class _CreateCount extends State<CreateCount>{
                         child: Opacity(
                           opacity: a1.value,
                           child: AlertDialog(
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("OK"),
+                                onPressed: () {Navigator.of(context).pop(); },
+                              )
+                            ],
                             shape: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16.0)),
-                            title: Text('Cadastro efetuado com sucesso',
-                            style: TextStyle(
-                              fontSize: 15.6,
-                            ),
+                            title: Text('Por favor, preencha todos os valores.',
+                              style: TextStyle(
+                                fontSize: 15.6,
+                              ),
                             ),
                           ),
                         ),
@@ -147,18 +247,107 @@ class _CreateCount extends State<CreateCount>{
                     barrierLabel: '',
                     context: context,
                     pageBuilder: (context, animation1, animation2) {var a; return a; });
-                Future.delayed(const Duration(milliseconds: 1200), () {
-                  Navigator.of(context).pop();
-
-                });
-                Timer(Duration(milliseconds: 1800), () {
-                  Navigator.of(context).pop();
-                });
-               }
-              else
-                {
-                print('else');
-                Dialog(child: Text('aaa'),);
+              }
+              try{
+              if(birthDate.day.toString() != null || birthDate.month.toString() != null|| birthDate.year.toString() != null){
+                if(_textFieldControllerSenha1.text == _textFieldControllerSenha2.text){
+                  POST.postcreate(_textFieldControllerNome.text,_textFieldControllerNick.text, _textFieldControllerSenha1.text, _textFieldControllerEmail.text);
+                  showGeneralDialog(
+                      barrierColor: Colors.black.withOpacity(0.5),
+                      transitionBuilder: (context, a1, a2, widget) {
+                        return Transform.scale(
+                          scale: a1.value,
+                          child: Opacity(
+                            opacity: a1.value,
+                            child: AlertDialog(
+                              shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16.0)),
+                              title: Text('Cadastro efetuado com sucesso',
+                                style: TextStyle(
+                                  fontSize: 15.6,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                        },
+                      transitionDuration: Duration(milliseconds: 500),
+                      barrierDismissible: true,
+                      barrierLabel: '',
+                      context: context,
+                      pageBuilder: (context, animation1, animation2) {var a; return a; });
+                  Future.delayed(const Duration(milliseconds: 1200), () {
+                    Navigator.of(context).pop();
+                  });
+                  Timer(Duration(milliseconds: 1800), () {
+                    Navigator.of(context).pop();
+                  });
+                }
+              }
+              }catch(erro){
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("OK"),
+                                onPressed: () {Navigator.of(context).pop(); },
+                              )
+                            ],
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            title: Text('Selecione a data de nascimento clicando em cima do ícone ou do texto.',
+                              style: TextStyle(
+                                fontSize: 15.6,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {var a; return a;});
+              }
+              if(_textFieldControllerSenha2.text != _textFieldControllerSenha1.text)
+              {
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("OK"),
+                                onPressed: () {Navigator.of(context).pop(); },
+                              )
+                            ],
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            title: Text('As senhas não correspodem.',
+                              style: TextStyle(
+                                fontSize: 15.6,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {var a; return a;});
               }
 
               },

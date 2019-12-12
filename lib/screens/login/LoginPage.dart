@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/painting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,32 +23,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
   var user;
-  bool answer = false;
-  _getUser(senha, email){
-    try
-    {
-      POST.postLogin(senha,email).then((response){
-        print(response.body);
-        var user = json.decode(response.body);
-        print("+++++++++++++++++++++++++++++++++++++++");
-        print(user[0]['Nick']);
-        print("+++++++++++++++++++++++++++++++++++++++");
-        if((user[0]['Name']) != null) {
-          _saveLogin(
-              user[0]['Email'], user[0]['Name'], user[0]['Nick'], user[0]['Password'],
-              user[0]['_id']);
-          answer = true;
-        }
-        else{
-          answer = false;
-      }
-      }
-      );
-      return answer;
-      }catch (error) {
-      return false;
-    }
-  }
+  bool answer;
   _saveLogin(email,nome,nick,senha, id) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('Email', email);
@@ -75,17 +51,15 @@ class _LoginPage extends State<LoginPage> {
 
       body: Container(
         padding: EdgeInsets.only(
-          top: 60,
-          left: 40,
-          right: 40,
+          top: 0,
+          left: 30,
+          right: 30,
         ),
 //        color: Colors.white,
         child: ListView(
           children: <Widget>[
+            SizedBox(width: 512, height: 256, child: Image.asset('assets/animese/nomeLogo.png'),),
 
-            SizedBox(width: 128, height: 128, child: Image.asset('assets/logos/logo.png'),),
-
-            SizedBox(height: 20,),
 
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.0),
@@ -102,7 +76,6 @@ class _LoginPage extends State<LoginPage> {
                 ),
               ),
             ),
-           // title: 'My List',
             SizedBox(height: 5,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.0),
@@ -122,41 +95,44 @@ class _LoginPage extends State<LoginPage> {
 
             Container(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Container(
-                    height: 40,
-                    alignment: Alignment.centerLeft,
-                    child: FlatButton(
-                      child: Text(
-                        'Cadastre-se         ',
-                      ),
-                      onPressed: ()
-                      {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateCount(),
+
+                      Container(
+                        child: FlatButton(
+                          child: Text(
+                            'Cadastre-se',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
-                        );
-                      },
-                    ),
-                  ),
+                          onPressed: ()
+                          {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateCount(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                   Container(
-                    height: 40,
-                    alignment: Alignment.centerRight,
                     child: FlatButton(
                       child: Text(
                         'Recuperar Senha',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
                       ),
                       onPressed: () {
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => RecoverPassword(),
                           ),
                         );
-                      },
+                        },
                     ),
                   )
                 ],
@@ -169,70 +145,74 @@ class _LoginPage extends State<LoginPage> {
               height: 40,
               child: OutlineButton(
                 onPressed: () {
-                  print(_textFieldControllerEmail.text+ '  '  + _textFieldControllerSenha.text);
+                  POST.postLogin(_textFieldControllerSenha.text,_textFieldControllerEmail.text).then((response){
+                    var user = json.decode(response.body);
+                    if((user[0]) != null) {
+                      _saveLogin(
+                          user[0]['Email'], user[0]['Name'], user[0]['Nick'], user[0]['Password'],
+                          user[0]['_id']);
+                      answer = true;
 
-                  var request = _getUser(_textFieldControllerSenha.text, _textFieldControllerEmail.text);
-                  print(request);
-                  print("_______________________________________");
-                  if(request==true){
-                    showGeneralDialog(
-                        barrierColor: Colors.black.withOpacity(0.5),
-                        transitionBuilder: (context, a1, a2, widget) {
-                          return Transform.scale(
-                            scale: a1.value,
-                            child: Opacity(
-                              opacity: a1.value,
-                              child: AlertDialog(
-                                shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16.0)),
-                                title: Text('Login efetuado com sucesso',
-                                  style: TextStyle(
-                                    fontSize: 15.6,
+                      showGeneralDialog(
+                          barrierColor: Colors.black.withOpacity(0.5),
+                          transitionBuilder: (context, a1, a2, widget) {
+                            return Transform.scale(
+                              scale: a1.value,
+                              child: Opacity(
+                                opacity: a1.value,
+                                child: AlertDialog(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16.0)),
+                                  title: Text('Login efetuado com sucesso',
+                                    style: TextStyle(
+                                      fontSize: 15.6,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                        transitionDuration: Duration(milliseconds: 500),
-                        barrierDismissible: true,
-                        barrierLabel: '',
-                        context: context,
-                        pageBuilder: (context, animation1, animation2) {var a; return a; });
-                    Future.delayed(Duration(milliseconds: 1200), () {
-                      Navigator.of(context).pop();
-                    });
-                    Timer(Duration(milliseconds: 1400), () {
-                      Navigator.of(context).pop();
-                    });
-                  }
-                  else {
-                    showGeneralDialog(
-                        barrierColor: Colors.black.withOpacity(0.5),
-                        transitionBuilder: (context, a1, a2, widget) {
-                          return Transform.scale(
-                            scale: a1.value,
-                            child: Opacity(
-                              opacity: a1.value,
-                              child: AlertDialog(
-                                shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16.0)),
-                                title: Text('Login ou senha está incorreto',
-                                  style: TextStyle(
-                                    fontSize: 15.6,
+                            );
+                          },
+                          transitionDuration: Duration(milliseconds: 500),
+                          barrierDismissible: true,
+                          barrierLabel: '',
+                          context: context,
+                          pageBuilder: (context, animation1, animation2) {var a; return a; });
+                      Future.delayed(Duration(milliseconds: 1200), () {
+                        Navigator.of(context).pop();
+                      });
+                      Timer(Duration(milliseconds: 1400), () {
+                        Navigator.of(context).pop();
+                      });
+                    }
+                    else{
+                      showGeneralDialog(
+                          barrierColor: Colors.black.withOpacity(0.5),
+                          transitionBuilder: (context, a1, a2, widget) {
+                            return Transform.scale(
+                              scale: a1.value,
+                              child: Opacity(
+                                opacity: a1.value,
+                                child: AlertDialog(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16.0)),
+                                  title: Text('Login ou senha está incorreto',
+                                    style: TextStyle(
+                                      fontSize: 15.6,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                        transitionDuration: Duration(milliseconds: 500),
-                        barrierDismissible: true,
-                        barrierLabel: '',
-                        context: context,
-                        pageBuilder: (context, animation1, animation2) {var a; return a; });
+                            );
+                          },
+                          transitionDuration: Duration(milliseconds: 500),
+                          barrierDismissible: true,
+                          barrierLabel: '',
+                          context: context,
+                          pageBuilder: (context, animation1, animation2) {var a; return a; });
+                    }
                   }
 
+                  );
                 },
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                 borderSide: BorderSide(),
@@ -242,12 +222,22 @@ class _LoginPage extends State<LoginPage> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: SizedBox(
+                            child: Image.asset('assets/animese/Icon.png'),
+                            height: 24,
+                            width: 24,
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           'Efetuar login',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       )
@@ -278,7 +268,7 @@ class _LoginPage extends State<LoginPage> {
                         child: Text(
                           'Entrar com o Google',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             color: Colors.grey,
                           ),
                         ),
@@ -303,7 +293,8 @@ class _LoginPage extends State<LoginPage> {
               child: SizedBox.expand(
                 child: FlatButton(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
                         child: Padding(
@@ -321,7 +312,7 @@ class _LoginPage extends State<LoginPage> {
                           'Entrar com o Facebook',
                           style: TextStyle(fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       ),

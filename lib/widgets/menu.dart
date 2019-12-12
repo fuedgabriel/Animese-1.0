@@ -74,7 +74,6 @@ class _MenuWidgetState extends State<MenuWidget> {
                   }
                   else{
                     showGeneralDialog(
-                        barrierColor: Colors.black.withOpacity(0.5),
                         transitionBuilder: (context, a1, a2, widget) {
                           return Transform.scale(
                             scale: a1.value,
@@ -148,7 +147,7 @@ class _MenuWidgetState extends State<MenuWidget> {
             title: Text('Favoritos'),
             trailing: Chip(label: Text("11", style: TextStyle(
               fontWeight: FontWeight.bold,
-              backgroundColor: Colors.blue[100],
+//              backgroundColor: Colors.blue[100],
             ),
             )
             ),

@@ -39,7 +39,7 @@ class _VideoscreenState extends State<Videoscreen> {
     categoria = categoria.replaceAll('|', ',  ');
 
     return Scaffold(
-      backgroundColor: HexColor('#212121'),
+//      backgroundColor: HexColor('#212121'),
       body: ListView(
         children: <Widget>[
           Stack(
@@ -135,7 +135,7 @@ class _VideoscreenState extends State<Videoscreen> {
                   },
                   icon: Icon(Icons.assistant_photo),
                   iconSize: 35.0,
-                  color: Colors.white,
+//                  color: Colors.white,
                 ),
               ),
               Positioned(
@@ -145,7 +145,7 @@ class _VideoscreenState extends State<Videoscreen> {
                   onPressed: () => Share.share('check out my website https://example.com'),
                   icon: Icon(Icons.share),
                   iconSize: 35.0,
-                  color: Colors.white,
+//                  color: Colors.white,
                 ),
               ),
             ],
@@ -158,7 +158,7 @@ class _VideoscreenState extends State<Videoscreen> {
                 Text(
                   widget.movie.title.toUpperCase(),
                   style: TextStyle(
-                    color: Colors.white,
+//                    color: Colors.white,
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -168,7 +168,7 @@ class _VideoscreenState extends State<Videoscreen> {
                 Text(
                   widget.movie.englishTitle.toUpperCase(),
                   style: TextStyle(
-                    color: Colors.white.withOpacity(.6),
+//                    color: Colors.white.withOpacity(.6),
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -177,7 +177,7 @@ class _VideoscreenState extends State<Videoscreen> {
                 Text(
                   categoria+ '.',
                   style: TextStyle(
-                    color: Colors.white70,
+//                    color: Colors.white70,
                     fontSize: 16.0,
                   ),
                 ),
@@ -186,11 +186,11 @@ class _VideoscreenState extends State<Videoscreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(Icons.star, color: Colors.white,),
-                      Icon(Icons.star, color: Colors.white,),
-                      Icon(Icons.star, color: Colors.white,),
-                      Icon(Icons.star_half, color: Colors.white,),
-                      Icon(Icons.star_border, color: Colors.white,),
+                      Icon(Icons.star, ),
+                      Icon(Icons.star, ),
+                      Icon(Icons.star,),
+                      Icon(Icons.star_half,),
+                      Icon(Icons.star_border,),
                     ],
                   ),
                 ),
@@ -206,7 +206,7 @@ class _VideoscreenState extends State<Videoscreen> {
                         Text(
                           'Ano',
                           style: TextStyle(
-                            color: Colors.white70,
+//                            color: Colors.white70,
                             fontSize: 16.0,
                           ),
                         ),
@@ -214,7 +214,7 @@ class _VideoscreenState extends State<Videoscreen> {
                         Text(
                           widget.movie.air.substring(0,4),
                           style: TextStyle(
-                            color: Colors.white54,
+//                            color: Colors.white54,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -224,9 +224,9 @@ class _VideoscreenState extends State<Videoscreen> {
                     Column(
                       children: <Widget>[
                         Text(
-                          'Episodeos',
+                          'Episódios',
                           style: TextStyle(
-                            color: Colors.white70,
+//                            color: Colors.white70,
                             fontSize: 16.0,
                           ),
                         ),
@@ -234,7 +234,7 @@ class _VideoscreenState extends State<Videoscreen> {
                         Text(
                           widget.movie.episodes.toString(),
                           style: TextStyle(
-                            color: Colors.white54,
+//                            color: Colors.white54,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -246,7 +246,7 @@ class _VideoscreenState extends State<Videoscreen> {
                         Text(
                           'Temporadas',
                           style: TextStyle(
-                            color: Colors.white70,
+//                            color: Colors.white70,
                             fontSize: 16.0,
                           ),
                         ),
@@ -254,7 +254,7 @@ class _VideoscreenState extends State<Videoscreen> {
                         Text(
                           widget.movie.seasons.toString(),
                           style: TextStyle(
-                            color: Colors.white54,
+//                            color: Colors.white54,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -270,7 +270,7 @@ class _VideoscreenState extends State<Videoscreen> {
                     child: Text(
                       widget.movie.synopse,
                       style: TextStyle(
-                        color: Colors.white70,
+//                        color: Colors.white70,
                       ),
                     ),
                   ),

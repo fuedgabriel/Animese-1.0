@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/screens/animes_list/animes_screen.dart';
 import 'package:flutter_netflix_ui_redesign/screens/home_page/home_screen.dart';
-import 'package:flutter_netflix_ui_redesign/screens/config/config.dart';
+//import 'package:flutter_netflix_ui_redesign/screens/config/config.dart';
 import 'package:flutter_netflix_ui_redesign/screens/suporte/suporte.dart';
 import '../screens/login/LoginPage.dart';
 import '../request/request.dart';
+
 
 // text: isso tira um erro
 // ignore: must_be_immutable
@@ -20,6 +21,7 @@ class MenuWidget extends StatefulWidget{
 }
 
 class _MenuWidgetState extends State<MenuWidget> {
+
 
   var nome = '';
   var email = '';
@@ -44,9 +46,11 @@ class _MenuWidgetState extends State<MenuWidget> {
 
   _MenuWidgetState(){
     _getUser();
+
   }
   @override
   Widget build(BuildContext context) {
+
     // TODO: implement build
     return new Drawer(
       child: Column(
@@ -61,16 +65,13 @@ class _MenuWidgetState extends State<MenuWidget> {
                 {
                   if(email == 'convidado'){
                     if (widget.page == 'Login') {
-                      Navigator.pop(context)
+                      Navigator.pop(context),
                     }
-                    else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
-                        ),
-                      ),
-                    },
+                    else{
+                      Navigator.pop(context),
+                      Navigator.of(context).pushNamed('/Login'),
+                    }
+
                   }
                   else{
                     showGeneralDialog(
@@ -111,40 +112,36 @@ class _MenuWidgetState extends State<MenuWidget> {
           ListTile(
             leading: Icon(Icons.home),
             title: Text('Inicio'),
-            onTap: () => {
+            onTap: () {
               if (widget.page == 'Inicio') {
-                Navigator.pop(context)
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
-                  ),
-                ),
-              },
+                Navigator.pop(context);
+              }
+              else{
+                Navigator.pop(context);
+                Navigator.of(context).pushNamed('/Home');
+              }
+
             }
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.pageview),
             title: Text('Lista'),
-              onTap: () => {
+              onTap: ()  {
                 if (widget.page == 'Lista') {
-                  Navigator.pop(context)
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AnimesScreen(),
-                    ),
-                  ),
-                },
+                  Navigator.pop(context);
+                }
+                else{
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/Animes');
+                }
+
               }
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Favoritos'),
+            title: Text('Meus animes'),
             trailing: Chip(label: Text("11", style: TextStyle(
               fontWeight: FontWeight.bold,
 //              backgroundColor: Colors.blue[100],
@@ -158,17 +155,14 @@ class _MenuWidgetState extends State<MenuWidget> {
             child: ListTile(
               leading: Icon(Icons.report_problem),
               title: Text("Suporte"),
-              onTap: () => {
+              onTap: ()  {
                 if (widget.page == 'Suporte') {
-                  Navigator.pop(context)
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Suporte(),
-                    ),
-                  ),
-                },
+                  Navigator.pop(context);
+                }
+                else{
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/Suporte');
+                }
               },
             ),
           ),
@@ -178,17 +172,16 @@ class _MenuWidgetState extends State<MenuWidget> {
             child: ListTile(
               leading: Icon(Icons.settings),
               title: Text('Configurações'),
-                onTap: () => {
-                if (widget.page == 'Config') {
-                  Navigator.pop(context)
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Config(),
-                    ),
-                  ),
-                },
+                onTap: ()
+                {
+                  if (widget.page == 'Config') {
+                    Navigator.pop(context);
+                  }
+                  else{
+                    Navigator.pop(context);
+                    Navigator.of(context).pushNamed('/Config');
+                  }
+
                 },
                 ),
           ),

@@ -40,18 +40,6 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    if(width > 500){
-      print('gg'+width.toString());
-    }
-    else if(width> 320){
-      print('g'+width.toString());
-    }
-    else if(width< 320){
-      print('celular '+width.toString());
-    }
-
-
     _getAnime();
     return Scaffold(
       drawer: Routes.menu('Lista'),

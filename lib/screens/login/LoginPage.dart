@@ -42,6 +42,14 @@ class _LoginPage extends State<LoginPage> {
   TextEditingController _textFieldControllerSenha = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    double font = 18;
+    double fontfb = 16;
+    var width = MediaQuery.of(context).size.width;
+    print(width);
+    if(width<360){
+      font = 13;
+      fontfb = 13;
+    }
     return Scaffold(
       drawer: MenuWidget(page: 'Login',),
       appBar: AppBar(
@@ -96,45 +104,41 @@ class _LoginPage extends State<LoginPage> {
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-
-                      Container(
-                        child: FlatButton(
-                          child: Text(
-                            'Cadastre-se',
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
-                          onPressed: ()
-                          {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CreateCount(),
-                              ),
-                            );
-                          },
-                        ),
+                  FlatButton(
+                    child: Text(
+                      'Cadastre-se',
+                      style: TextStyle(
+                        fontSize: font,
                       ),
-                  Container(
-                    child: FlatButton(
-                      child: Text(
-                        'Recuperar Senha',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RecoverPassword(),
-                          ),
-                        );
-                        },
                     ),
-                  )
+                    onPressed: ()
+                    {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreateCount(),
+                        ),
+                      );
+                      },
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Recuperar Senha',
+                      style: TextStyle(
+                        fontSize: font,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RecoverPassword(),
+                        ),
+                      );
+                      },
+                  ),
                 ],
               ),
             ),
@@ -312,7 +316,7 @@ class _LoginPage extends State<LoginPage> {
                           'Entrar com o Facebook',
                           style: TextStyle(fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: fontfb,
                           ),
                         ),
                       ),

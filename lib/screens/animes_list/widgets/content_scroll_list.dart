@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 import '../../video/movie_screen.dart';
 
-
 class ContentScroll extends StatelessWidget {
   final List<ListAnime> images;
 
@@ -14,11 +13,57 @@ class ContentScroll extends StatelessWidget {
 
 
   @override
+  double heightC;
+  double horizontal;
+  double vertical;
+  double heightRC;
+  double widthRC;
+  double heightCRC;
+  double widthCRC;
+
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    if(width>600){
+    if(width > 530){
+      if(width>= 650){
+        heightC = 551;
+        horizontal = 10.0;
+        vertical = 5.0;
+        heightRC = 170;
+        widthRC = 120;
+        heightCRC = 120;
+        widthCRC = 178;
+
+
+      }
+      else if(width>=630){
+        heightC = 551;
+        horizontal = 10.0;
+        vertical = 5.0;
+        heightRC = 160;
+        widthRC = 110;
+        heightCRC = 120;
+        widthCRC = 178;
+      }
+      else if(width>=593){
+        heightC = 551;
+        horizontal = 10.0;
+        vertical = 5.0;
+        heightRC = 140;
+        widthRC = 90;
+        heightCRC = 120;
+        widthCRC = 178;
+      }
+      else if(width>=530){
+        heightC = 551;
+        horizontal = 10.0;
+        vertical = 5.0;
+        heightRC = 120;
+        widthRC = 70;
+        heightCRC = 100;
+        widthCRC = 158;
+      }
       return Container(
-        height: 551,
+        height: heightC,
         alignment: Alignment.bottomLeft,
         child: ListView.builder(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -28,7 +73,7 @@ class ContentScroll extends StatelessWidget {
             return Container(
                 alignment: Alignment.bottomLeft,
                 margin: EdgeInsets.symmetric(
-                  horizontal: 10.0,
+                  horizontal: horizontal,
                   vertical: 5.0,
                 ),
 
@@ -39,41 +84,51 @@ class ContentScroll extends StatelessWidget {
                       elevation: 5,
                       child: Row(
                         children: <Widget>[
-                          Container(
-                            height: 140,
-                            width: 90,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(5),
-                                  topLeft: Radius.circular(5)
+                          GestureDetector(
+                            onTap: () { Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => Videoscreen(movie: images[index]),
                               ),
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(images[index].url)
+                            );
+                            },
+                            child: Container(
+                              height: heightRC,
+                              width: widthRC,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(5),
+                                    topLeft: Radius.circular(5)
+                                ),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(images[index].url)
+                                ),
                               ),
                             ),
                           ),
                           Container(
-                            height: 120,
-                            width: 190,
+                            height: heightCRC,
+                            width: widthCRC,
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: ListView(
                               children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      images[index].title,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Text(
-                                      '  Ep: '+images[index].episodes.toString(),
-                                      style: TextStyle(
+                                Text(
+                                  images[index].title,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Opacity(
+                                  opacity: 0.9,
+                                  child: Text(
+                                    'Ep:' + images[index].episodes.toString(),
+                                    style: TextStyle(
                                         fontSize: 13,
-                                      ),
+                                        fontWeight: FontWeight.bold
                                     ),
-                                  ],
+                                  ),
                                 ),
                                 Stack(
                                   children: <Widget>[
@@ -98,41 +153,51 @@ class ContentScroll extends StatelessWidget {
                       elevation: 5,
                       child: Row(
                         children: <Widget>[
-                          Container(
-                            height: 140,
-                            width: 90,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(5),
-                                  topLeft: Radius.circular(5)
+                          GestureDetector(
+                            onTap: () { Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => Videoscreen(movie: images[index+1]),
                               ),
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(images[index+1].url)
+                            );
+                            },
+                            child: Container(
+                              height: heightRC,
+                              width: widthRC,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(5),
+                                    topLeft: Radius.circular(5)
+                                ),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(images[index+1].url)
+                                ),
                               ),
                             ),
                           ),
                           Container(
-                            height: 120,
-                            width: 190,
+                            height: heightCRC,
+                            width: widthCRC,
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: ListView(
                               children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      images[index+1].title,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Text(
-                                      '  Ep: '+images[index+1].episodes.toString(),
-                                      style: TextStyle(
+                                Text(
+                                  images[index+1].title,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Opacity(
+                                  opacity: 0.9,
+                                  child: Text(
+                                    'Ep:' + images[index+1].episodes.toString(),
+                                    style: TextStyle(
                                         fontSize: 13,
-                                      ),
+                                        fontWeight: FontWeight.bold
                                     ),
-                                  ],
+                                  ),
                                 ),
                                 Stack(
                                   children: <Widget>[
@@ -160,8 +225,27 @@ class ContentScroll extends StatelessWidget {
         ),
       );
     }
-//    else if(width <= 360){}
-    else if(width == 360|| width>=300 || width<=430){
+    else{
+      if(width < 530 && width>=444){
+        heightRC = 180;
+        widthRC = 130;
+      }
+      else if(width <= 444 && width>=382){
+        heightRC = 170;
+        widthRC = 110;
+      }
+      else if(width <= 382 && width>=354){
+        heightRC = 160;
+        widthRC = 100;
+      }
+      else if(width <= 354 && width>=322){
+        heightRC = 150;
+        widthRC = 90;
+      }
+      else if(width <= 322 && width>=0){
+        heightRC = 130;
+        widthRC = 70;
+      }
       return Container(
         height: 551,
         alignment: Alignment.bottomLeft,
@@ -183,8 +267,8 @@ class ContentScroll extends StatelessWidget {
                     Stack(
                       children: <Widget>[
                         Container(
-                          width: 100.0,
-                          height: 150.0,
+                          width: widthRC,
+                          height: heightRC,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.cover,
@@ -194,12 +278,13 @@ class ContentScroll extends StatelessWidget {
                             color: Colors.redAccent,
                           ),
                           child: GestureDetector(
-                            onTap: () => Navigator.push(
+                            onTap: () { Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (_) => Videoscreen(movie: images[index]),
                               ),
-                            ),
+                            );
+                            },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
                               child: Image.network(
@@ -231,8 +316,8 @@ class ContentScroll extends StatelessWidget {
                     Stack(
                       children: <Widget>[
                         Container(
-                          width: 100.0,
-                          height: 150.0,
+                          width: widthRC,
+                          height: heightRC,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.cover,
@@ -279,8 +364,8 @@ class ContentScroll extends StatelessWidget {
                     Stack(
                       children: <Widget>[
                         Container(
-                          width: 100.0,
-                          height: 150.0,
+                          width: widthRC,
+                          height: heightRC,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.cover,
@@ -330,5 +415,6 @@ class ContentScroll extends StatelessWidget {
         ),
       );
     }
+
   }
 }

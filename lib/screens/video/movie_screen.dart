@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 import 'package:flutter_netflix_ui_redesign/routes.dart';
 import 'package:share/share.dart';
-import '../../screens/video_native/player.dart';
 import 'circular_clipper.dart';
+import '../../screens/video_native/pro.dart';
+
 //import 'package:android_intent/android_intent.dart';
 import 'episodios.dart';
 
@@ -107,9 +108,15 @@ class _VideoscreenState extends State<Videoscreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Episodios(id: widget.movie.sId, title: widget.movie.title,),
+                          builder: (context) => Pro(movie: widget.movie,),
                         ),
                       ),
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                          builder: (context) => Episodios(movie: widget.movie,),
+//                        ),
+//                      ),
                     },
                     shape: CircleBorder(),
                     fillColor: Colors.black,

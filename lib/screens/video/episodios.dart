@@ -3,12 +3,11 @@ import '../../request/request.dart';
 import '../../request/Videos.dart';
 import 'dart:convert';
 import '../../screens/video_native/pro.dart';
-
+import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 class Episodios extends StatefulWidget {
-  final String id;
-  final String title;
+  final ListAnime movie;
 
-  Episodios({this.id, this.title});
+  Episodios({this.movie});
   @override
   _EpisodiosState createState() => _EpisodiosState();
 }
@@ -35,11 +34,11 @@ class _EpisodiosState extends State<Episodios> {
 
     return Scaffold(
     appBar: AppBar(
-    title: Text(widget.title),
+    title: Text(widget.movie.title),
     ),
     body: ListView(
         children: <Widget>[
-          Lista(temporada: '01',link: list,)
+          Lista(movie: widget.movie,)
         ]
 
     )
@@ -48,10 +47,9 @@ class _EpisodiosState extends State<Episodios> {
 }
 
 class Lista extends StatefulWidget {
-  final String temporada;
-  final List link;
+  final ListAnime movie;
 
-  Lista({this.temporada, this.link});
+  Lista({this.movie});
   @override
   _ListaState createState() => _ListaState();
 }
@@ -78,7 +76,7 @@ class _ListaState extends State<Lista> {
   Widget build(BuildContext context) {
     return ExpansionTile(
       leading: Icon(Icons.movie),
-      title: Text('Temporada '+widget.temporada),
+      title: Text('Temporada '+widget.movie.seasons.toString()),
       children: <Widget>[
         Divider(),
         ListTile(title: Text('Ep 01'),
@@ -86,7 +84,7 @@ class _ListaState extends State<Lista> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Pro(title: list[0].title,ep: '01',link: list[0].url,)),
+                builder: (context) => Pro(movie: widget.movie,)),
               );
           },),
         Divider(),

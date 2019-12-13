@@ -151,21 +151,23 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
             child: ListView(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
+                Text(
+                  list[index].title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+                Opacity(
+                    opacity: 0.8,
+                    child:
                     Text(
-                      list[index].title,
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '  Ep: '+list[index].episodes.toString(),
+                      'Episódios: '+list[index].episodes.toString() + '         Status: '+list[index].status,
                       style: TextStyle(
                         fontSize: 13,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
                 ),
                 Stack(
                   children: <Widget>[
@@ -269,11 +271,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    if (width > 600) {
+
+    double logoH = 200;
+    double logoW =200 ;
+    var width = MediaQuery.of(context).size.width;
+    if(width<=350){
+      logoH = 150;
+      logoW = 150;
+    }
+    if (width > 584) {
       return Scaffold(
         drawer: Routes.menu('Inicio'),
         appBar: AppBar(
@@ -282,10 +288,8 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               Image(
                 image: AssetImage('assets/animese/name.png',),
-                height: SizeConfig.of(context).dynamicScaleSize(
-                    size: 200, scaleFactorTablet: 2),
-                width: SizeConfig.of(context).dynamicScaleSize(
-                    size: 200, scaleFactorTablet: 2),
+                height: logoH,
+                width: logoW
               ),
             ],
           ),
@@ -326,6 +330,8 @@ class _HomeScreenState extends State<HomeScreen> {
               imageWidth: 150.0,
             ),
 
+
+
             ContentScroll(
               images: list,
               title: "Minha lista",
@@ -348,10 +354,8 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               Image(
                 image: AssetImage('assets/animese/name.png',),
-                height: SizeConfig.of(context).dynamicScaleSize(
-                    size: 200, scaleFactorTablet: 2),
-                width: SizeConfig.of(context).dynamicScaleSize(
-                    size: 200, scaleFactorTablet: 2),
+                height: logoH,
+                width: logoW
               ),
             ],
           ),
@@ -385,14 +389,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            ContentScroll(
+            ContentScrollFavorite(
               images: list,
               title: 'Lançamentos',
               imageHeight: 250.0,
               imageWidth: 150.0,
             ),
 
-            ContentScroll(
+            ContentScrollFavorite(
               images: list,
               title: "Minha lista",
               imageHeight: 250.0,

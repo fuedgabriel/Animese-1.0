@@ -47,65 +47,100 @@ class ContentScroll extends StatelessWidget {
           ),
         ),
 
+
         Container(
           height: imageHeight,
+          width: double.infinity,
           child: ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             scrollDirection: Axis.horizontal,
             itemCount: images.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 20.0,
-                ),
-                width: imageWidth,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: HexColor('#2b2a2a'),
-                      offset: Offset(0.0, 4.0),
-                      blurRadius: 9.0,
-                    ),
-                  ],
-                ),
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => Videoscreen(movie: images[index]),
-                    ),
-                  ),
-                  child: Stack(
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(
-                          images[index].url,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Positioned(
-                        left: 10.0,
-                        right: 5.0,
-                        bottom: 20.0,
-                        child: Container(
-                          width: 250.0,
-                          child: Text(
-                            images[index].title,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
+                width: 340,
+                child:  Card(
+                    elevation: 5,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 10.0,
+                            vertical: 20.0,
+                          ),
+                          width: imageWidth,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: HexColor('#2b2a2a'),
+                                offset: Offset(0.0, 4.0),
+                                blurRadius: 9.0,
+                              ),
+                            ],
+                          ),
+                          child: GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => Videoscreen(movie: images[index]),
+                              ),
                             ),
+                            child:
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                images[index].url,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ),
+                        Container(
+                          height: 200,
+                          width: 160,
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: ListView(
+                            children: <Widget>[
+                              Text(
+                                images[index].title,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              Opacity(
+                                opacity: 0.8,
+                                child:
+                                Text(
+                                  'Episódios: '+images[index].episodes.toString(),
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Stack(
+                                children: <Widget>[
+                                  Opacity(
+                                    opacity: 0.8,
+                                    child: Text(
+                                      images[index].synopse,
+                                      style: TextStyle(
+                                          fontSize: 13
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        )
 
+                      ],
+                    )
+                ),
               );
             },
           ),
@@ -117,7 +152,7 @@ class ContentScroll extends StatelessWidget {
 
 
 class ContentScrollFavorite extends StatelessWidget {
-  final List<String> images;
+  final List<ListAnime> images;
   final String title;
   final double imageHeight;
   final double imageWidth;
@@ -132,7 +167,6 @@ class ContentScrollFavorite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(images[2]);
     return Column(
       children: <Widget>[
         Padding(
@@ -157,34 +191,49 @@ class ContentScrollFavorite extends StatelessWidget {
             ],
           ),
         ),
+
+
         Container(
           height: imageHeight,
+          width: double.infinity,
           child: ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             scrollDirection: Axis.horizontal,
             itemCount: images.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 20.0,
-                ),
-                width: imageWidth,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: HexColor('#2b2a2a'),
-                      offset: Offset(0.0, 4.0),
-                      blurRadius: 9.0,
+                child:  Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 20.0,
+                  ),
+                  width: imageWidth,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: HexColor('#2b2a2a'),
+                        offset: Offset(0.0, 4.0),
+                        blurRadius: 9.0,
+                      ),
+                    ],
+                  ),
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => Videoscreen(movie: images[index]),
+                      ),
                     ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image(
-                    image: AssetImage(images[index]),
-                    fit: BoxFit.cover,
+                    child:
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network(
+                        images[index].url,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+
                   ),
                 ),
               );

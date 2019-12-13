@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:video_box/video.controller.dart';
 import 'package:video_box/video_box.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 
 import 'globals.dart';
 
 class Pro extends StatefulWidget {
-  final String title;
-  final String ep;
-  final String link;
-  Pro({this.title, this.ep, this.link});
+  final ListAnime movie;
+
+  Pro({this.movie});
 
 
   @override
@@ -42,7 +42,7 @@ class _ProSrcState extends State<Pro> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.movie.title),
       ),
       body: ListView(
         children: <Widget>[
@@ -53,7 +53,7 @@ class _ProSrcState extends State<Pro> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Ep: '+(index+1).toString()+' de '+widget.ep+'  '+widget.title,style: TextStyle(color: Colors.white),),
+                  child: Text('Ep: '+(index+1).toString()+' de '+widget.movie.episodes.toString()+'  '+widget.movie.title,style: TextStyle(color: Colors.white),),
                 ),
                 Align(
                   alignment: Alignment(0.9, 0),
@@ -98,7 +98,44 @@ class _ProSrcState extends State<Pro> {
               ],
             ),
           ),
+          Column(
+            children: <Widget>[
+              ExpansionTile(
+                leading: Icon(Icons.movie),
+                title: Text('Temporada '+widget.movie.seasons.toString()),
+                children: <Widget>[
+                  Divider(),
+                  ListTile(title: Text('Ep 01'),
+                    onTap: (){
 
+
+                    vc.setSource(VideoPlayerController.network(src1));
+                    vc.initialize();
+                    },),
+                  Divider(),
+                  ListTile(title: Text('Ep 02'),
+                    onTap: (){
+                    setState(() {
+                      index = 2;
+                    });
+                    vc.setSource(VideoPlayerController.network(src2));
+                    vc.initialize();
+                    },),
+                  Divider(),
+                  ListTile(title: Text('Ep 03'),
+                    onTap: (){
+                    vc.setSource(VideoPlayerController.network(src3));
+                    vc.initialize();
+                    },),
+                  Divider(),
+                  ListTile(title: Text('Ep 04'),
+                    onTap: (){
+                    },),
+                  Divider(),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

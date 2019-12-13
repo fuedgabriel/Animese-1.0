@@ -49,12 +49,22 @@ class _CreateCount extends State<CreateCount>{
 
   @override
   Widget build(BuildContext context) {
+    double font = 18;
+    double fontfb = 16;
+    double size = 48;
+    var width = MediaQuery.of(context).size.width;
+    print(width);
+    if(width<360){
+      font = 13;
+      fontfb = 11;
+      size = 30;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Criar conta'),
       ),
       body: ListView(children: <Widget>[
-        SizedBox(height: 40,),
+        SizedBox(height: 20,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45.0),
           child: TextField(
@@ -123,12 +133,17 @@ class _CreateCount extends State<CreateCount>{
           ),
         ),
         SizedBox(height: 20,),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 45.0),
+          child: Text('Data de nascimento'),
+        ),
+
         Padding(padding: EdgeInsets.symmetric(horizontal: 45.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             GestureDetector(
-                child: new Icon(Icons.calendar_today,size: 48,),
+                child: new Icon(Icons.calendar_today,size: size,),
                 onTap: ()async{
                   final datePick= await showDatePicker(
                       context: context,
@@ -152,7 +167,7 @@ class _CreateCount extends State<CreateCount>{
             GestureDetector(
               child: Text('      '+dia.toString()+' / '+mes.toString()+' / '+ano.toString(),
                 style: TextStyle(
-                    fontSize: 18
+                    fontSize: font
                 ),
               ),
                 onTap: ()async{
@@ -178,7 +193,7 @@ class _CreateCount extends State<CreateCount>{
             GestureDetector(
                 child: Text('  (DD/MM/AAAA)',
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: fontfb,
                     fontStyle: FontStyle.italic,
                   ),),
                 onTap: ()async{
@@ -248,43 +263,41 @@ class _CreateCount extends State<CreateCount>{
                     context: context,
                     pageBuilder: (context, animation1, animation2) {var a; return a; });
               }
-              try{
-              if(birthDate.day.toString() != null || birthDate.month.toString() != null|| birthDate.year.toString() != null){
-                if(_textFieldControllerSenha1.text == _textFieldControllerSenha2.text){
-                  POST.postcreate(_textFieldControllerNome.text,_textFieldControllerNick.text, _textFieldControllerSenha1.text, _textFieldControllerEmail.text);
-                  showGeneralDialog(
-                      barrierColor: Colors.black.withOpacity(0.5),
-                      transitionBuilder: (context, a1, a2, widget) {
-                        return Transform.scale(
-                          scale: a1.value,
-                          child: Opacity(
-                            opacity: a1.value,
-                            child: AlertDialog(
-                              shape: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              title: Text('Cadastro efetuado com sucesso',
-                                style: TextStyle(
-                                  fontSize: 15.6,
-                                ),
+
+              else if(dia.toString() != '0'){
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            title: Text('Cadastro efetuado com sucesso',
+                              style: TextStyle(
+                                fontSize: 15.6,
                               ),
                             ),
                           ),
-                        );
-                        },
-                      transitionDuration: Duration(milliseconds: 500),
-                      barrierDismissible: true,
-                      barrierLabel: '',
-                      context: context,
-                      pageBuilder: (context, animation1, animation2) {var a; return a; });
-                  Future.delayed(const Duration(milliseconds: 1200), () {
-                    Navigator.of(context).pop();
-                  });
-                  Timer(Duration(milliseconds: 1800), () {
-                    Navigator.of(context).pop();
-                  });
-                }
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {var a; return a; });
+                Future.delayed(const Duration(milliseconds: 1200), () {
+                  Navigator.of(context).pop();
+                });
+                Timer(Duration(milliseconds: 1800), () {
+                  Navigator.of(context).pop();
+                });
+
               }
-              }catch(erro){
+              else{
                 showGeneralDialog(
                     barrierColor: Colors.black.withOpacity(0.5),
                     transitionBuilder: (context, a1, a2, widget) {
@@ -301,7 +314,7 @@ class _CreateCount extends State<CreateCount>{
                             ],
                             shape: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16.0)),
-                            title: Text('Selecione a data de nascimento clicando em cima do ícone ou do texto.',
+                            title: Text('Por favor, preencha a data de nascimento.',
                               style: TextStyle(
                                 fontSize: 15.6,
                               ),
@@ -314,41 +327,9 @@ class _CreateCount extends State<CreateCount>{
                     barrierDismissible: true,
                     barrierLabel: '',
                     context: context,
-                    pageBuilder: (context, animation1, animation2) {var a; return a;});
+                    pageBuilder: (context, animation1, animation2) {var a; return a; });
               }
-              if(_textFieldControllerSenha2.text != _textFieldControllerSenha1.text)
-              {
-                showGeneralDialog(
-                    barrierColor: Colors.black.withOpacity(0.5),
-                    transitionBuilder: (context, a1, a2, widget) {
-                      return Transform.scale(
-                        scale: a1.value,
-                        child: Opacity(
-                          opacity: a1.value,
-                          child: AlertDialog(
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text("OK"),
-                                onPressed: () {Navigator.of(context).pop(); },
-                              )
-                            ],
-                            shape: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16.0)),
-                            title: Text('As senhas não correspodem.',
-                              style: TextStyle(
-                                fontSize: 15.6,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    transitionDuration: Duration(milliseconds: 500),
-                    barrierDismissible: true,
-                    barrierLabel: '',
-                    context: context,
-                    pageBuilder: (context, animation1, animation2) {var a; return a;});
-              }
+
 
               },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
@@ -373,6 +354,7 @@ class _CreateCount extends State<CreateCount>{
             ),
           ),
         ),
+        SizedBox(height: 20,),
       ],
       )
     );

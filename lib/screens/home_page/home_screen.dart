@@ -108,6 +108,85 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController = PageController(initialPage: 1, viewportFraction: 0.8);
 
   }
+  _movieSelectorRotate(int index) {
+    return Card(
+      elevation: 5,
+      child: Row(
+        children: <Widget>[
+          GestureDetector(
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => Videoscreen(movie: list[index]),
+                ),
+              );
+
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.0),
+              child: Container(
+                height: 200,
+                width: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    topLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(list[index].url,)
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+
+          Container(
+            height: 190,
+            width: 300,
+            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+            child: ListView(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      list[index].title,
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      '  Ep: '+list[index].episodes.toString(),
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: <Widget>[
+                    Opacity(
+                      opacity: 0.8,
+                      child: Text(
+                        list[index].synopse,
+                        style: TextStyle(
+                            fontSize: 13
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
 
 
@@ -190,68 +269,139 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final sizeConfig = SizeConfig(mediaQueryData: MediaQuery.of(context));
-    return Scaffold(
-      drawer: Routes.menu('Inicio'),
-//    backgroundColor: HexColor('#212121'),
-      appBar: AppBar(
-//        backgroundColor: HexColor('000000'),
-//        elevation: 10.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(
-              image: AssetImage('assets/animese/name.png',),
-              height: SizeConfig.of(context).dynamicScaleSize(size: 200, scaleFactorTablet: 2),
-              width: SizeConfig.of(context).dynamicScaleSize(size: 200, scaleFactorTablet: 2),
+    var width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    if (width > 600) {
+      return Scaffold(
+        drawer: Routes.menu('Inicio'),
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(
+                image: AssetImage('assets/animese/name.png',),
+                height: SizeConfig.of(context).dynamicScaleSize(
+                    size: 200, scaleFactorTablet: 2),
+                width: SizeConfig.of(context).dynamicScaleSize(
+                    size: 200, scaleFactorTablet: 2),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            IconButton(
+              padding: EdgeInsets.only(right: 30.0),
+              onPressed: () =>
+              {
+                showSearch(context: context, delegate: DataSearch())
+              },
+              icon: Icon(Icons.search),
+              iconSize: 30.0,
+              color: Colors.white,
             ),
           ],
         ),
-        actions: <Widget>[
-          IconButton(
-            padding: EdgeInsets.only(right: 30.0),
-            onPressed: () => {
-              showSearch(context: context, delegate: DataSearch())
-            },
-            icon: Icon(Icons.search),
-            iconSize: 30.0,
-            color: Colors.white,
-          ),
-        ],
-      ),
 
 
-      body: ListView(
-        children: <Widget>[
-          Container(
-            height: 280.0,
-            width: double.infinity,
-            child: PageView.builder(
-              scrollDirection: Axis.horizontal,
-              controller: _pageController,
-              itemCount: list.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _movieSelector(index);
-              },
+        body: ListView(
+          children: <Widget>[
+            Container(
+              height: 240.0,
+              width: double.infinity,
+              child: PageView.builder(
+                scrollDirection: Axis.horizontal,
+                controller: _pageController,
+                itemCount: list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _movieSelectorRotate(index);
+                },
+              ),
             ),
-          ),
 
-          ContentScroll(
-            images: list,
-            title: 'Lançamentos',
-            imageHeight: 250.0,
-            imageWidth: 150.0,
-          ),
+            ContentScroll(
+              images: list,
+              title: 'Lançamentos',
+              imageHeight: 250.0,
+              imageWidth: 150.0,
+            ),
 
-          ContentScroll(
-            images: list,
-            title: "Minha lista",
-            imageHeight: 250.0,
-            imageWidth: 150.0,
+            ContentScroll(
+              images: list,
+              title: "Minha lista",
+              imageHeight: 250.0,
+              imageWidth: 150.0,
+            ),
+          ],
+        ),
+      );
+    }
+    else {
+      return Scaffold(
+        drawer: Routes.menu('Inicio'),
+//    backgroundColor: HexColor('#212121'),
+        appBar: AppBar(
+//        backgroundColor: HexColor('000000'),
+//        elevation: 10.0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(
+                image: AssetImage('assets/animese/name.png',),
+                height: SizeConfig.of(context).dynamicScaleSize(
+                    size: 200, scaleFactorTablet: 2),
+                width: SizeConfig.of(context).dynamicScaleSize(
+                    size: 200, scaleFactorTablet: 2),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+          actions: <Widget>[
+            IconButton(
+              padding: EdgeInsets.only(right: 30.0),
+              onPressed: () =>
+              {
+                showSearch(context: context, delegate: DataSearch())
+              },
+              icon: Icon(Icons.search),
+              iconSize: 30.0,
+              color: Colors.white,
+            ),
+          ],
+        ),
+
+
+        body: ListView(
+          children: <Widget>[
+            Container(
+              height: 280.0,
+              width: double.infinity,
+              child: PageView.builder(
+                scrollDirection: Axis.horizontal,
+                controller: _pageController,
+                itemCount: list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _movieSelector(index);
+                },
+              ),
+            ),
+
+            ContentScroll(
+              images: list,
+              title: 'Lançamentos',
+              imageHeight: 250.0,
+              imageWidth: 150.0,
+            ),
+
+            ContentScroll(
+              images: list,
+              title: "Minha lista",
+              imageHeight: 250.0,
+              imageWidth: 150.0,
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
 

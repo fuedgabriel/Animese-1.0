@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-const baseUrl = "http://192.168.0.191:7844";
+const baseUrl = "http://187.13.15.7:7844";
 
 class API {
   static Future getAnimes() async{
@@ -17,7 +17,7 @@ class API {
   
   static Future<String> getData() async{
     http.Response response =await http.get(
-        Uri.encodeFull("http://192.168.0.191:7844/api/anime/"),
+        Uri.encodeFull("http://187.13.15.7:7844/api/anime/"),
       headers:
       {
           "Accept": "application/json"
@@ -42,7 +42,7 @@ class POST
 {
   static Future postLogin (senha, email) async {
     try{
-    var url ='http://192.168.0.191:7844/api/User/id';
+    var url ='http://187.13.15.7:7844/api/User/id';
     var key = utf8.encode(senha);
     var hash = sha512.convert(key);
 
@@ -62,7 +62,7 @@ class POST
     var key = utf8.encode(senha);
     var hash = sha512.convert(key);
 
-    var url ='http://192.168.0.191:7844/api/User';
+    var url ='http://187.13.15.7:7844/api/User';
 
     Map data = {
       'Name': '$nome',

@@ -77,14 +77,35 @@ class ContentScroll extends StatelessWidget {
                       builder: (_) => Videoscreen(movie: images[index]),
                     ),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.network(
-                      images[index].url,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.network(
+                          images[index].url,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Positioned(
+                        left: 10.0,
+                        right: 5.0,
+                        bottom: 20.0,
+                        child: Container(
+                          width: 250.0,
+                          child: Text(
+                            images[index].title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ),
+
               );
             },
           ),

@@ -185,19 +185,60 @@ _Config(){
             alignment: Alignment.bottomCenter,
             child: FlatButton(
               onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                prefs.remove('Email');
-                prefs.remove('Name');
-                prefs.remove('Nick');
-                prefs.remove('Password');
-                prefs.remove('_id');
-                prefs.remove('Notifications');
-                prefs.remove('AlertaAnimes');
-                prefs.remove('AlertaMessages');
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            actions: <Widget>[
+                              FlatButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
+                                  },
+                                  child: Text('Não')
+                              ),
+                              FlatButton(
+                                child: Text("Sim"),
+                                onPressed: () async{
+                                  final prefs = await SharedPreferences.getInstance();
+                                  prefs.remove('Email');
+                                  prefs.remove('Name');
+                                  prefs.remove('Nick');
+                                  prefs.remove('Password');
+                                  prefs.remove('_id');
+                                  prefs.remove('Notifications');
+                                  prefs.remove('AlertaAnimes');
+                                  prefs.remove('AlertaMessages');
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pushReplacementNamed('/Login');
+
+                                  },
+                              )
+                            ],
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            title: Text('Você realmente deseja sair?',
+                              style: TextStyle(
+                                fontSize: 15.6,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {var a; return a; });
+
 //                print(_theme);
 //                _nameRetriever();
               },
-              child: Text("Sair",
+              child: Text("Sair da conta",
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 16,

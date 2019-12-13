@@ -22,6 +22,8 @@ class Cat{
 
 class Videoscreen extends StatefulWidget {
   final ListAnime movie;
+  var icon = Icons.favorite;
+
 
   Videoscreen({this.movie});
 
@@ -77,17 +79,16 @@ class _VideoscreenState extends State<Videoscreen> {
                   ),
                   IconButton(
                     padding: EdgeInsets.only(left: 30.0),
-                    icon: Icon(Icons.favorite),
+                    icon: Icon(Icons.favorite_border),
                     iconSize: 30.0,
                     color: Colors.red,
-                    onPressed: () =>
+                    onPressed: ()
                     {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyApp(),
-                        ),
-                      ),
+                      void initState() {
+                        super.initState();
+
+                      }
+                      initState();
 
                     },
 

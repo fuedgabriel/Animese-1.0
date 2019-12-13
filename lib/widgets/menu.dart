@@ -49,122 +49,135 @@ class _MenuWidgetState extends State<MenuWidget> {
     return new Drawer(
       child: Column(
         children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountEmail: Text(email),
-            accountName: Text(nick),
-            currentAccountPicture: GestureDetector(
-              onTap: (){
+          Stack(
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountEmail: Text(email),
+                accountName: Text(nick),
+                currentAccountPicture: GestureDetector(
+                  onTap: (){
 
 
 
 
-              },
-              child: CircleAvatar(
-                child: Text(nome.toString().substring(0,0)),
-              ),
-            ),
-            otherAccountsPictures: <Widget>[
-              GestureDetector(
-                onTap: () =>
-                {
-                  if(email == 'convidado'){
-                    if (widget.page == 'Login') {
-                      Navigator.pop(context),
-                    }
-                    else{
-                      if(widget.page == 'Inicio'){
-                        Navigator.pop(context),
-                        Navigator.of(context).pushNamed('/Login'),
+                  },
+                  child: CircleAvatar(
+                    child: Text(nome.toString().substring(0,0)),
+                  ),
+                ),
+                otherAccountsPictures: <Widget>[
+                  GestureDetector(
+                    onTap: () =>
+                    {
+                      if(email == 'convidado'){
+                        if (widget.page == 'Login') {
+                          Navigator.pop(context),
+                        }
+                        else{
+                          if(widget.page == 'Inicio'){
+                            Navigator.pop(context),
+                            Navigator.of(context).pushNamed('/Login'),
+
+                          }
+                          else{
+                            Navigator.pop(context),
+                            Navigator.of(context).pushReplacementNamed('/Login'),
+                          }
+
+                        }
 
                       }
                       else{
-                        Navigator.pop(context),
-                        Navigator.of(context).pushReplacementNamed('/Login'),
-                      }
-
-                    }
-
-                  }
-                  else{
-                    showGeneralDialog(
-                        transitionBuilder: (context, a1, a2, widget) {
-                          return Transform.scale(
-                            scale: a1.value,
-                            child: Opacity(
-                              opacity: a1.value,
-                              child: AlertDialog(
-                                shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16.0)),
-                                title: Text('Você já está logado',
-                                  style: TextStyle(
-                                    fontSize: 15.6,
+                        showGeneralDialog(
+                            transitionBuilder: (context, a1, a2, widget) {
+                              return Transform.scale(
+                                scale: a1.value,
+                                child: Opacity(
+                                  opacity: a1.value,
+                                  child: AlertDialog(
+                                    shape: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(16.0)),
+                                    title: Text('Você já está logado',
+                                      style: TextStyle(
+                                        fontSize: 15.6,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          );
-                          },
-                        transitionDuration: Duration(milliseconds: 500),
-                        barrierDismissible: true,
-                        barrierLabel: '',
-                        context: context,
-                        pageBuilder: (context, animation1, animation2) {var a; return a;}),
-                  }
-                },
-                child: CircleAvatar(
-                  child: Icon(Icons.add),
-                ),
+                              );
+                            },
+                            transitionDuration: Duration(milliseconds: 500),
+                            barrierDismissible: true,
+                            barrierLabel: '',
+                            context: context,
+                            pageBuilder: (context, animation1, animation2) {var a; return a;}),
+                      }
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.add),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-//          Padding(
-//            padding: EdgeInsets.only(top: 20),
-//          ),
-//          Divider(),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Inicio'),
-            onTap: () {
-              if (widget.page == 'Inicio') {
-                Navigator.pop(context);
-              }
-              else{
-                Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
-              }
-            }
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.pageview),
-            title: Text('Lista'),
-              onTap: ()  {
-                if (widget.page == 'Lista') {
-                  Navigator.pop(context);
-                }
-                else{
-                  if(widget.page == 'Inicio'){
-                    Navigator.pop(context);
-                    Navigator.of(context).pushNamed('/Animes');
+          Stack(
+            children: <Widget>[
+              ListTile(
+                  leading: Icon(Icons.home),
+                  title: Text('Inicio'),
+                  onTap: () {
+                    if (widget.page == 'Inicio') {
+                      Navigator.pop(context);
+                    }
+                    else{
+                      Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
+                    }
                   }
-                  else{
-                    Navigator.pop(context);
-                    Navigator.of(context).pushReplacementNamed('/Animes');
-                  }
-                }
-              }
+              ),
+              Divider(),
+            ],
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Meus animes'),
-            trailing: Chip(label: Text("11", style: TextStyle(
-              fontWeight: FontWeight.bold,
+          Stack(
+            children: <Widget>[
+              ListTile(
+                  leading: Icon(Icons.pageview),
+                  title: Text('Lista'),
+                  onTap: ()  {
+                    if (widget.page == 'Lista') {
+                      Navigator.pop(context);
+                    }
+                    else{
+                      if(widget.page == 'Inicio'){
+                        Navigator.pop(context);
+                        Navigator.of(context).pushNamed('/Animes');
+                      }
+                      else{
+                        Navigator.pop(context);
+                        Navigator.of(context).pushReplacementNamed('/Animes');
+                      }
+                    }
+                  }
+              ),
+              Divider(),
+            ],
+          ),
+          Stack(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.favorite),
+                title: Text('Meus animes'),
+                trailing: Chip(label: Text("11", style: TextStyle(
+                  fontWeight: FontWeight.bold,
 //              backgroundColor: Colors.blue[100],
-            ),
-            )
-            ),
+                ),
+                )
+                ),
+              ),
+              Divider(),
+            ],
           ),
-          Divider(),
+
           Expanded(child: Align(
             alignment: FractionalOffset.bottomCenter,
             child: ListTile(

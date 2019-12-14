@@ -54,7 +54,7 @@ class _CreateCount extends State<CreateCount>{
     double size = 48;
     var width = MediaQuery.of(context).size.width;
     print(width);
-    if(width<360){
+    if(width<=360){
       font = 13;
       fontfb = 11;
       size = 30;
@@ -263,8 +263,42 @@ class _CreateCount extends State<CreateCount>{
                     context: context,
                     pageBuilder: (context, animation1, animation2) {var a; return a; });
               }
+              else if(_textFieldControllerSenha1.text != _textFieldControllerSenha2.text){
+
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("OK"),
+                                onPressed: () {Navigator.of(context).pop(); },
+                              )
+                            ],
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            title: Text('As senhas não correspondem',
+                              style: TextStyle(
+                                fontSize: 15.6,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {var a; return a; });
+              }
 
               else if(dia.toString() != '0'){
+                POST.postcreate(_textFieldControllerNome.text, _textFieldControllerNick.text, _textFieldControllerSenha1.text, _textFieldControllerEmail.text);
                 showGeneralDialog(
                     barrierColor: Colors.black.withOpacity(0.5),
                     transitionBuilder: (context, a1, a2, widget) {
@@ -329,8 +363,6 @@ class _CreateCount extends State<CreateCount>{
                     context: context,
                     pageBuilder: (context, animation1, animation2) {var a; return a; });
               }
-
-
               },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
             borderSide: BorderSide(),

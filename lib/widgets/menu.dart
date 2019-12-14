@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../request/request.dart';
 
 
+// ignore: must_be_immutable
 class MenuWidget extends StatefulWidget{
   String page;
 
@@ -47,138 +48,140 @@ class _MenuWidgetState extends State<MenuWidget> {
 
     // TODO: implement build
     return new Drawer(
-      child: Column(
+      child: ListView(
+        padding: EdgeInsets.zero,
         children: <Widget>[
-          Stack(
-            children: <Widget>[
-              UserAccountsDrawerHeader(
-                accountEmail: Text(email),
-                accountName: Text(nick),
-                currentAccountPicture: GestureDetector(
-                  onTap: (){
+          UserAccountsDrawerHeader(
+            accountEmail: Text(email),
+            accountName: Text(nick),
+            currentAccountPicture: GestureDetector(
+              onTap: (){
 
 
 
 
-                  },
-                  child: CircleAvatar(
-                    child: Text(nome.toString().substring(0,0)),
-                  ),
-                ),
-                otherAccountsPictures: <Widget>[
-                  GestureDetector(
-                    onTap: () =>
-                    {
-                      if(email == 'convidado'){
-                        if (widget.page == 'Login') {
-                          Navigator.pop(context),
-                        }
-                        else{
-                          if(widget.page == 'Inicio'){
-                            Navigator.pop(context),
-                            Navigator.of(context).pushNamed('/Login'),
-
-                          }
-                          else{
-                            Navigator.pop(context),
-                            Navigator.of(context).pushReplacementNamed('/Login'),
-                          }
-
-                        }
-
-                      }
-                      else{
-                        showGeneralDialog(
-                            transitionBuilder: (context, a1, a2, widget) {
-                              return Transform.scale(
-                                scale: a1.value,
-                                child: Opacity(
-                                  opacity: a1.value,
-                                  child: AlertDialog(
-                                    shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16.0)),
-                                    title: Text('Você já está logado',
-                                      style: TextStyle(
-                                        fontSize: 15.6,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            transitionDuration: Duration(milliseconds: 500),
-                            barrierDismissible: true,
-                            barrierLabel: '',
-                            context: context,
-                            pageBuilder: (context, animation1, animation2) {var a; return a;}),
-                      }
-                    },
-                    child: CircleAvatar(
-                      child: Icon(Icons.add),
-                    ),
-                  ),
-                ],
+              },
+              child: CircleAvatar(
+                child: Text(nome.toString().substring(0,0)),
               ),
-            ],
-          ),
-          Stack(
-            children: <Widget>[
-              ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text('Inicio'),
-                  onTap: () {
-                    if (widget.page == 'Inicio') {
-                      Navigator.pop(context);
-                    }
-                    else{
-                      Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
-                    }
-                  }
-              ),
-              Divider(),
-            ],
-          ),
-          Stack(
-            children: <Widget>[
-              ListTile(
-                  leading: Icon(Icons.pageview),
-                  title: Text('Lista'),
-                  onTap: ()  {
-                    if (widget.page == 'Lista') {
-                      Navigator.pop(context);
+            ),
+            otherAccountsPictures: <Widget>[
+              GestureDetector(
+                onTap: () =>
+                {
+                  if(email == 'convidado'){
+                    if (widget.page == 'Login') {
+                      Navigator.pop(context),
                     }
                     else{
                       if(widget.page == 'Inicio'){
-                        Navigator.pop(context);
-                        Navigator.of(context).pushNamed('/Animes');
+                        Navigator.pop(context),
+                        Navigator.of(context).pushNamed('/Login'),
+
                       }
                       else{
-                        Navigator.pop(context);
-                        Navigator.of(context).pushReplacementNamed('/Animes');
+                        Navigator.pop(context),
+                        Navigator.of(context).pushReplacementNamed('/Login'),
                       }
+
                     }
+
                   }
-              ),
-              Divider(),
-            ],
-          ),
-          Stack(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.favorite),
-                title: Text('Meus animes'),
-                trailing: Chip(label: Text("11", style: TextStyle(
-                  fontWeight: FontWeight.bold,
-//              backgroundColor: Colors.blue[100],
+                  else{
+                    showGeneralDialog(
+                        transitionBuilder: (context, a1, a2, widget) {
+                          return Transform.scale(
+                            scale: a1.value,
+                            child: Opacity(
+                              opacity: a1.value,
+                              child: AlertDialog(
+                                shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.0)),
+                                title: Text('Você já está logado',
+                                  style: TextStyle(
+                                    fontSize: 15.6,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 500),
+                        barrierDismissible: true,
+                        barrierLabel: '',
+                        context: context,
+                        pageBuilder: (context, animation1, animation2) {var a; return a;}),
+                  }
+                },
+                child: CircleAvatar(
+                  child: Icon(Icons.add),
                 ),
-                )
-                ),
               ),
-              Divider(),
             ],
           ),
 
-          Expanded(child: Align(
+          ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Inicio'),
+              onTap: () {
+                if (widget.page == 'Inicio') {
+                  Navigator.pop(context);
+                }
+                else{
+                  Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
+                }
+              }
+          ),
+          Divider(),
+
+          ListTile(
+              leading: Icon(Icons.pageview),
+              title: Text('Lista'),
+              onTap: ()  {
+                if (widget.page == 'Lista') {
+                  Navigator.pop(context);
+                }
+                else{
+                  if(widget.page == 'Inicio'){
+                    Navigator.pop(context);
+                    Navigator.of(context).pushNamed('/Animes');
+                  }
+                  else{
+                    Navigator.pop(context);
+                    Navigator.of(context).pushReplacementNamed('/Animes');
+                  }
+                }
+              }
+          ),
+          Divider(),
+
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text('Meus animes'),
+            trailing: Chip(label: Text("11", style: TextStyle(
+              fontWeight: FontWeight.bold,
+//              backgroundColor: Colors.blue[100],
+            ),
+            ),
+            ),
+            onTap: () {
+              if (widget.page == 'Favoritos') {
+                Navigator.pop(context);
+              }
+              else{
+                if(widget.page == 'Inicio'){
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/Favoritos');
+                }
+                else{
+                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacementNamed('/Favoritos');
+                }
+              }
+            },
+          ),
+          Divider(),
+          Align(
             alignment: FractionalOffset.bottomCenter,
             child: ListTile(
               leading: Icon(Icons.report_problem),
@@ -200,30 +203,31 @@ class _MenuWidgetState extends State<MenuWidget> {
               },
             ),
           ),
-          ),
+          Divider(),
           Align(
             alignment: FractionalOffset.bottomCenter,
             child: ListTile(
               leading: Icon(Icons.settings),
               title: Text('Configurações'),
-                onTap: ()
-                {
-                  if (widget.page == 'Config') {
+              onTap: ()
+              {
+                if (widget.page == 'Config') {
+                  Navigator.pop(context);
+                }
+                else{
+                  if(widget.page == 'Inicio'){
                     Navigator.pop(context);
+                    Navigator.of(context).pushNamed('/Config');
                   }
                   else{
-                    if(widget.page == 'Inicio'){
-                      Navigator.pop(context);
-                      Navigator.of(context).pushNamed('/Config');
-                    }
-                    else{
-                      Navigator.pop(context);
-                      Navigator.of(context).pushReplacementNamed('/Config');
-                    }
+                    Navigator.pop(context);
+                    Navigator.of(context).pushReplacementNamed('/Config');
                   }
-                },
-                ),
+                }
+              },
+            ),
           ),
+          Divider(),
         ],
       ),
     );

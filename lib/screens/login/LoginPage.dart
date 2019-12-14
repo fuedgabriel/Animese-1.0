@@ -33,6 +33,16 @@ class _LoginPage extends State<LoginPage> {
     prefs.setString('_id', id);
   }
 
+  bool _obscureText = true;
+
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
 
 
 
@@ -87,18 +97,32 @@ class _LoginPage extends State<LoginPage> {
             SizedBox(height: 5,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.0),
-              child: TextField(
-                autofocus: true,
-                obscureText: true,
-                keyboardType: TextInputType.text,
-                controller: _textFieldControllerSenha,
-                decoration: InputDecoration(
-                  hintText: "Senha",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+              child: Stack(
+                children: <Widget>[
+                  TextField(
+                    autofocus: true,
+                    obscureText: _obscureText,
+                    keyboardType: TextInputType.text,
+                    controller: _textFieldControllerSenha,
+                    decoration: InputDecoration(
+                      hintText: "Senha",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.end,
+                   children: <Widget>[
+                     FlatButton(
+                         onPressed: _toggle,
+                         child: new Text(_obscureText ? "Amostrar" : "Ocultar")
+                     ),
+                   ],
+                 )
+
+                ],
+              )
             ),
 
             Container(

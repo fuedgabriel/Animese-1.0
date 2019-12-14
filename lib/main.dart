@@ -8,6 +8,7 @@ import 'screens/config/config.dart';
 import 'screens/login/LoginPage.dart';
 import 'screens/animes_list/animes_screen.dart';
 import 'screens/suporte/suporte.dart';
+import 'screens/favoritos/favoritos.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/Suporte': (BuildContext context) => Suporte(),
         '/Login': (BuildContext context) => LoginPage(),
         '/Animes': (BuildContext context) => AnimesScreen(),
+        '/Favoritos': (BuildContext context) => Favoritos(),
       },
       home: HomeScreen(),
     );

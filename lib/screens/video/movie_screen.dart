@@ -7,7 +7,7 @@ import 'circular_clipper.dart';
 import '../../screens/video_native/pro.dart';
 
 //import 'package:android_intent/android_intent.dart';
-import 'episodios.dart';
+//import 'episodios.dart';
 
 class Cat{
   static categoria(List categoria, int tamanho)  {
@@ -21,9 +21,11 @@ class Cat{
 }
 }
 
+// ignore: must_be_immutable
 class Videoscreen extends StatefulWidget {
   final ListAnime movie;
   var icon = Icons.favorite;
+
 
 
   Videoscreen({this.movie});
@@ -33,6 +35,19 @@ class Videoscreen extends StatefulWidget {
 }
 
 class _VideoscreenState extends State<Videoscreen> {
+  IconData _obscureText = Icons.favorite_border;
+  IconData __obscureText = Icons.favorite;
+  void _favorite() {
+    setState(() {
+      if(_obscureText == Icons.favorite_border){
+        _obscureText = __obscureText;
+      }
+      else{
+        _obscureText = Icons.favorite_border;
+      }
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,16 +95,12 @@ class _VideoscreenState extends State<Videoscreen> {
                   ),
                   IconButton(
                     padding: EdgeInsets.only(left: 30.0),
-                    icon: Icon(Icons.favorite_border),
+                    icon: Icon(_obscureText),
                     iconSize: 30.0,
                     color: Colors.red,
                     onPressed: ()
                     {
-                      void initState() {
-                        super.initState();
-
-                      }
-                      initState();
+                      _favorite();
 
                     },
 

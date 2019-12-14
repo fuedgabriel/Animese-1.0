@@ -182,7 +182,10 @@ class ContentScrollFavorite extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () => print('View $title'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/Favoritos');
+
+                },
                 child: Icon(
                   Icons.arrow_forward,
                   size: 30.0,

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
-import '../../video/movie_screen.dart';
+import '../video/movie_screen.dart';
 
 // ignore: must_be_immutable
 class ContentScroll extends StatelessWidget {

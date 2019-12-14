@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 //woidget
-import 'widgets/content_scroll_list.dart';
+import 'widgets.dart';
 //rotas
 import '../../routes.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
@@ -13,14 +13,15 @@ import 'dart:convert';
 
 
 
-class AnimesScreen extends StatefulWidget {
+
+class Favoritos extends StatefulWidget {
   @override
 
-  _AnimesScreenState createState() => _AnimesScreenState();
+  _FavoritosState createState() => _FavoritosState();
 }
 
 
-class _AnimesScreenState extends State<AnimesScreen> {
+class _FavoritosState extends State<Favoritos> {
   var list = new List<ListAnime>();
 
 
@@ -41,10 +42,10 @@ class _AnimesScreenState extends State<AnimesScreen> {
   Widget build(BuildContext context) {
     _getAnime();
     return Scaffold(
-      drawer: Routes.menu('Lista'),
+      drawer: Routes.menu('Favoritos'),
       appBar: AppBar(
         elevation: 0,
-        title: Text("Lista"),
+        title: Text("Favoritos"),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.all(10.0),
@@ -58,12 +59,11 @@ class _AnimesScreenState extends State<AnimesScreen> {
               child: Center(child: Text(list.length.toString())
               ),
             ),
-          ),
+          )
         ],
       ),
       body: Stack(
         children: <Widget>[
-
           ContentScroll(images: list,),
         ],
       ),

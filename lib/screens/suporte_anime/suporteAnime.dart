@@ -4,6 +4,7 @@ import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 
 
 
+// ignore: must_be_immutable
 class SuporteAnime extends StatefulWidget {
   ListAnime movieA;
   SuporteAnime({this.movieA});

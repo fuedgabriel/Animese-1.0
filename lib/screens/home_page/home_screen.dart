@@ -3,10 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Usuario.dart';
-
-//routes
-import 'package:flutter_netflix_ui_redesign/routes.dart';
-
+import '../../widgets/menu.dart';
 
 //widget
 import '../../screens/video/movie_screen.dart';
@@ -281,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (width > 584) {
       return Scaffold(
-        drawer: Routes.menu('Inicio'),
+        drawer: MenuWidget(page: 'Inicio'),
         appBar: AppBar(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -344,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     else {
       return Scaffold(
-        drawer: Routes.menu('Inicio'),
+        drawer: MenuWidget(page: 'Inicio'),
 //    backgroundColor: HexColor('#212121'),
         appBar: AppBar(
 //        backgroundColor: HexColor('000000'),
@@ -425,8 +422,6 @@ class DataSearch extends SearchDelegate<StreamBuilder>{
 
 
   List cities = [
-
-
   ];
   final recentCities = [
     "canada",

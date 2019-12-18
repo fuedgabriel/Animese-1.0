@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
+import 'package:flutter_netflix_ui_redesign/screens/animes_list/gridViwer_play.dart';
 import '../video/movie_screen.dart';
 
 // ignore: must_be_immutable
 class ContentScroll extends StatelessWidget {
   final List<ListAnime> images;
+
+
 
   ContentScroll({
     this.images,
@@ -20,6 +23,7 @@ class ContentScroll extends StatelessWidget {
   double widthRC;
   double heightCRC;
   double widthCRC;
+
 
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -68,7 +72,7 @@ class ContentScroll extends StatelessWidget {
         child: ListView.builder(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           scrollDirection: Axis.vertical,
-          itemCount: images.length,
+          itemCount: images.length-1,
           itemBuilder: (BuildContext context, int index) {
             return Container(
                 alignment: Alignment.bottomLeft,

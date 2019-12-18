@@ -5,9 +5,9 @@ import 'package:flutter_netflix_ui_redesign/routes.dart';
 import 'package:share/share.dart';
 import 'circular_clipper.dart';
 import '../../screens/video_native/pro.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-//import 'package:android_intent/android_intent.dart';
-//import 'episodios.dart';
+
 
 class Cat{
   static categoria(List categoria, int tamanho)  {
@@ -17,7 +17,6 @@ class Cat{
     if(tamanho == 0){
       return categoria[0];
     }
-
 }
 }
 
@@ -28,6 +27,7 @@ class Videoscreen extends StatefulWidget {
 
 
 
+
   Videoscreen({this.movie});
 
   @override
@@ -35,23 +35,121 @@ class Videoscreen extends StatefulWidget {
 }
 
 class _VideoscreenState extends State<Videoscreen> {
+
+  String theme;
+  List itemAppTheme;
+
   IconData _obscureText = Icons.favorite_border;
   IconData __obscureText = Icons.favorite;
+
+  _VideoscreenState(){
+    _EstadoFavorito();
+  }
+
+
   void _favorite() {
     setState(() {
       if(_obscureText == Icons.favorite_border){
         _obscureText = __obscureText;
+//        _Getfavoritos();
+        _SaveFavoritos();
       }
       else{
         _obscureText = Icons.favorite_border;
+        _RemoveFavoritos();
       }
 
     });
   }
 
+
+  _EstadoFavorito()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> Favoritos = prefs.getStringList('lista');
+    if(Favoritos == null){
+      Favoritos = [];
+    }
+    print(Favoritos);
+    print('________________________');
+    if(Favoritos.contains(widget.movie.sId)== true) {
+      setState(() {
+        _obscureText = __obscureText;
+      });
+    }
+  }
+
+
+  var list = new List<ListAnime>();
+  _RemoveFavoritos() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> Favoritos = prefs.getStringList('lista');
+    Favoritos.remove(widget.movie.sId.toString());
+    prefs.setStringList('lista', Favoritos);
+
+  }
+
+  _SaveFavoritos() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> Favoritos = prefs.getStringList('lista');
+    if(Favoritos == null){ Favoritos = [];}
+    Favoritos.add(widget.movie.sId.toString());
+    prefs.setStringList('lista', Favoritos);
+    print(Favoritos);
+
+
+
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    List<String> lisa;
+//    lisa.add('aaa');
+//    lisa.add('aaa');
+//    lisa.add('aaa');
+//    print(lisa);
+//    List<String> lista = prefs.get('lista');
+//
+//    print(lista);
+//    prefs.setStringList('lista', lista);
+//
+//    lista = prefs.get('lista');
+//    print(lista);
+//
+//    lista.add('{'+widget.movie.title+'}');
+//    List a = lista[0].replaceAll('{', '').replaceAll('}', '').split(', Synopse: ');
+//    var synopse = a[1].toString().replaceRange(a[1].toString().indexOf(', Seasons'), a[1].toString().length, '');
+//    a = lista[0].replaceAll('{', '').replaceAll('}', '').replaceAll(synopse, '').split(', ');
+//    print(a[0].toString().replaceAll('_id: ', ''));
+//    print(a[1].toString().replaceAll('Title: ', ''));
+//    print(a[2].toString().replaceAll('English: ', ''));
+//    print(a[4].toString().replaceAll('Seasons: ', ''));
+//    print(a[5].toString().replaceAll('Status: ', ''));
+//    print(a[6].toString().replaceAll('Category: ', ''));
+//    print(a[7].toString().replaceAll('Episodes: ', ''));
+//    print(a[8].toString().replaceAll('Score: ', ''));
+//    print(a[9].toString().replaceAll('air: ', ''));
+//    print(a[10].toString().replaceAll('url: ', ''));
+
+
+
+
+
+
+
+
+
+//    List<String> send=[{'aaa', 'aa'}];
+
+
+
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     String categoria;
+
 
     categoria = widget.movie.category.replaceAll('5de1d75c43c6f33cf8f9331f', 'Ação').replaceAll('5de1d7a943c6f33cf8f93320', 'Aventura').replaceAll('5de1d7b143c6f33cf8f93321', 'Fantasia').replaceAll('5de1d7b743c6f33cf8f93322', 'Game').replaceAll('5de1d7c643c6f33cf8f93323', 'Romance');
     categoria = categoria.replaceAll('|', ',  ');

@@ -19,43 +19,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../config/theme/app_themes.dart';
 import '../config/theme/bloc/bloc.dart';
 
-class SizeConfig {
-
-  final MediaQueryData mediaQueryData;
-
-  SizeConfig({this.mediaQueryData});
-
-  static SizeConfig of(BuildContext context) =>
-      SizeConfig(mediaQueryData: MediaQuery.of(context));
-
-  double dynamicScaleSize({double size, double scaleFactorTablet, double scaleFactorMini}) {
-    if(isTablet()) {
-      final scaleFactor = scaleFactorTablet ?? 2;
-      return size * (scaleFactor);
-    }
-
-    if(isMini()) {
-      final scaleFactor = scaleFactorMini ?? 0.8;
-      print('____________________' + scaleFactor.toString());
-      return size * (scaleFactor);
-    }
-
-    return size;
-  }
-
-  /// Defines device type based on logical device pixels. Bigger than 600 means it is a tablet
-  bool isTablet() {
-    final shortestSide = mediaQueryData.size.shortestSide;
-    return shortestSide > 600;
-  }
-
-  /// Defines device type based on logical device pixels. Less or equal than 320 means it is a mini device
-  bool isMini() {
-    final shortestSide = mediaQueryData.size.shortestSide;
-    return shortestSide <= 320;
-  }
-}
-
 class HomeScreen extends StatefulWidget {
   @override
 
@@ -71,13 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final itemAppTheme = AppTheme.values;
 
   _getAnime(){
-    API.getAnimes().then((response){
+    API.getAnimes('').then((response){
       setState(() {
         Iterable lista = json.decode(response.body);
         list = lista.map((model) => ListAnime.fromJson(model)).toList();
       });
     });
   }
+
 
   _thema()async{
     Shared.getTheme().then((resp){
@@ -412,7 +376,7 @@ class DataSearch extends SearchDelegate<StreamBuilder>{
 
 
   _getAnime(){
-    API.getAnimes().then((response){
+    API.getAnimes('').then((response){
         Iterable lista = json.decode(response.body);
         list = lista.map((model) => ListAnime.fromJson(model)).toList();
         ado = list.map((model) => ado.add(model)).toList();

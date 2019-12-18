@@ -28,7 +28,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
   _getAnime(){
 
 
-    API.getAnimes().then((response){
+    API.getAnimes('').then((response){
       setState(() {
         Iterable lista = json.decode(response.body);
         list = lista.map((model) => ListAnime.fromJson(model)).toList();

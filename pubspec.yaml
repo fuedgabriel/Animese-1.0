@@ -27,6 +27,8 @@ dependencies:
   share: ^0.6.2+1 #Compartilhar com as pessoas
   video_box: ^0.7.2 #video player mmelhor
   get: ^1.4.0+7 # Navigation
+  video_player: ^0.10.5
+  localstorage: ^3.0.1+4
 #  android_intent: ^0.3.4+7 #Aplicativos externos
 #  image_picker: ^0.4.5
 #  image_cropper: ^0.0.4

@@ -1,13 +1,21 @@
 import 'dart:async';
+import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:localstorage/localstorage.dart';
 const baseUrl = "http://187.13.15.7:7844";
 
 class API {
-  static Future getAnimes() async{
-    var url = baseUrl + "/api/anime/";
+  static Future getAnimes(String id) async{
+    String url;
+    if (id == ''){
+      url = baseUrl + "/api/anime/";
+    }
+    else{
+      url = baseUrl + "/api/anime/"+id;
+    }
     return await http.get(url);
   }
   static Future getVideos() async{
@@ -88,6 +96,13 @@ class POST
 
 
 class Shared{
+  static Future getFavoritos() async{
+
+    final LocalStorage storage = new LocalStorage('favoritos');
+    var anime = storage.getItem('favoritos');
+    print(anime);
+    print('resgatou');
+  }
   static Future getLogin(id,nome,nick,email,senha) async {
     final prefs = await SharedPreferences.getInstance();
     if(id == 1){

@@ -158,12 +158,6 @@ class _MenuWidgetState extends State<MenuWidget> {
           ListTile(
             leading: Icon(Icons.favorite),
             title: Text('Meus animes'),
-            trailing: Chip(label: Text("11", style: TextStyle(
-              fontWeight: FontWeight.bold,
-//              backgroundColor: Colors.blue[100],
-            ),
-            ),
-            ),
             onTap: () {
               if (widget.page == 'Favoritos') {
                 Navigator.pop(context);

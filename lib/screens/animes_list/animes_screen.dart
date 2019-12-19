@@ -1,14 +1,16 @@
-
-
+//widget
+import '../../widgets/menu.dart';
 import 'package:flutter/material.dart';
-//woidget
 import 'widgets/content_scroll_list.dart';
-//rotas
-import '../../routes.dart';
+
+//json
+import 'dart:convert';
+
+//request
 import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
 import 'package:flutter_netflix_ui_redesign/request/request.dart';
-//biblioteca
-import 'dart:convert';
+
+
 
 
 
@@ -41,7 +43,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
   Widget build(BuildContext context) {
     _getAnime();
     return Scaffold(
-      drawer: Routes.menu('Lista'),
+      drawer: MenuWidget(page: 'Lista',),
       appBar: AppBar(
         elevation: 0,
         title: Text("Lista"),
@@ -63,10 +65,10 @@ class _AnimesScreenState extends State<AnimesScreen> {
       ),
       body: Stack(
         children: <Widget>[
-
           ContentScroll(images: list,),
         ],
-      ),
+      )
+
     );
   }
 }

@@ -1,11 +1,17 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
-import 'package:flutter_netflix_ui_redesign/routes.dart';
-import 'package:share/share.dart';
+//widget
 import 'circular_clipper.dart';
+import 'package:flutter/material.dart';
+
+//request
+import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
+
+//rotas
+import 'package:flutter_netflix_ui_redesign/screens/suporte_anime/suporteAnime.dart';
 import '../../screens/video_native/pro.dart';
+
+//biblioteca
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:share/share.dart';
 
 
 
@@ -36,14 +42,12 @@ class Videoscreen extends StatefulWidget {
 
 class _VideoscreenState extends State<Videoscreen> {
 
-  String theme;
-  List itemAppTheme;
 
   IconData _obscureText = Icons.favorite_border;
   IconData __obscureText = Icons.favorite;
 
   _VideoscreenState(){
-    _EstadoFavorito();
+    _estadoFavorito();
   }
 
 
@@ -51,27 +55,23 @@ class _VideoscreenState extends State<Videoscreen> {
     setState(() {
       if(_obscureText == Icons.favorite_border){
         _obscureText = __obscureText;
-//        _Getfavoritos();
-        _SaveFavoritos();
+        _saveFavoritos();
       }
       else{
         _obscureText = Icons.favorite_border;
-        _RemoveFavoritos();
+        _removeFavoritos();
       }
 
     });
   }
 
-
-  _EstadoFavorito()async{
+  _estadoFavorito()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> Favoritos = prefs.getStringList('lista');
-    if(Favoritos == null){
-      Favoritos = [];
+    List<String> favoritos = prefs.getStringList('lista');
+    if(favoritos == null){
+      favoritos = [];
     }
-    print(Favoritos);
-    print('________________________');
-    if(Favoritos.contains(widget.movie.sId)== true) {
+    if(favoritos.contains(widget.movie.sId)== true) {
       setState(() {
         _obscureText = __obscureText;
       });
@@ -80,70 +80,20 @@ class _VideoscreenState extends State<Videoscreen> {
 
 
   var list = new List<ListAnime>();
-  _RemoveFavoritos() async{
+  _removeFavoritos() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> Favoritos = prefs.getStringList('lista');
-    Favoritos.remove(widget.movie.sId.toString());
-    prefs.setStringList('lista', Favoritos);
-
+    List<String> favoritos = prefs.getStringList('lista');
+    favoritos.remove(widget.movie.sId.toString());
+    prefs.setStringList('lista', favoritos);
   }
 
-  _SaveFavoritos() async {
+  _saveFavoritos() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> Favoritos = prefs.getStringList('lista');
-    if(Favoritos == null){ Favoritos = [];}
-    Favoritos.add(widget.movie.sId.toString());
-    prefs.setStringList('lista', Favoritos);
-    print(Favoritos);
-
-
-
-//    SharedPreferences prefs = await SharedPreferences.getInstance();
-//    List<String> lisa;
-//    lisa.add('aaa');
-//    lisa.add('aaa');
-//    lisa.add('aaa');
-//    print(lisa);
-//    List<String> lista = prefs.get('lista');
-//
-//    print(lista);
-//    prefs.setStringList('lista', lista);
-//
-//    lista = prefs.get('lista');
-//    print(lista);
-//
-//    lista.add('{'+widget.movie.title+'}');
-//    List a = lista[0].replaceAll('{', '').replaceAll('}', '').split(', Synopse: ');
-//    var synopse = a[1].toString().replaceRange(a[1].toString().indexOf(', Seasons'), a[1].toString().length, '');
-//    a = lista[0].replaceAll('{', '').replaceAll('}', '').replaceAll(synopse, '').split(', ');
-//    print(a[0].toString().replaceAll('_id: ', ''));
-//    print(a[1].toString().replaceAll('Title: ', ''));
-//    print(a[2].toString().replaceAll('English: ', ''));
-//    print(a[4].toString().replaceAll('Seasons: ', ''));
-//    print(a[5].toString().replaceAll('Status: ', ''));
-//    print(a[6].toString().replaceAll('Category: ', ''));
-//    print(a[7].toString().replaceAll('Episodes: ', ''));
-//    print(a[8].toString().replaceAll('Score: ', ''));
-//    print(a[9].toString().replaceAll('air: ', ''));
-//    print(a[10].toString().replaceAll('url: ', ''));
-
-
-
-
-
-
-
-
-
-//    List<String> send=[{'aaa', 'aa'}];
-
-
-
+    List<String> favoritos = prefs.getStringList('lista');
+    if(favoritos == null){ favoritos = [];}
+    favoritos.add(widget.movie.sId.toString());
+    prefs.setStringList('lista', favoritos);
   }
-
-
-
-
 
 
   @override
@@ -246,7 +196,7 @@ class _VideoscreenState extends State<Videoscreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Routes.suporteAnimeScreenR(widget.movie),
+                        builder: (context) => SuporteAnime(movieA: widget.movie,),
                       ),
                     ),
                   },

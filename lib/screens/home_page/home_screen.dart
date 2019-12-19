@@ -1,20 +1,17 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/request/Usuario.dart';
-import '../../widgets/menu.dart';
-
 //widget
+import 'package:flutter/material.dart';
 import '../../screens/video/movie_screen.dart';
 import 'widgets/content_scroll.dart';
+import '../../widgets/menu.dart';
 
 //request
-//import '../../request/request.dart';
+import 'package:flutter_netflix_ui_redesign/request/Usuario.dart';
 import '../../request/request.dart';
 import '../../request/Animes.dart';
+//json
+import 'dart:convert';
 
-
+//tema
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../config/theme/app_themes.dart';
 import '../config/theme/bloc/bloc.dart';

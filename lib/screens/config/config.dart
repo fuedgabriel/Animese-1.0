@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
+import 'package:animese/widgets/menu.dart';
+import 'package:animese/request/request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'theme/app_themes.dart';
 import 'theme/bloc/bloc.dart';
-import '../../request/request.dart';
+
 
 
 class Config extends StatefulWidget {

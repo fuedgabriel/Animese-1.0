@@ -50,7 +50,7 @@ class POST
 {
   static Future postLogin (senha, email) async {
     try{
-    var url ='http://187.13.15.7:7844/api/User/id';
+    var url =baseUrl+'/api/User/id';
     var key = utf8.encode(senha);
     var hash = sha512.convert(key);
 
@@ -70,7 +70,7 @@ class POST
     var key = utf8.encode(senha);
     var hash = sha512.convert(key);
 
-    var url ='http://187.13.15.7:7844/api/User';
+    var url =baseUrl+'/api/User';
 
     Map data = {
       'Name': '$nome',

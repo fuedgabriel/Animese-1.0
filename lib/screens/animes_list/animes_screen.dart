@@ -7,8 +7,9 @@ import 'widgets/content_scroll_list.dart';
 import 'dart:convert';
 
 //request
-import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
-import 'package:flutter_netflix_ui_redesign/request/request.dart';
+
+import 'package:animese/request/Animes.dart';
+import 'package:animese/request/request.dart';
 
 
 
@@ -28,8 +29,6 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
 
   _getAnime(){
-
-
     API.getAnimes('').then((response){
       setState(() {
         Iterable lista = json.decode(response.body);

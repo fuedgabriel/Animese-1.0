@@ -6,8 +6,8 @@ import 'package:flutter/painting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/request/request.dart';
-import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
+import 'package:animese/request/request.dart';
+import 'package:animese/widgets/menu.dart';
 import 'createcount.dart';
 import 'recoverpassword.dart';
 
@@ -53,12 +53,12 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     double font = 18;
-    double fontfb = 16;
+//    double fontfb = 16;
     var width = MediaQuery.of(context).size.width;
     print(width);
     if(width<360){
       font = 13;
-      fontfb = 13;
+//      fontfb = 13;
     }
     return Scaffold(
       drawer: MenuWidget(page: 'Login',),
@@ -275,81 +275,81 @@ class _LoginPage extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(height: 05,),
+            SizedBox(height: 20,),
 
-            Container(
-              height: 40,
-              child: OutlineButton(
-                splashColor: Colors.grey,
-                onPressed: () {},
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-                borderSide: BorderSide(),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image(image: AssetImage("assets/logos/google.png"), height: 24),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Entrar com o Google',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                        ),
-                     )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 05,),
-
-            Container(
-              height: 40,
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                color: Color(0XFF3C5A99),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(40),
-                ),
-              ),
-              child: SizedBox.expand(
-                child: FlatButton(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                          child: SizedBox(
-                            child: Image.asset('assets/logos/facebook.png'),
-                            height: 24,
-                            width: 24,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Entrar com o Facebook',
-                          style: TextStyle(fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: fontfb,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onPressed: () => {},
-                ),
-              ),
-            ),
+//            Container(
+//              height: 40,
+//              child: OutlineButton(
+//                splashColor: Colors.grey,
+//                onPressed: () {},
+//                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+//                borderSide: BorderSide(),
+//                child: Padding(
+//                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+//                  child: Row(
+//                    mainAxisSize: MainAxisSize.min,
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    children: <Widget>[
+//                      Image(image: AssetImage("assets/logos/google.png"), height: 24),
+//                      Padding(
+//                        padding: const EdgeInsets.only(left: 10),
+//                        child: Text(
+//                          'Entrar com o Google',
+//                          style: TextStyle(
+//                            fontSize: 16,
+//                            color: Colors.grey,
+//                          ),
+//                        ),
+//                     )
+//                    ],
+//                  ),
+//                ),
+//              ),
+//            ),
+//
+//            SizedBox(height: 05,),
+//
+//            Container(
+//              height: 40,
+//              alignment: Alignment.centerLeft,
+//              decoration: BoxDecoration(
+//                color: Color(0XFF3C5A99),
+//                borderRadius: BorderRadius.all(
+//                  Radius.circular(40),
+//                ),
+//              ),
+//              child: SizedBox.expand(
+//                child: FlatButton(
+//                  child: Row(
+//                    mainAxisSize: MainAxisSize.min,
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    children: <Widget>[
+//                      Container(
+//                        child: Padding(
+//                          padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+//                          child: SizedBox(
+//                            child: Image.asset('assets/logos/facebook.png'),
+//                            height: 24,
+//                            width: 24,
+//                          ),
+//                        ),
+//                      ),
+//                      Padding(
+//                        padding: const EdgeInsets.only(left: 10),
+//                        child: Text(
+//                          'Entrar com o Facebook',
+//                          style: TextStyle(fontWeight: FontWeight.bold,
+//                            color: Colors.white,
+//                            fontSize: fontfb,
+//                          ),
+//                        ),
+//                      ),
+//                    ],
+//                  ),
+//                  onPressed: () => {},
+//                ),
+//              ),
+//            ),
           ],
         ),
 

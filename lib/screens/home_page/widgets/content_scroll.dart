@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
+import 'package:animese/request/Animes.dart';
 import '../../../screens/video/movie_screen.dart';
 
 class HexColor extends Color {

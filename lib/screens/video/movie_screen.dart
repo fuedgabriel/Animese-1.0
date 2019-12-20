@@ -3,15 +3,15 @@ import 'circular_clipper.dart';
 import 'package:flutter/material.dart';
 
 //request
-import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
+import 'package:animese/request/Animes.dart';
 
 //rotas
-import 'package:flutter_netflix_ui_redesign/screens/suporte_anime/suporteAnime.dart';
-import '../../screens/video_native/pro.dart';
+import 'package:animese/screens/suporte_anime/suporteAnime.dart';
+import '../player/player.dart';
 
 //biblioteca
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:share/share.dart';
+//import 'package:share/share.dart';
 
 
 
@@ -45,6 +45,8 @@ class _VideoscreenState extends State<Videoscreen> {
 
   IconData _obscureText = Icons.favorite_border;
   IconData __obscureText = Icons.favorite;
+
+  String score;
 
   _VideoscreenState(){
     _estadoFavorito();
@@ -95,9 +97,16 @@ class _VideoscreenState extends State<Videoscreen> {
     prefs.setStringList('lista', favoritos);
   }
 
+  _Score(){
+    setState(() {
+      score = widget.movie.score.toString();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    _Score();
     String categoria;
 
 
@@ -170,12 +179,6 @@ class _VideoscreenState extends State<Videoscreen> {
                           builder: (context) => Pro(movie: widget.movie,),
                         ),
                       ),
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(
-//                          builder: (context) => Episodios(movie: widget.movie,),
-//                        ),
-//                      ),
                     },
                     shape: CircleBorder(),
                     fillColor: Colors.black,
@@ -209,10 +212,38 @@ class _VideoscreenState extends State<Videoscreen> {
                 bottom: 0.0,
                 right: 25.0,
                 child: IconButton(
-                  onPressed: () => Share.share('check out my website https://example.com'),
+                  onPressed: () {
+                    showGeneralDialog(
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        transitionBuilder: (context, a1, a2, widget) {
+                          return Transform.scale(
+                            scale: a1.value,
+                            child: Opacity(
+                              opacity: a1.value,
+                              child: AlertDialog(
+                                shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.0)),
+                                title: Text('Está função estará diponível em breve.',
+                                  style: TextStyle(
+                                    fontSize: 15.6,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 500),
+                        barrierDismissible: true,
+                        barrierLabel: '',
+                        context: context,
+                        pageBuilder: (context, animation1, animation2) {var a; return a; });
+                    Future.delayed(const Duration(milliseconds: 1200), () {
+                      Navigator.of(context).pop();
+                    });
+                  },
                   icon: Icon(Icons.share),
                   iconSize: 35.0,
-//                  color: Colors.white,
+                  color: Colors.black.withOpacity(0.5),
                 ),
               ),
             ],
@@ -250,16 +281,8 @@ class _VideoscreenState extends State<Videoscreen> {
                 ),
                 SizedBox(height: 12.0),
                 Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.star, ),
-                      Icon(Icons.star, ),
-                      Icon(Icons.star,),
-                      Icon(Icons.star_half,),
-                      Icon(Icons.star_border,),
-                    ],
-                  ),
+                  child: Text(score,
+                  style: TextStyle(fontSize: 16),),
                 ),
 
 

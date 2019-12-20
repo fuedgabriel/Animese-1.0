@@ -5,7 +5,7 @@ import 'widgets/content_scroll.dart';
 import '../../widgets/menu.dart';
 
 //request
-import 'package:flutter_netflix_ui_redesign/request/Usuario.dart';
+import 'package:animese/request/Usuario.dart';
 import '../../request/request.dart';
 import '../../request/Animes.dart';
 //json

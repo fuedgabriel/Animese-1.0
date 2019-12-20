@@ -2,7 +2,7 @@
 //widget
 import 'package:flutter/material.dart';
 //request
-import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
+import 'package:animese/request/Animes.dart';
 //rotas
 import '../../video/movie_screen.dart';
 

@@ -1,11 +1,12 @@
 
 //widget
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/widgets/menu.dart';
+import 'package:animese/widgets/menu.dart';
+
 import '../animes_list/widgets/content_scroll_list.dart';
 //rotas
-import 'package:flutter_netflix_ui_redesign/request/Animes.dart';
-import 'package:flutter_netflix_ui_redesign/request/request.dart';
+import 'package:animese/request/Animes.dart';
+import 'package:animese/request/request.dart';
 //json e dados
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';

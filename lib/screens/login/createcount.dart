@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_netflix_ui_redesign/request/request.dart';
+import 'package:animese/request/request.dart';
 import 'dart:async';
 
 

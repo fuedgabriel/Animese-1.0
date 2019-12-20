@@ -139,9 +139,9 @@ class _Suporte extends State<Suporte> {
                       //padding: EdgeInsets.only(left: 300.0, top: 400.0),
                       icon: Icon(Icons.send),
                       iconSize: 30.0,
-                      onPressed: () =>{
+                      onPressed: () {
                         if(tipo != null){
-                          SUPORTINSERT.insert(id, tipo, anime, anime, _textFieldController.text),
+                          SUPORTINSERT.insert(id, tipo, anime, anime, _textFieldController.text);
                           showGeneralDialog(
                               barrierColor: Colors.black.withOpacity(0.5),
                               transitionBuilder: (context, a1, a2, widget) {
@@ -166,12 +166,18 @@ class _Suporte extends State<Suporte> {
                                     ),
                                   ),
                                 );
+
                               },
                               transitionDuration: Duration(milliseconds: 500),
                               barrierDismissible: true,
                               barrierLabel: '',
                               context: context,
-                              pageBuilder: (context, animation1, animation2) {var a; return a; }),
+                              pageBuilder: (context, animation1, animation2) {var a; return a; });
+                          _textFieldController.clear();
+                          setState(() {
+                            motivo = 'Selecione o motivo';
+                          });
+
                         }
                         else
                           {
@@ -204,7 +210,7 @@ class _Suporte extends State<Suporte> {
                                 barrierDismissible: true,
                                 barrierLabel: '',
                                 context: context,
-                                pageBuilder: (context, animation1, animation2) {var a; return a; }),
+                                pageBuilder: (context, animation1, animation2) {var a; return a; });
                           }
                       },
                     ),

@@ -1,5 +1,8 @@
 //widget
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../screens/video/movie_screen.dart';
 import 'widgets/content_scroll.dart';
 import '../../widgets/menu.dart';
@@ -8,6 +11,7 @@ import '../../widgets/menu.dart';
 import 'package:animese/request/Usuario.dart';
 import '../../request/request.dart';
 import '../../request/Animes.dart';
+import 'package:device_info/device_info.dart';
 //json
 import 'dart:convert';
 
@@ -27,7 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var list = new List<ListAnime>();
   var user = new List<User>();
+  List nome;
+  List id;
   String theme;
+  List<String> recent;
   final itemAppTheme = AppTheme.values;
 
   _getAnime(){
@@ -35,8 +42,21 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         Iterable lista = json.decode(response.body);
         list = lista.map((model) => ListAnime.fromJson(model)).toList();
+        nome = list.map((f) => f.title).toList();
+        id = list.map((f) => f.sId).toList();
       });
     });
+  }
+  _recentAnimes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    recent = prefs.getStringList('lista');
+    if(recent == null){
+      recent = [];
+    }
+    print('lista');
+    print(recent.reversed);
+    Iterable<String> a = recent.reversed;
+    print(a.toList());
   }
 
 
@@ -54,11 +74,29 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
+  _device() async{
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    print('Running on ${androidInfo.model}');  // e.g. "Moto G (4)"
+//    print('Running on ${androidInfo.id}');
+//    print('Running on ${androidInfo.androidId}');
+//    print('Running on ${androidInfo.device}');
+//    print('Running on ${androidInfo.display}');
+//    print('Running on ${androidInfo.version}');
+//    print('Running on ${androidInfo.type}');
+//    print('Running on ${androidInfo.bootloader}');
+//    print('Running on ${androidInfo.hardware}');
+//    print('Running on ${androidInfo.host}');
+//    print('Running on ${androidInfo.product}');
+  }
 
 
   _HomeScreenState(){
     _getAnime();
     _thema();
+
+//    _device();
+
   }
   @override
   void initState(){
@@ -229,6 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _recentAnimes();
 
     double logoH = 200;
     double logoW =200 ;
@@ -254,9 +293,10 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: <Widget>[
             IconButton(
               padding: EdgeInsets.only(right: 30.0),
-              onPressed: () =>
+              onPressed: ()
               {
-                showSearch(context: context, delegate: DataSearch())
+                print(nome);
+                showSearch(context: context, delegate: DataSearch(id, nome, recent.reversed.toList()));
               },
               icon: Icon(Icons.search),
               iconSize: 30.0,
@@ -320,9 +360,10 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: <Widget>[
             IconButton(
               padding: EdgeInsets.only(right: 30.0),
-              onPressed: () =>
+              onPressed: () 
               {
-                showSearch(context: context, delegate: DataSearch())
+
+                showSearch(context: context, delegate: DataSearch(id, nome, recent.reversed.toList()),);
               },
               icon: Icon(Icons.search),
               iconSize: 30.0,
@@ -367,101 +408,123 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class DataSearch extends SearchDelegate<StreamBuilder>{
-  var list = new List<ListAnime>();
-  var ado = new List<ListAnime>();
+
+class DataSearch extends SearchDelegate<String>{
+  List id;
+  List nome;
+  List recent;
+  DataSearch(this.id, this.nome, this.recent);
+  ListAnime lisa;
 
 
-  _getAnime(){
-    API.getAnimes('').then((response){
-        Iterable lista = json.decode(response.body);
-        list = lista.map((model) => ListAnime.fromJson(model)).toList();
-        ado = list.map((model) => ado.add(model)).toList();
+  saverecent(sugestion) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> favoritos = prefs.getStringList('lista');
+    if(favoritos == null){ favoritos = [];}
+    if(favoritos.length > 15){favoritos.removeLast();}
+    if(favoritos.contains(sugestion) == true){favoritos.remove(sugestion);}
+
+    favoritos.add(sugestion);
+    prefs.setStringList('lista', favoritos);
+  }
+
+  get(num) async{
+    API.getAnimes(id[num]).then((response){
+      final json = jsonDecode(response.body);
+      lisa = ListAnime.fromJson(json);
     });
+  }
+
+  save(String key, dynamic value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList(key, value);
   }
 
 
 
-  List cities = [
-  ];
-  final recentCities = [
-    "canada",
-    "belem",
-    "vaca",
-    "salve"
-  ];
+
   @override
   List<Widget> buildActions(BuildContext context) {
-    _getAnime();
-    for(int i = 0; i == ado.length.toInt(); i++){
-//      cities = cities + ado[i].title;
-    }
-    // TODO: implement buildActions
+    // action for app bar
     return [
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: (){
           query = "";
         },
-      ),
+      )
     ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
+    // leading icon on the left of the app bar
+
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
         progress: transitionAnimation,
       ),
       onPressed: (){
-        close(context,null);
+        close(context, null);
       },
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return Card(
-      color: Colors.red,
-      shape: StadiumBorder(),
-      child: Center(
-        child: Text(query),
-      ),
-    );
+    //SHow some result based on the selection
+    return null;
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
+    // Show when someone searches for something
     final suggestionList = query.isEmpty
-        ?ado.toList()
-        :ado.toList();
+        ?recent
+        :nome.where((p) => p.startsWith(query)).toList();
 
-    return ListView.builder(itemBuilder: (context, index)=>ListTile(
-      onTap: (){
-        showResults(context);
-      },
-      leading: Icon(Icons.location_city),
-      title: RichText(
-        text: TextSpan(
-          text: suggestionList[index].title.substring(0,query.length),
-          style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold
+    return ListView.builder(
+        itemBuilder: (context, index) => ListTile(
+          onTap: () async{
+            saverecent(suggestionList[index]);
+
+            for(int i = 0; i<nome.length; i++){
+              if(suggestionList[index] == nome[i]){
+                get(i);
+                Timer(Duration(milliseconds: 1200), () {
+
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Videoscreen(movie: lisa),
+                    ),
+                  );
+                });
+
+              }
+            }
+
+          },
+          leading: Icon(Icons.movie),
+          title: RichText(
+              text: TextSpan(
+                text: suggestionList[index].substring(0, query.length),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold
+                ),
+                children: [
+                  TextSpan(
+                    text: suggestionList[index].substring(query.length),
+                    style: TextStyle(color: Colors.grey)
+                  ),
+                ],
+              ),
           ),
-          children: [TextSpan(
-            text: suggestionList[index].title.substring(query.length),
-            style: TextStyle(color: Colors.grey
-            )
-          )
-          ]
         ),
-      )
-    ),
       itemCount: suggestionList.length,
     );
   }
-
 }

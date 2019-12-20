@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 
 //request
 import 'package:animese/request/Animes.dart';
-
+import 'package:animese/request/request.dart';
 //rotas
 import 'package:animese/screens/suporte_anime/suporteAnime.dart';
 import '../player/player.dart';
 
 //biblioteca
 import 'package:shared_preferences/shared_preferences.dart';
+
 //import 'package:share/share.dart';
 
 
@@ -46,11 +47,13 @@ class _VideoscreenState extends State<Videoscreen> {
   IconData _obscureText = Icons.favorite_border;
   IconData __obscureText = Icons.favorite;
 
-  String score;
+  String score = '';
 
   _VideoscreenState(){
     _estadoFavorito();
   }
+
+
 
 
   void _favorite() {
@@ -97,7 +100,7 @@ class _VideoscreenState extends State<Videoscreen> {
     prefs.setStringList('lista', favoritos);
   }
 
-  _Score(){
+  _score(){
     setState(() {
       score = widget.movie.score.toString();
     });
@@ -106,7 +109,7 @@ class _VideoscreenState extends State<Videoscreen> {
 
   @override
   Widget build(BuildContext context) {
-    _Score();
+    _score();
     String categoria;
 
 
@@ -281,7 +284,7 @@ class _VideoscreenState extends State<Videoscreen> {
                 ),
                 SizedBox(height: 12.0),
                 Center(
-                  child: Text(score,
+                  child: Text('Nota: $score',
                   style: TextStyle(fontSize: 16),),
                 ),
 

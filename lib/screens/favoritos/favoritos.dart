@@ -31,14 +31,11 @@ class _FavoritosState extends State<Favoritos> {
       API.getAnimes(animes[i]).then((response){
         setState(() {
           final json = jsonDecode(response.body);
-
           lisa = ListAnime.fromJson(json);
-
           list.add(lisa);
         });
       });
     }
-
   }
 
   _FavoritosState() {

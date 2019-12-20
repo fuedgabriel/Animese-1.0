@@ -166,9 +166,9 @@ class _SuporteAnime extends State<SuporteAnime> {
                         //padding: EdgeInsets.only(left: 300.0, top: 400.0),
                         icon: Icon(Icons.send),
                         iconSize: 30.0,
-                        onPressed: () =>{
+                        onPressed: () {
                           if(tipo != null){
-                            SUPORTINSERT.insert(id, tipo, widget.movieA.title, widget.movieA.sId, _textFieldController.text),
+                            SUPORTINSERT.insert(id, tipo, widget.movieA.title, widget.movieA.sId, _textFieldController.text);
                             showGeneralDialog(
                                 barrierColor: Colors.black.withOpacity(0.5),
                                 transitionBuilder: (context, a1, a2, widget) {
@@ -198,7 +198,12 @@ class _SuporteAnime extends State<SuporteAnime> {
                                 barrierDismissible: true,
                                 barrierLabel: '',
                                 context: context,
-                                pageBuilder: (context, animation1, animation2) {var a; return a; }),
+                                pageBuilder: (context, animation1, animation2) {var a; return a; });
+                            _textFieldController.clear();
+                            setState(() {
+                              motivo = 'Selecione o motivo';
+                            });
+
                           }
                           else
                             {
@@ -231,7 +236,7 @@ class _SuporteAnime extends State<SuporteAnime> {
                                   barrierDismissible: true,
                                   barrierLabel: '',
                                   context: context,
-                                  pageBuilder: (context, animation1, animation2) {var a; return a; }),
+                                  pageBuilder: (context, animation1, animation2) {var a; return a; });
                             }
                         },
                       ),

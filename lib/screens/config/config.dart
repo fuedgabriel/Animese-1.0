@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:animese/widgets/menu.dart';
 import 'package:animese/request/request.dart';
@@ -62,55 +63,60 @@ _Config(){
           Padding(padding: EdgeInsets.all(5.0),),
           Stack(
             children: <Widget>[
-              Container(
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child:Text(
+              ExpansionTile(
+                title: Row(
+                  children: <Widget>[
+                    Icon(Icons.color_lens),
+                    Text(
                       '  Escolha seu tema:',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Stack(
-            children: <Widget>[
-              Container(
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Container(
 //                width: 400,
-                height: 275,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(9),
-                  itemCount: AppTheme.values.length,
-                  itemBuilder: (context, index) {
-                    final itemAppTheme = AppTheme.values[index];
-                    return Card(
-                      color: appThemeData[itemAppTheme].primaryColor,
-                      child: ListTile(
-                        title: Text(
-                          itemAppTheme.toString().replaceAll('AppTheme.', '').replaceAll('__', ': ').replaceAll('_', ' '),
-                          style: appThemeData[itemAppTheme].textTheme.body1,
-                        ),
-                        onTap: () async {
-                          BlocProvider.of<ThemeBloc>(context).dispatch(
-                            ThemeChanged(theme: itemAppTheme),
-                          );
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setString('Thema', itemAppTheme.toString());
-                          print(itemAppTheme);
+                        height: 275,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.all(9),
+                          itemCount: AppTheme.values.length,
+                          itemBuilder: (context, index) {
+                            final itemAppTheme = AppTheme.values[index];
+                            return Card(
+                              color: appThemeData[itemAppTheme].primaryColor,
+                              child: ListTile(
+                                title: Text(
+                                  itemAppTheme.toString().replaceAll('AppTheme.', '').replaceAll('__', ': ').replaceAll('_', ' '),
+                                  style: appThemeData[itemAppTheme].textTheme.body1,
+                                ),
+                                onTap: () async {
+                                  BlocProvider.of<ThemeBloc>(context).dispatch(
+                                    ThemeChanged(theme: itemAppTheme),
+                                  );
+                                  final prefs = await SharedPreferences.getInstance();
+                                  prefs.setString('Thema', itemAppTheme.toString());
+                                  print(itemAppTheme);
 
-                        },
+                                },
+                              ),
+                            );
+                          },
+                          scrollDirection: Axis.vertical,
+                        ),
                       ),
-                    );
-                  },
-                  scrollDirection: Axis.vertical,
-                ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
+
           Divider(),
           Stack(
             children: <Widget>[

@@ -167,7 +167,7 @@ class _SuporteAnime extends State<SuporteAnime> {
                         icon: Icon(Icons.send),
                         iconSize: 30.0,
                         onPressed: () {
-                          if(tipo != null){
+                          if(tipo != null && _textFieldController.text != ''){
                             SUPORTINSERT.insert(id, tipo, widget.movieA.title, widget.movieA.sId, _textFieldController.text);
                             showGeneralDialog(
                                 barrierColor: Colors.black.withOpacity(0.5),
@@ -223,7 +223,7 @@ class _SuporteAnime extends State<SuporteAnime> {
                                                 },)],
                                           shape: OutlineInputBorder(
                                               borderRadius: BorderRadius.circular(16.0)),
-                                          title: Text('Selecione uma opção',
+                                          title: Text('Selecione uma opção ou digite uma mensagem.',
                                             style: TextStyle(
                                               fontSize: 15.6,
                                             ),

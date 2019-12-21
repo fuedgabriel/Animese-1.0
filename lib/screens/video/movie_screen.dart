@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 //request
 import 'package:animese/request/Animes.dart';
-import 'package:animese/request/request.dart';
+
 //rotas
 import 'package:animese/screens/suporte_anime/suporteAnime.dart';
 import '../player/player.dart';
@@ -72,7 +72,7 @@ class _VideoscreenState extends State<Videoscreen> {
 
   _estadoFavorito()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> favoritos = prefs.getStringList('lista');
+    List<String> favoritos = prefs.getStringList('favoritos');
     if(favoritos == null){
       favoritos = [];
     }
@@ -87,17 +87,17 @@ class _VideoscreenState extends State<Videoscreen> {
   var list = new List<ListAnime>();
   _removeFavoritos() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> favoritos = prefs.getStringList('lista');
+    List<String> favoritos = prefs.getStringList('favoritos');
     favoritos.remove(widget.movie.sId.toString());
-    prefs.setStringList('lista', favoritos);
+    prefs.setStringList('favoritos', favoritos);
   }
 
   _saveFavoritos() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> favoritos = prefs.getStringList('lista');
+    List<String> favoritos = prefs.getStringList('favoritos');
     if(favoritos == null){ favoritos = [];}
     favoritos.add(widget.movie.sId.toString());
-    prefs.setStringList('lista', favoritos);
+    prefs.setStringList('favoritos', favoritos);
   }
 
   _score(){
@@ -283,9 +283,14 @@ class _VideoscreenState extends State<Videoscreen> {
                   ),
                 ),
                 SizedBox(height: 12.0),
-                Center(
-                  child: Text('Nota: $score',
-                  style: TextStyle(fontSize: 16),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Nota: ',
+                      style: TextStyle(fontSize: 16, fontWeight:FontWeight.w500),),
+                    Text('$score',
+                      style: TextStyle(fontSize: 16, fontWeight:FontWeight.w700 ),),
+                  ],
                 ),
 
 

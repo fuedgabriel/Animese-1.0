@@ -140,7 +140,7 @@ class _Suporte extends State<Suporte> {
                       icon: Icon(Icons.send),
                       iconSize: 30.0,
                       onPressed: () {
-                        if(tipo != null){
+                        if(tipo != null && _textFieldController.text != ''){
                           SUPORTINSERT.insert(id, tipo, anime, anime, _textFieldController.text);
                           showGeneralDialog(
                               barrierColor: Colors.black.withOpacity(0.5),
@@ -197,7 +197,7 @@ class _Suporte extends State<Suporte> {
                                             },)],
                                         shape: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(16.0)),
-                                        title: Text('Selecione uma opção',
+                                        title: Text('Selecione uma opção ou digite uma mensagem.',
                                           style: TextStyle(
                                             fontSize: 15.6,
                                           ),

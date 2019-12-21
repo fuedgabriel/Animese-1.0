@@ -1,5 +1,4 @@
 //widget
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
   var user = new List<User>();
   List nome;
   List id;
+  List url;
+  List ep;
   String theme;
   List<String> recent;
   final itemAppTheme = AppTheme.values;
@@ -44,6 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
         list = lista.map((model) => ListAnime.fromJson(model)).toList();
         nome = list.map((f) => f.title).toList();
         id = list.map((f) => f.sId).toList();
+        ep = list.map((f) => f.episodes).toList();
+        url = list.map((f) => f.url).toList();
       });
     });
   }
@@ -363,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () 
               {
 
-                showSearch(context: context, delegate: DataSearch(id, nome, recent.reversed.toList()),);
+                showSearch(context: context, delegate: DataSearch(id, nome, recent.reversed.toList()), );
               },
               icon: Icon(Icons.search),
               iconSize: 30.0,
@@ -431,7 +434,7 @@ class DataSearch extends SearchDelegate<String>{
   get(num) async{
     API.getAnimes(id[num]).then((response){
       final json = jsonDecode(response.body);
-      lisa = ListAnime.fromJson(json);
+      return ListAnime.fromJson(json);
     });
   }
 
@@ -484,17 +487,16 @@ class DataSearch extends SearchDelegate<String>{
         ?recent
         :nome.where((p) => p.startsWith(query)).toList();
 
+
     return ListView.builder(
         itemBuilder: (context, index) => ListTile(
           onTap: () async{
             saverecent(suggestionList[index]);
-
             for(int i = 0; i<nome.length; i++){
               if(suggestionList[index] == nome[i]){
-                get(i);
-                Timer(Duration(milliseconds: 1200), () {
-
-
+                API.getAnimes(id[i]).then((response){
+                  final json = jsonDecode(response.body);
+                  lisa = ListAnime.fromJson(json);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -502,12 +504,10 @@ class DataSearch extends SearchDelegate<String>{
                     ),
                   );
                 });
-
               }
             }
-
           },
-          leading: Icon(Icons.movie),
+          contentPadding: EdgeInsets.only(bottom: 3, top: 3, left: 5),
           title: RichText(
               text: TextSpan(
                 text: suggestionList[index].substring(0, query.length),

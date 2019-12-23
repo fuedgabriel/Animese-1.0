@@ -56,10 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if(recent == null){
       recent = [];
     }
-    print('lista');
-    print(recent.reversed);
     Iterable<String> a = recent.reversed;
-    print(a.toList());
   }
 
 
@@ -298,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(right: 30.0),
               onPressed: ()
               {
-                print(nome);
+
                 showSearch(context: context, delegate: DataSearch(id, nome, recent.reversed.toList()));
               },
               icon: Icon(Icons.search),
@@ -462,8 +459,8 @@ class DataSearch extends SearchDelegate<String>{
   @override
   Widget buildLeading(BuildContext context) {
     // leading icon on the left of the app bar
-
     return IconButton(
+      disabledColor: Colors.red,
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
         progress: transitionAnimation,
@@ -486,8 +483,6 @@ class DataSearch extends SearchDelegate<String>{
     final suggestionList = query.isEmpty
         ?recent
         :nome.where((p) => p.startsWith(query)).toList();
-
-
     return ListView.builder(
         itemBuilder: (context, index) => ListTile(
           onTap: () async{

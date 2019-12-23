@@ -3,13 +3,15 @@ import 'package:video_box/video.controller.dart';
 import 'package:video_box/video_box.dart';
 import 'package:video_player/video_player.dart';
 import 'package:animese/request/Animes.dart';
-
+import 'package:animese/request/Videos.dart';
 import 'globals.dart';
+import 'widget/tile.dart';
 
 class Pro extends StatefulWidget {
   final ListAnime movie;
+  final List<ListVideo> videos;
 
-  Pro({this.movie});
+  Pro({this.movie, this.videos});
 
 
   @override
@@ -19,11 +21,18 @@ class Pro extends StatefulWidget {
 class _ProSrcState extends State<Pro> {
   List<String> source = [src1, src2, src3];
 
+  List<ListVideo> video;
   int index = 0;
 
   String get src => source[index];
 
+
+
   VideoController vc;
+  bool loading = true;
+
+
+
 
   @override
   void initState() {
@@ -37,12 +46,11 @@ class _ProSrcState extends State<Pro> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.movie.title),
-      ),
       body: ListView(
         children: <Widget>[
           AspectRatio(
@@ -50,9 +58,26 @@ class _ProSrcState extends State<Pro> {
             child: VideoBox(
               controller: vc,
               children: <Widget>[
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Ep: '+(index+1).toString()+' de '+widget.movie.episodes.toString()+'  '+widget.movie.title,style: TextStyle(color: Colors.white),),
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        iconSize: 24,
+                        disabledColor: Colors.white60,
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      Text('Ep: '+(index+1).toString()+' de '+widget.movie.episodes.toString()+'  '+widget.movie.title,
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Align(
                   alignment: Alignment(0.9, 0),
@@ -95,37 +120,9 @@ class _ProSrcState extends State<Pro> {
               ],
             ),
           ),
-          Column(
+          Stack(
             children: <Widget>[
-              ExpansionTile(
-                leading: Icon(Icons.movie),
-                title: Text('Temporada '+widget.movie.seasons.toString()),
-                children: <Widget>[
-                  Divider(),
-                  ListTile(title: Text('Ep 01'),
-                    onTap: (){
-                      vc.setSource(VideoPlayerController.network(src1));
-                    },),
-                  Divider(),
-                  ListTile(title: Text('Ep 02'),
-                    onTap: (){
-                      setState(() {
-                        index = 2;
-                      });
-                      vc.setSource(VideoPlayerController.network(src2));
-                    },),
-                  Divider(),
-                  ListTile(title: Text('Ep 03'),
-                    onTap: (){
-                      vc.setSource(VideoPlayerController.network(src3));
-                    },),
-                  Divider(),
-                  ListTile(title: Text('Ep 04'),
-                    onTap: (){
-                    },),
-                  Divider(),
-                ],
-              ),
+              ContentScroll(images: widget.videos, movies: widget.movie,),
             ],
           ),
         ],

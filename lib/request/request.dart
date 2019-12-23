@@ -16,8 +16,8 @@ class API {
     }
     return await http.get(url);
   }
-  static Future getVideos() async{
-    var url = baseUrl + "/api/video";
+  static Future getVideos(String id) async{
+    var url = baseUrl + "/api/video/anime/"+id;
     return await http.get(url);
   }
   

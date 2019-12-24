@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController;
 
   var list = new List<ListAnime>();
+  var listLancamento = new List<ListAnime>();
   var user = new List<User>();
   List nome;
   List id;
@@ -37,6 +38,23 @@ class _HomeScreenState extends State<HomeScreen> {
   String theme;
   List<String> recent;
   final itemAppTheme = AppTheme.values;
+
+  var listFavoritos = new List<ListAnime>();
+  ListAnime lisa;
+
+  _getFavoritos() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List animes = prefs.getStringList('favoritos');
+    for(int i = 0;i < animes.length; i++){
+      API.getAnimes(animes[i]).then((response){
+        setState(() {
+          final json = jsonDecode(response.body);
+          lisa = ListAnime.fromJson(json);
+          listFavoritos.add(lisa);
+        });
+      });
+    }
+  }
 
   _getAnime(){
     API.getAnimes('').then((response){
@@ -47,6 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
         id = list.map((f) => f.sId).toList();
         ep = list.map((f) => f.episodes).toList();
         url = list.map((f) => f.url).toList();
+      });
+    });
+  }
+  _getLancamento(){
+    POST.lancamento().then((response){
+      setState(() {
+        Iterable lika = json.decode(response.body);
+        listLancamento = lika.map((model) => ListAnime.fromJson(model)).toList();
       });
     });
   }
@@ -92,7 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   _HomeScreenState(){
+    _getLancamento();
     _getAnime();
+    _getFavoritos();
     _thema();
 
 //    _device();
@@ -322,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             ContentScroll(
-              images: list,
+              images: listLancamento,
               title: 'Lançamentos',
               imageHeight: 250.0,
               imageWidth: 150.0,
@@ -331,7 +359,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
             ContentScroll(
-              images: list,
+              images: listFavoritos,
               title: "Minha lista",
               imageHeight: 250.0,
               imageWidth: 150.0,
@@ -389,14 +417,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             ContentScrollFavorite(
-              images: list,
+              images: listLancamento,
               title: 'Lançamentos',
               imageHeight: 250.0,
               imageWidth: 150.0,
             ),
 
             ContentScrollFavorite(
-              images: list,
+              images: listFavoritos,
               title: "Minha lista",
               imageHeight: 250.0,
               imageWidth: 150.0,

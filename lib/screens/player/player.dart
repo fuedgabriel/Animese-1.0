@@ -1,11 +1,15 @@
+//widget
 import 'package:flutter/material.dart';
 import 'package:video_box/video.controller.dart';
 import 'package:video_box/video_box.dart';
 import 'package:video_player/video_player.dart';
+
+//request
 import 'package:animese/request/Animes.dart';
 import 'package:animese/request/Videos.dart';
-import 'globals.dart';
-import 'widget/tile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+//external
+import 'package:mx_player_plugin/mx_player_plugin.dart';
 
 class Pro extends StatefulWidget {
   final ListAnime movie;
@@ -18,28 +22,63 @@ class Pro extends StatefulWidget {
 }
 
 class _ProSrcState extends State<Pro> {
-  List<String> source = [src1, src2, src3];
-
   List<ListVideo> video;
   int index = 0;
-
-  String get src => source[index];
-
+  double opacidade = 1;
+  Icon icone = Icon(Icons.visibility);
   VideoController vc;
   bool loading = true;
-  var episode;
+  int episode;
 
   @override
   void initState() {
     super.initState();
-    episode = 0;
     vc = VideoController(
-      source: VideoPlayerController.network(widget.videos[episode].url),
+      source: VideoPlayerController.network(''),
       autoplay: true,
-      controllerWidgets: true
+      controllerWidgets: true,
     );
-
   }
+
+  continuar() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int episodio = prefs.getInt(widget.movie.title);
+    if(episodio == null){
+      setState(() {
+        episode = 0;
+      });
+      vc.setAutoplay(true);
+      vc.showVideoCtrl(true);
+      vc.autoplay;
+      vc.setSource(VideoPlayerController.network(widget.videos[episode].url));
+
+    }
+    else{
+      setState(() {
+        episode = episodio;
+      });
+      vc.setAutoplay(true);
+      vc.showVideoCtrl(true);
+      vc.autoplay;
+      vc.setSource(VideoPlayerController.network(widget.videos[episode].url));
+    }
+  }
+  _ProSrcState(){
+    continuar();
+  }
+
+  _suggestion() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> suggestion = prefs.getStringList('suggestion');
+    if(suggestion == null){ suggestion = [];}
+    suggestion.add(widget.movie.sId.toString());
+    prefs.setStringList('suggestion', suggestion);
+  }
+
+
+
+
+
 
   @override
   void dispose() {
@@ -49,8 +88,11 @@ class _ProSrcState extends State<Pro> {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
 
+    if(episode+1 == widget.videos.length){
+
+    }
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -61,6 +103,33 @@ class _ProSrcState extends State<Pro> {
                 child: VideoBox(
                   controller: vc,
                   children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 200, right: 5, top: 5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          IconButton(
+                            iconSize: 30,
+                            disabledColor: Colors.white60,
+                            icon: icone,
+                            onPressed: () {
+                              setState(() {
+                                if(opacidade == 1){
+                                  opacidade = 0;
+                                  icone = Icon(Icons.visibility_off);
+                                }
+                                else{
+                                  opacidade = 1;
+                                  icone = Icon(Icons.visibility);
+                                }
+
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -73,45 +142,28 @@ class _ProSrcState extends State<Pro> {
                               Navigator.of(context).pop();
                             },
                           ),
-                          Text(
-                            'Ep: ' +
-                                (episode + 1).toString() +
-                                ' de ' +
-                                widget.movie.episodes.toString() +
-                                '  ' +
-                                widget.movie.title,
-                            style: TextStyle(color: Colors.white),
-                          ),
                         ],
                       ),
                     ),
-//                    Align(
-//                      alignment: Alignment(0.9, -0.9),
-//                      child: IconButton(
-//                        iconSize: VideoBox.centerIconSize,
-//                        disabledColor: Colors.white60,
-//                        icon: Icon(Icons.swap_horiz, size: 32,),
-//                        onPressed: () {
-//                        },
-//                      ),
-//                    ),
                     Align(
                       alignment: Alignment(0.9, 0),
                       child: IconButton(
                         iconSize: VideoBox.centerIconSize,
                         disabledColor: Colors.white60,
                         icon: Icon(Icons.skip_next),
-                        onPressed: () {
-                          print(episode);
-                          episode=episode+1;
-                          print(widget.videos[episode].url);
-                          print(episode);
-//                          vc.dispose();
+                        onPressed: () async{
+                          setState(() {
+                            episode = episode + 1;
+                          });
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setInt(widget.movie.title, episode);
+
                           vc.setAutoplay(true);
                           vc.showVideoCtrl(true);
                           vc.autoplay;
                           print(widget.videos[episode].url);
-                          vc.setSource(VideoPlayerController.network(widget.videos[episode].url));
+                          vc.setSource(VideoPlayerController.network(
+                              widget.videos[episode].url));
                         },
                       ),
                     ),
@@ -121,8 +173,12 @@ class _ProSrcState extends State<Pro> {
                         iconSize: VideoBox.centerIconSize,
                         disabledColor: Colors.white60,
                         icon: Icon(Icons.skip_previous),
-                        onPressed: () {
-                          episode=episode-1;
+                        onPressed: () async{
+                          setState(() {
+                            episode = episode - 1;
+                          });
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setInt(widget.movie.title, episode);
                           vc.setAutoplay(true);
                           vc.showVideoCtrl(true);
                           vc.setSource(VideoPlayerController.network(widget.videos[episode].url));
@@ -132,6 +188,16 @@ class _ProSrcState extends State<Pro> {
                   ],
                 ),
               ),
+              Opacity(
+                opacity: opacidade,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 50, top: 24),
+                  child: Text(
+                    'Ep: ' + (episode + 1).toString() + ' de ' + widget.movie.episodes.toString() + '  ' + widget.movie.title,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
             ],
           ),
           Stack(
@@ -142,6 +208,7 @@ class _ProSrcState extends State<Pro> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: widget.videos.length,
+                    // ignore: non_constant_identifier_names
                     itemBuilder: (BuildContext, int conta) {
                       return Stack(
                         children: <Widget>[
@@ -150,8 +217,6 @@ class _ProSrcState extends State<Pro> {
                             child: Card(
                               elevation: 5,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
                                       padding: EdgeInsets.only(left: 6),
@@ -159,8 +224,7 @@ class _ProSrcState extends State<Pro> {
                                         child: Stack(
                                           children: <Widget>[
                                             Image(
-                                              image: NetworkImage(
-                                                  'https://3.bp.blogspot.com/-2bwBfYvt0Rk/WDM-lfH574I/AAAAAAAABos/Jb4MauEsi8072H-4IOy5b4y9Joi_ia5_ACLcB/s1600/Untitled.png'),
+                                              image: NetworkImage('https://3.bp.blogspot.com/-2bwBfYvt0Rk/WDM-lfH574I/AAAAAAAABos/Jb4MauEsi8072H-4IOy5b4y9Joi_ia5_ACLcB/s1600/Untitled.png'),
                                               fit: BoxFit.contain,
                                               height: 128,
                                               width: 128,
@@ -176,8 +240,13 @@ class _ProSrcState extends State<Pro> {
                                             ),
                                           ],
                                         ),
-                                        onTap: () {
-                                          episode = conta;
+                                        onTap: () async{
+                                          setState(() {
+                                            episode = conta;
+                                          });
+                                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                                          prefs.setInt(widget.movie.title, conta);
+
                                           vc.setAutoplay(true);
                                           vc.showVideoCtrl(true);
                                           vc.setSource(VideoPlayerController.network(widget.videos[conta].url));
@@ -186,24 +255,20 @@ class _ProSrcState extends State<Pro> {
                                   Padding(
                                     padding: EdgeInsets.only(top: 10, left: 5),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Opacity(
                                             opacity: 0.8,
                                             child: Padding(
                                               padding: EdgeInsets.only(top: 5),
                                               child: Text(
-                                                'Episódio ' +
-                                                    widget.videos[conta].episode.toString() +
-                                                    '   ',
+                                                'Episódio ' + widget.videos[conta].episode.toString() + '   ',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
-                                                    fontStyle:
-                                                        FontStyle.italic),
+                                                    fontStyle: FontStyle.italic
+                                                ),
                                               ),
                                             )),
                                         Opacity(
@@ -211,10 +276,7 @@ class _ProSrcState extends State<Pro> {
                                             child: Padding(
                                               padding: EdgeInsets.only(top: 5),
                                               child: Text(
-                                                widget.movie.air
-                                                    .toString()
-                                                    .replaceAll(
-                                                        'T00:00:00.000Z', ''),
+                                                widget.movie.air.toString().replaceAll('T00:00:00.000Z', ''),
                                                 style: TextStyle(
                                                     fontSize: 13,
                                                     fontWeight: FontWeight.bold,
@@ -225,28 +287,122 @@ class _ProSrcState extends State<Pro> {
                                       ],
                                     ),
                                   ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisSize: MainAxisSize.max,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Container(
-                                        height: 20,
-                                        child: IconButton(
-                                          icon: Icon(Icons.file_download),
+                                      FlatButton(
+                                        child: Text(
+                                          'Externo',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle: FontStyle.italic),
                                         ),
+                                        onPressed: () {
+                                          showGeneralDialog(
+                                              barrierColor:
+                                                  Colors.black.withOpacity(0.2),
+                                              transitionBuilder:
+                                                  (context, a1, a2, widgett) {
+                                                return Transform.scale(
+                                                  scale: a1.value,
+                                                  child: AlertDialog(
+                                                    actions: <Widget>[
+                                                      FlatButton(
+                                                        child: Row(
+                                                          children: <Widget>[
+                                                            Image(
+                                                              image: AssetImage(
+                                                                  'assets/logos/vlc.png'),
+                                                              height: 24,
+                                                              width: 24,
+                                                            ),
+                                                            Text(' VLC')
+                                                          ],
+                                                        ),
+                                                        onPressed: () async {
+                                                          await PlayerPlugin.openWithVlcPlayer(widget.videos[conta].url);
+                                                        },
+                                                      ),
+//                                                      FlatButton(
+//                                                        child: Row(
+//                                                          children: <Widget>[
+//                                                            Image(
+//                                                              image: AssetImage(
+//                                                                  'assets/logos/mxplayer.png'),
+//                                                              height: 24,
+//                                                              width: 24,
+//                                                            ),
+//                                                            Text(' MX Player')
+//                                                          ],
+//                                                        ),
+//                                                        onPressed: () async {
+//                                                          await PlayerPlugin.openWithMxPlayer(widget.videos[conta].url, '');
+//                                                        },
+//                                                      ),
+//                                                      FlatButton(
+//                                                        child: Row(
+//                                                          children: <Widget>[
+//                                                            Icon(Icons
+//                                                                .file_download),
+//                                                            Text(' Download')
+//                                                          ],
+//                                                        ),
+//                                                        onPressed: () async{
+//                                                          final taskId = await FlutterDownloader.enqueue(
+//                                                            url: widget.videos[conta].url,
+//                                                            savedDir: 'the path of directory where you want to save downloaded files',
+//                                                            showNotification: true, // show download progress in status bar (for Android)
+//                                                            openFileFromNotification: true, // click on notification to open downloaded file (for Android)
+//                                                          );
+//
+//
+//
+//
+//                                                        },
+//                                                      ),
+                                                      FlatButton(
+                                                        child: Row(
+                                                          children: <Widget>[
+                                                            Icon(Icons
+                                                                .arrow_back),
+                                                            Text(' Voltar')
+                                                          ],
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                    ],
+                                                    shape: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    30.0)),
+                                                    title: Text(
+                                                      'Escolha uma opção: ',
+                                                      style: TextStyle(
+                                                        fontSize: 15.6,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              transitionDuration:
+                                                  Duration(milliseconds: 500),
+                                              barrierDismissible: false,
+                                              barrierLabel: '',
+                                              context: context,
+                                              pageBuilder: (context, animation1,
+                                                  animation2) {
+                                                var a;
+                                                return a;
+                                              });
+                                        },
                                       ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 20, left: 12),
-                                        child: Container(
-                                          height: 20,
-                                          child: IconButton(
-                                            icon: Icon(Icons.screen_share),
-                                          ),
-                                        ),
-                                      )
                                     ],
-                                  ),
+                                  )
                                 ],
                               ),
                             ),

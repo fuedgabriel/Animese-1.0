@@ -22,6 +22,7 @@ class ContentScroll extends StatelessWidget {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           itemCount: 5,
+          // ignore: non_constant_identifier_names
           itemBuilder: (BuildContext, int conta) {
             return Stack(
               children: <Widget>[

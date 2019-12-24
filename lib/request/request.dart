@@ -42,14 +42,14 @@ class API {
 
 }
 
-
-
-
-
 class POST
 {
   static Future lancamento() async{
     var url =baseUrl+'/api/anime/release';
+    return await http.post(url);
+  }
+  static Future categoria() async{
+    var url =baseUrl+'/api/anime/category';
     return await http.post(url);
   }
 

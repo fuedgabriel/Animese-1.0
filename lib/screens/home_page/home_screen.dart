@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var list = new List<ListAnime>();
   var listLancamento = new List<ListAnime>();
+  var listCategoria = new List<ListAnime>();
   var user = new List<User>();
   List nome;
   List id;
@@ -73,6 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         Iterable lika = json.decode(response.body);
         listLancamento = lika.map((model) => ListAnime.fromJson(model)).toList();
+      });
+    });
+  }
+  _getCategoria(){
+    POST.categoria().then((response){
+      setState(() {
+        Iterable cate = json.decode(response.body);
+        listCategoria = cate.map((model) => ListAnime.fromJson(model)).toList();
       });
     });
   }
@@ -121,6 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _getLancamento();
     _getAnime();
     _getFavoritos();
+    _getCategoria();
     _thema();
 
 //    _device();
@@ -355,6 +365,12 @@ class _HomeScreenState extends State<HomeScreen> {
               imageHeight: 250.0,
               imageWidth: 150.0,
             ),
+            ContentScroll(
+              images: listCategoria,
+              title: 'Sugestões',
+              imageHeight: 250.0,
+              imageWidth: 150.0,
+            ),
 
 
 
@@ -419,6 +435,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ContentScrollFavorite(
               images: listLancamento,
               title: 'Lançamentos',
+              imageHeight: 250.0,
+              imageWidth: 150.0,
+            ),
+            ContentScrollFavorite(
+              images: listCategoria,
+              title: 'Sugestões',
               imageHeight: 250.0,
               imageWidth: 150.0,
             ),

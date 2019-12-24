@@ -17,6 +17,7 @@ import 'package:animese/request/request.dart';
 
 
 class AnimesScreen extends StatefulWidget {
+  
   @override
 
   _AnimesScreenState createState() => _AnimesScreenState();

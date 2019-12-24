@@ -67,15 +67,6 @@ class _ProSrcState extends State<Pro> {
     continuar();
   }
 
-  _suggestion() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> suggestion = prefs.getStringList('suggestion');
-    if(suggestion == null){ suggestion = [];}
-    suggestion.add(widget.movie.sId.toString());
-    prefs.setStringList('suggestion', suggestion);
-  }
-
-
 
 
 

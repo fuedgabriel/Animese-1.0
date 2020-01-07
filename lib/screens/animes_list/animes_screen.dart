@@ -7,7 +7,7 @@ import 'widgets/content_scroll_list.dart';
 import 'dart:convert';
 
 //request
-
+import 'package:animese/request/ListPage.dart';
 import 'package:animese/request/Animes.dart';
 import 'package:animese/request/request.dart';
 
@@ -25,6 +25,7 @@ class AnimesScreen extends StatefulWidget {
 
 
 class _AnimesScreenState extends State<AnimesScreen> {
+  ListAnimePage page;
   var list = new List<ListAnime>();
 
 
@@ -32,8 +33,16 @@ class _AnimesScreenState extends State<AnimesScreen> {
   _getAnime(){
     API.getAnimes('').then((response){
       setState(() {
-        Iterable lista = json.decode(response.body);
+        Map decoded = json.decode(response.body);
+        Iterable lista = decoded['docs'];
         list = lista.map((model) => ListAnime.fromJson(model)).toList();
+//        print(response.body);
+//        Iterable lista = json.decode(response.body);
+//        listPage = lista.map((model) => ListAnimePage.fromJson(model)).toList();
+//        list = listPage.map((f) => f.docs).cast<ListAnime>().toList();
+//        print(list);
+
+//        list = lista.map((model) => ListAnime.fromJson(model)).toList();
       });
     });
   }
@@ -42,6 +51,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
   @override
   Widget build(BuildContext context) {
     _getAnime();
+    print('aaa');
     return Scaffold(
       drawer: MenuWidget(page: 'Lista',),
       appBar: AppBar(

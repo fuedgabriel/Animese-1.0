@@ -79,10 +79,6 @@ class _ProSrcState extends State<Pro> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(episode+1 == widget.videos.length){
-
-    }
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView(
@@ -184,7 +180,7 @@ class _ProSrcState extends State<Pro> {
                 child: Padding(
                   padding: EdgeInsets.only(left: 50, top: 24),
                   child: Text(
-                    'Ep: ' + (episode + 1).toString() + ' de ' + widget.movie.episodes.toString() + '  ' + widget.movie.title,
+                    'Ep: ' + (widget.videos[episode].episode).toString() + ' de ' + widget.movie.episodes.toString() + '  ' + widget.movie.title,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -194,7 +190,7 @@ class _ProSrcState extends State<Pro> {
           Stack(
             children: <Widget>[
               Container(
-                height: (height - 170),
+                height: (height - 200),
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,

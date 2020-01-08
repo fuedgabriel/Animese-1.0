@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animese/request/Animes.dart';
 import '../../../screens/video/movie_screen.dart';
-import '../../animes_list/listaHome.dart';
 
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
@@ -194,22 +193,7 @@ class ContentScrollFavorite extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  if(title == "Lançamentos"){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Screen(images, title),),);
-                  }
-                  else if(title == "Minha lista"){
-                    Navigator.of(context).pushNamed('/Favoritos');
-                  }
-                  else if(title == "Sugestões"){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Screen(images, title),),);
-                  }
-
+                  Navigator.of(context).pushNamed('/Favoritos');
 
                 },
                 child: Icon(

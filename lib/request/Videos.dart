@@ -1,36 +1,30 @@
-class ListVideo {
+class Videos {
   String sId;
-  String idAnime;
+  String season;
   String title;
   String url;
-  String episode;
-  String season;
+  String sended;
+  int iV;
 
-  ListVideo(
-      {this.sId,
-        this.idAnime,
-        this.title,
-        this.url,
-        this.episode,
-        this.season});
+  Videos({this.sId, this.season, this.title, this.url, this.sended, this.iV});
 
-  ListVideo.fromJson(Map<String, dynamic> json) {
+  Videos.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    idAnime = json['idAnime'];
+    season = json['Season'];
     title = json['title'];
     url = json['url'];
-    episode = json['episode'];
-    season = json['season'];
+    sended = json['sended'];
+    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
-    data['idAnime'] = this.idAnime;
+    data['Season'] = this.season;
     data['title'] = this.title;
     data['url'] = this.url;
-    data['episode'] = this.episode;
-    data['season'] = this.season;
+    data['sended'] = this.sended;
+    data['__v'] = this.iV;
     return data;
   }
 }

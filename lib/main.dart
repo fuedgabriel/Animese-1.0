@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
   }
 
   Widget _buildWithTheme(BuildContext context, ThemeState state) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',

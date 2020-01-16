@@ -1,4 +1,6 @@
 //widget
+import 'package:animese/request/Videos.dart';
+
 import 'circular_clipper.dart';
 import 'package:flutter/material.dart';
 
@@ -179,7 +181,7 @@ class _VideoscreenState extends State<Videoscreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListVideo(),
+                          builder: (context) => Pro(movie: widget.movie,videos: [],),
                         ),
                       ),
                     },

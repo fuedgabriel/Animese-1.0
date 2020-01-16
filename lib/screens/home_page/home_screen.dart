@@ -10,7 +10,7 @@ import '../../widgets/menu.dart';
 import 'package:animese/request/Usuario.dart';
 import '../../request/request.dart';
 import '../../request/Animes.dart';
-//import 'package:device_info/device_info.dart';
+import 'package:device_info/device_info.dart';
 //json
 import 'dart:convert';
 
@@ -29,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController;
 
   var list = new List<ListAnime>();
+  var listLancamento = new List<ListAnime>();
+  var listCategoria = new List<ListAnime>();
   var user = new List<User>();
   List nome;
   List id;
@@ -37,6 +39,23 @@ class _HomeScreenState extends State<HomeScreen> {
   String theme;
   List<String> recent;
   final itemAppTheme = AppTheme.values;
+
+  var listFavoritos = new List<ListAnime>();
+  ListAnime lisa;
+
+  _getFavoritos() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List animes = prefs.getStringList('favoritos');
+    for(int i = 0;i < animes.length; i++){
+      API.getAnimes(animes[i]).then((response){
+        setState(() {
+          final json = jsonDecode(response.body);
+          lisa = ListAnime.fromJson(json);
+          listFavoritos.add(lisa);
+        });
+      });
+    }
+  }
 
   _getAnime(){
     API.getAnimes('').then((response){
@@ -50,16 +69,29 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
   }
+  _getLancamento(){
+    POST.lancamento().then((response){
+      setState(() {
+        Iterable lika = json.decode(response.body);
+        listLancamento = lika.map((model) => ListAnime.fromJson(model)).toList();
+      });
+    });
+  }
+  _getCategoria(){
+    POST.categoria().then((response){
+      setState(() {
+        Iterable cate = json.decode(response.body);
+        listCategoria = cate.map((model) => ListAnime.fromJson(model)).toList();
+      });
+    });
+  }
   _recentAnimes() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     recent = prefs.getStringList('lista');
     if(recent == null){
       recent = [];
     }
-    print('lista');
-    print(recent.reversed);
     Iterable<String> a = recent.reversed;
-    print(a.toList());
   }
 
 
@@ -77,25 +109,28 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-//  _device() async{
-//    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-//    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-//    print('Running on ${androidInfo.model}');  // e.g. "Moto G (4)"
-////    print('Running on ${androidInfo.id}');
-////    print('Running on ${androidInfo.androidId}');
-////    print('Running on ${androidInfo.device}');
-////    print('Running on ${androidInfo.display}');
-////    print('Running on ${androidInfo.version}');
-////    print('Running on ${androidInfo.type}');
-////    print('Running on ${androidInfo.bootloader}');
-////    print('Running on ${androidInfo.hardware}');
-////    print('Running on ${androidInfo.host}');
-////    print('Running on ${androidInfo.product}');
-//  }
+  _device() async{
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    print('Running on ${androidInfo.model}');  // e.g. "Moto G (4)"
+//    print('Running on ${androidInfo.id}');
+//    print('Running on ${androidInfo.androidId}');
+//    print('Running on ${androidInfo.device}');
+//    print('Running on ${androidInfo.display}');
+//    print('Running on ${androidInfo.version}');
+//    print('Running on ${androidInfo.type}');
+//    print('Running on ${androidInfo.bootloader}');
+//    print('Running on ${androidInfo.hardware}');
+//    print('Running on ${androidInfo.host}');
+//    print('Running on ${androidInfo.product}');
+  }
 
 
   _HomeScreenState(){
+    _getLancamento();
     _getAnime();
+    _getFavoritos();
+    _getCategoria();
     _thema();
 
 //    _device();
@@ -298,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(right: 30.0),
               onPressed: ()
               {
-                print(nome);
+
                 showSearch(context: context, delegate: DataSearch(id, nome, recent.reversed.toList()));
               },
               icon: Icon(Icons.search),
@@ -325,8 +360,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             ContentScroll(
-              images: list,
+              images: listLancamento,
               title: 'Lançamentos',
+              imageHeight: 250.0,
+              imageWidth: 150.0,
+            ),
+            ContentScroll(
+              images: listCategoria,
+              title: 'Sugestões',
               imageHeight: 250.0,
               imageWidth: 150.0,
             ),
@@ -334,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
             ContentScroll(
-              images: list,
+              images: listFavoritos,
               title: "Minha lista",
               imageHeight: 250.0,
               imageWidth: 150.0,
@@ -392,14 +433,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             ContentScrollFavorite(
-              images: list,
+              images: listLancamento,
               title: 'Lançamentos',
+              imageHeight: 250.0,
+              imageWidth: 150.0,
+            ),
+            ContentScrollFavorite(
+              images: listCategoria,
+              title: 'Sugestões',
               imageHeight: 250.0,
               imageWidth: 150.0,
             ),
 
             ContentScrollFavorite(
-              images: list,
+              images: listFavoritos,
               title: "Minha lista",
               imageHeight: 250.0,
               imageWidth: 150.0,
@@ -462,8 +509,8 @@ class DataSearch extends SearchDelegate<String>{
   @override
   Widget buildLeading(BuildContext context) {
     // leading icon on the left of the app bar
-
     return IconButton(
+      disabledColor: Colors.red,
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
         progress: transitionAnimation,
@@ -486,8 +533,6 @@ class DataSearch extends SearchDelegate<String>{
     final suggestionList = query.isEmpty
         ?recent
         :nome.where((p) => p.startsWith(query)).toList();
-
-
     return ListView.builder(
         itemBuilder: (context, index) => ListTile(
           onTap: () async{

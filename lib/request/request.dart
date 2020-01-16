@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-const baseUrl = "http://187.13.15.7:7844";
+const baseUrl = "http://192.168.255.249:7844";
 
 class API {
   static Future getAnimes(String id) async{
@@ -16,8 +16,8 @@ class API {
     }
     return await http.get(url);
   }
-  static Future getVideos() async{
-    var url = baseUrl + "/api/video";
+  static Future getVideos(String id) async{
+    var url = baseUrl + "/api/video/anime/"+id;
     return await http.get(url);
   }
   
@@ -42,12 +42,17 @@ class API {
 
 }
 
-
-
-
-
 class POST
 {
+  static Future lancamento() async{
+    var url =baseUrl+'/api/anime/release';
+    return await http.post(url);
+  }
+  static Future categoria() async{
+    var url =baseUrl+'/api/anime/category';
+    return await http.post(url);
+  }
+
   static Future postLogin (senha, email) async {
     try{
     var url =baseUrl+'/api/User/id';

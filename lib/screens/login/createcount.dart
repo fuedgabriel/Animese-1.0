@@ -53,7 +53,6 @@ class _CreateCount extends State<CreateCount>{
     double fontfb = 16;
     double size = 48;
     var width = MediaQuery.of(context).size.width;
-    print(width);
     if(width<=360){
       font = 13;
       fontfb = 11;
@@ -140,7 +139,7 @@ class _CreateCount extends State<CreateCount>{
 
         Padding(padding: EdgeInsets.symmetric(horizontal: 45.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+//          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             GestureDetector(
                 child: new Icon(Icons.calendar_today,size: size,),
@@ -149,7 +148,7 @@ class _CreateCount extends State<CreateCount>{
                       context: context,
                       initialDate: new DateTime.now(),
                       firstDate: new DateTime(1940),
-                      lastDate: new DateTime(2020)
+                      lastDate: new DateTime(2022)
                   );
                   if(datePick!=null && datePick!=birthDate){
                     setState(() {
@@ -175,7 +174,7 @@ class _CreateCount extends State<CreateCount>{
                       context: context,
                       initialDate: new DateTime.now(),
                       firstDate: new DateTime(1940),
-                      lastDate: new DateTime(2020)
+                      lastDate: new DateTime(2022)
                   );
                   if(datePick!=null && datePick!=birthDate){
                     setState(() {

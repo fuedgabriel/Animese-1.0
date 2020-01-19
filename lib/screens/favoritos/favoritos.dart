@@ -28,7 +28,7 @@ class _FavoritosState extends State<Favoritos> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List animes = prefs.getStringList('favoritos');
     for(int i = 0;i < animes.length; i++){
-      API.getAnimes(animes[i]).then((response){
+      API.getAnimes(animes[i], 0).then((response){
         setState(() {
           final json = jsonDecode(response.body);
           lisa = ListAnime.fromJson(json);

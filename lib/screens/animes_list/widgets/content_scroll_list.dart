@@ -10,12 +10,17 @@ import '../../video/movie_screen.dart';
 // ignore: must_be_immutable
 class ContentScroll extends StatelessWidget {
   final List<ListAnime> images;
+  var controller = ScrollController();
+
 
   ContentScroll({
     this.images,
+    this.controller
   });
 
+
   Widget build(BuildContext context) {
+
     var width = MediaQuery.of(context).size.width;
     double heightRC;
     double widthRC;
@@ -43,10 +48,12 @@ class ContentScroll extends StatelessWidget {
       }
       return Container(
         child: GridView.builder(
+          controller: controller,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 5, childAspectRatio: 2.10, ),
           scrollDirection: Axis.vertical,
           itemCount: images.length,
           itemBuilder: (BuildContext context, int index) {
+
             return Card(
               elevation: 5,
               child: Container(
@@ -142,6 +149,7 @@ class ContentScroll extends StatelessWidget {
         height: 551,
         alignment: Alignment.bottomLeft,
         child: GridView.builder(
+          controller: controller,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 8, childAspectRatio: 0.9 ),
           scrollDirection: Axis.vertical,
           itemCount: images.length,

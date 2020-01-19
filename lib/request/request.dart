@@ -3,17 +3,21 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-const baseUrl = "http://192.168.255.249:7844";
+const baseUrl = "http://192.168.1.103:7844";
 
 class API {
-  static Future getAnimes(String id) async{
+  static Future getAnimes(String id, int page) async{
     String url;
-    if (id == ''){
-      url = baseUrl + "/api/anime/";
+    if (id == '' || page != 0){
+      url = baseUrl + "/api/anime?page="+page.toString();
     }
     else{
       url = baseUrl + "/api/anime/"+id;
     }
+    return await http.get(url);
+  }
+  static Future searchAnime(String name) async{
+    String url = baseUrl + "/api/animeSearch?name="+name.toString();
     return await http.get(url);
   }
   static Future getVideos(String id) async{

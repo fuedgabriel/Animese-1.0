@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List animes = prefs.getStringList('favoritos');
     for(int i = 0;i < animes.length; i++){
-      API.getAnimes(animes[i], 0).then((response){
+      API.getAnimes(animes[i]).then((response){
         setState(() {
           final json = jsonDecode(response.body);
           lisa = ListAnime.fromJson(json);
@@ -58,11 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _getAnime(){
-    API.getAnimes('', 1).then((response){
+    API.getAnimes('').then((response){
       setState(() {
-        Map decoded = json.decode(response.body);
-        Iterable lista = decoded['docs'];
+        Iterable lista = json.decode(response.body);
         list = lista.map((model) => ListAnime.fromJson(model)).toList();
+        nome = list.map((f) => f.title).toList();
         id = list.map((f) => f.sId).toList();
         ep = list.map((f) => f.episodes).toList();
         url = list.map((f) => f.url).toList();
@@ -333,7 +333,8 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(right: 30.0),
               onPressed: ()
               {
-                showSearch(context: context, delegate: DataSearch(recent.reversed.toList()));
+
+                showSearch(context: context, delegate: DataSearch(id, nome, recent.reversed.toList()));
               },
               icon: Icon(Icons.search),
               iconSize: 30.0,
@@ -406,7 +407,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () 
               {
 
-                showSearch(context: context, delegate: DataSearch(recent.reversed.toList()), );
+                showSearch(context: context, delegate: DataSearch(id, nome, recent.reversed.toList()), );
               },
               icon: Icon(Icons.search),
               iconSize: 30.0,
@@ -460,11 +461,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class DataSearch extends SearchDelegate<String>{
   List id;
-
+  List nome;
   List recent;
-  DataSearch(this.recent);
+  DataSearch(this.id, this.nome, this.recent);
   ListAnime lisa;
-  List searchNome = [];
 
 
   saverecent(sugestion) async{
@@ -479,7 +479,7 @@ class DataSearch extends SearchDelegate<String>{
   }
 
   get(num) async{
-    API.getAnimes(id[num], 0).then((response){
+    API.getAnimes(id[num]).then((response){
       final json = jsonDecode(response.body);
       return ListAnime.fromJson(json);
     });
@@ -530,24 +530,16 @@ class DataSearch extends SearchDelegate<String>{
   @override
   Widget buildSuggestions(BuildContext context) {
     // Show when someone searches for something
-    final suggestionList = query.isEmpty ?recent :searchNome.where((p) => p.toString().toUpperCase().startsWith(query.toUpperCase())).toList();
-    print(searchNome);
-    print(query.toUpperCase());
-
-    API.searchAnime(query).then((response){
-      Iterable lista = json.decode(response.body);
-      List<ListAnime> list = lista.map((model) => ListAnime.fromJson(model)).toList();
-      searchNome = list.map((f) => f.title).toList();
-      id = list.map((f) => f.sId).toList();
-    });
-
+    final suggestionList = query.isEmpty
+        ?recent
+        :nome.where((p) => p.startsWith(query)).toList();
     return ListView.builder(
         itemBuilder: (context, index) => ListTile(
           onTap: () async{
             saverecent(suggestionList[index]);
-            for(int i = 0; i<searchNome.length; i++){
-              if(suggestionList[index].toString() == searchNome[i]){
-                API.getAnimes(id[i], 0).then((response){
+            for(int i = 0; i<nome.length; i++){
+              if(suggestionList[index] == nome[i]){
+                API.getAnimes(id[i]).then((response){
                   final json = jsonDecode(response.body);
                   lisa = ListAnime.fromJson(json);
                   Navigator.push(
@@ -568,7 +560,6 @@ class DataSearch extends SearchDelegate<String>{
                   color: Colors.black,
                   fontWeight: FontWeight.bold
                 ),
-
                 children: [
                   TextSpan(
                     text: suggestionList[index].substring(query.length),

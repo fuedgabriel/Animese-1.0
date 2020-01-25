@@ -48,6 +48,7 @@ class _ProSrcState extends State<Pro> {
         episode = 0;
       });
       vc.setAutoplay(true);
+      vc.showVideoCtrl(true);
       vc.autoplay;
       vc.setSource(VideoPlayerController.network(widget.videos[episode].url));
 
@@ -57,6 +58,7 @@ class _ProSrcState extends State<Pro> {
         episode = episodio;
       });
       vc.setAutoplay(true);
+      vc.showVideoCtrl(true);
       vc.autoplay;
       vc.setSource(VideoPlayerController.network(widget.videos[episode].url));
     }
@@ -144,6 +146,7 @@ class _ProSrcState extends State<Pro> {
                           prefs.setInt(widget.movie.title, episode);
 
                           vc.setAutoplay(true);
+                          vc.showVideoCtrl(true);
                           vc.autoplay;
                           print(widget.videos[episode].url);
                           vc.setSource(VideoPlayerController.network(
@@ -164,6 +167,7 @@ class _ProSrcState extends State<Pro> {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setInt(widget.movie.title, episode);
                           vc.setAutoplay(true);
+                          vc.showVideoCtrl(true);
                           vc.setSource(VideoPlayerController.network(widget.videos[episode].url));
                         },
                       ),
@@ -231,6 +235,7 @@ class _ProSrcState extends State<Pro> {
                                           prefs.setInt(widget.movie.title, conta);
 
                                           vc.setAutoplay(true);
+                                          vc.showVideoCtrl(true);
                                           vc.setSource(VideoPlayerController.network(widget.videos[conta].url));
                                         },
                                       )),

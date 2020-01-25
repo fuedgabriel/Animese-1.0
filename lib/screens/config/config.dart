@@ -211,6 +211,63 @@ _Config(){
                                 child: Text("Sim"),
                                 onPressed: () async{
                                   final prefs = await SharedPreferences.getInstance();
+                                  prefs.clear();
+                                  Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
+                                },
+                              )
+                            ],
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            title: Text('Caso você continue, será apagado todos os seus favoritos, configurações de usuários e pesquisas recentes.',
+                              style: TextStyle(
+                                fontSize: 15.6,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {var a; return a; });
+
+//                print(_theme);
+//                _nameRetriever();
+              },
+              child: Text("Restaurar padrão",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+          Divider(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: FlatButton(
+              onPressed: () async {
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            actions: <Widget>[
+                              FlatButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamedAndRemoveUntil('/Home', (Route<dynamic> route) => false);
+                                  },
+                                  child: Text('Não')
+                              ),
+                              FlatButton(
+                                child: Text("Sim"),
+                                onPressed: () async{
+                                  final prefs = await SharedPreferences.getInstance();
                                   prefs.remove('Email');
                                   prefs.remove('Name');
                                   prefs.remove('Nick');

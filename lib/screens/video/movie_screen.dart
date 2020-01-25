@@ -1,18 +1,19 @@
 //widget
-import 'package:animese/request/Videos.dart';
+import 'package:animese/request/request.dart';
 
 import 'circular_clipper.dart';
 import 'package:flutter/material.dart';
 
 //request
 import 'package:animese/request/Animes.dart';
-
+import 'package:animese/request/Videos.dart';
 //rotas
 import 'package:animese/screens/suporte_anime/suporteAnime.dart';
 import '../player/player.dart';
 
 //biblioteca
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 //import 'package:share/share.dart';
 
@@ -54,6 +55,7 @@ class _VideoscreenState extends State<Videoscreen> {
   _VideoscreenState(){
     _estadoFavorito();
   }
+
 
 
 
@@ -115,10 +117,12 @@ class _VideoscreenState extends State<Videoscreen> {
     String categoria;
 
 
+
     categoria = widget.movie.category.replaceAll('5de1d75c43c6f33cf8f9331f', 'Ação').replaceAll('5de1d7a943c6f33cf8f93320', 'Aventura').replaceAll('5de1d7b143c6f33cf8f93321', 'Fantasia').replaceAll('5de1d7b743c6f33cf8f93322', 'Game').replaceAll('5de1d7c643c6f33cf8f93323', 'Romance');
     categoria = categoria.replaceAll('|', ',  ');
 
     return Scaffold(
+
 //      backgroundColor: HexColor('#212121'),
       body: ListView(
         children: <Widget>[
@@ -176,14 +180,20 @@ class _VideoscreenState extends State<Videoscreen> {
                   child: RawMaterialButton(
                     padding: EdgeInsets.all(10.0),
                     elevation: 12.0,
-                    onPressed: () =>
+                    onPressed: ()
                     {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Pro(movie: widget.movie,videos: [],),
-                        ),
-                      ),
+                      API.getVideos(widget.movie.sId).then((response){
+                        List<ListVideo> video;
+                        Iterable lista = json.decode(response.body);
+                        video = lista.map((model) => ListVideo.fromJson(model)).toList();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Pro(movie: widget.movie,videos: video, ),
+                          ),
+                        );
+                    });
+
                     },
                     shape: CircleBorder(),
                     fillColor: Colors.black,

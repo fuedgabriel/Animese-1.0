@@ -55,7 +55,7 @@ class _LoginPage extends State<LoginPage> {
     double font = 18;
 //    double fontfb = 16;
     var width = MediaQuery.of(context).size.width;
-    print(width);
+
     if(width<360){
       font = 13;
 //      fontfb = 13;

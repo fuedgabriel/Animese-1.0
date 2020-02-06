@@ -9,6 +9,7 @@ import 'screens/login/LoginPage.dart';
 import 'screens/animes_list/animes_screen.dart';
 import 'screens/suporte/suporte.dart';
 import 'screens/favoritos/favoritos.dart';
+import 'screens/premium/Premium.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/Login': (BuildContext context) => LoginPage(),
         '/Animes': (BuildContext context) => AnimesScreen(),
         '/Favoritos': (BuildContext context) => Favoritos(),
+        '/Premium': (BuildContext context) => PremiumPage(),
       },
       home: HomeScreen(),
     );

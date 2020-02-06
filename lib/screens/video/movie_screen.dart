@@ -1,5 +1,6 @@
 //widget
 import 'package:animese/request/request.dart';
+import 'package:video_box/video_box.dart';
 
 import 'circular_clipper.dart';
 import 'package:flutter/material.dart';
@@ -189,11 +190,10 @@ class _VideoscreenState extends State<Videoscreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Pro(movie: widget.movie,videos: video, ),
+                            builder: (context) => PipPage(movie: widget.movie,videos: video, ),
                           ),
                         );
                     });
-
                     },
                     shape: CircleBorder(),
                     fillColor: Colors.black,

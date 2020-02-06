@@ -54,7 +54,7 @@ _Config(){
   Widget build(BuildContext context) {
 
     return Scaffold(
-      drawer: new MenuWidget(page: 'Config'),
+      drawer: MenuWidget(page: 'Config'),
       appBar: AppBar(
         title: Text('Configurações'),
       ),

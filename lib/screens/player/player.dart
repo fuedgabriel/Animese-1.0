@@ -5,6 +5,7 @@ import 'package:video_player/video_player.dart';
 // import 'package:flutter_android_pip/flutter_android_pip.dart';
 
 //request
+import 'package:http/http.dart' as http;
 import 'package:animese/request/Animes.dart';
 import 'package:animese/request/Videos.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,23 +33,24 @@ class _PipPageState extends State<PipPage> with WidgetsBindingObserver {
   bool loading = true;
   int episode;
 
-  String src = 'https://r1---sn-gpv7eney.googlevideo.com/videoplayback?expire=1580125624&ei=OF0uXs3rCMHMgwO40IfADw&ip=167.114.102.170&id=e9162718d58a74d5&itag=18&source=blogger&susc=bl&mime=video/mp4&dur=1422.616&lmt=1362184632899569&sparams=expire,ei,ip,id,itag,source,susc,mime,dur,lmt&sig=ALgxI2wwRQIhAOa3vjuTFgTCcrsZUm_A_ogqZXPoJULiRuFIO7t1ww2oAiAeb88wEc95JZQkV8k0qtlDIu_WhYnZgcirgCHWWrgU3Q%3D%3D&redirect_counter=1&rm=sn-p5qe777s&req_id=7d3e1aa4640ea3ee&cms_redirect=yes&ipbypass=yes&mip=186.233.112.13&mm=31&mn=sn-gpv7eney&ms=au&mt=1580096714&mv=m&mvi=0&pl=21&lsparams=ipbypass,mip,mm,mn,ms,mv,mvi,pl&lsig=AHylml4wRAIgXnShwGcNZXUItcUqAEeIsGW8eL6ow4U-KTPUSqKPRncCID3EwxC979utyplJ-fRlFMg_p9SF1cSXM1L4nF_Bj2Kc';
+  String src = 'https://r1---sn-5hnekn7z.googlevideo.com/videoplayback?expire=1580844428&ei=DFU5Xq6_OKLw8gTr8IKYBQ&ip=167.114.102.170&id=1a15cd2ac9d9550f&itag=18&source=blogger&susc=bl&mime=video/mp4&dur=1469.916&lmt=1349045872892881&sparams=expire,ei,ip,id,itag,source,susc,mime,dur,lmt&sig=ALgxI2wwRQIgfJaehXWpCav_O5AoN_oeugvqraSAdI0kcCfLWsc2u_4CIQCo1p2-bOw8kD65xNVMCRSeluMsB1n5bShvaX6Xv9k6YA%3D%3D&redirect_counter=1&cm2rm=sn-aigeze7e&req_id=f91049c42a37a3ee&cms_redirect=yes&mip=187.13.0.150&mm=34&mn=sn-5hnekn7z&ms=ltu&mt=1580815342&mv=D&mvi=0&pl=0&lsparams=mip,mm,mn,ms,mv,mvi,pl&lsig=AHylml4wRAIgHe1bIvRkk6YZ_4eo87p0apNZNUWQeXAnYQ-Ddt_bWD4CIDSf_5xQ9Wa-Ua7e0zoR38WdA_B-_2c1s_UmRQKsxL4q';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     vc = VideoController(
-      source: VideoPlayerController.network(src),
-      autoplay: true,
-      controllerWidgets: true
+        source: VideoPlayerController.network(src),
+        autoplay: true,
+        controllerWidgets: true
     )..initialize();
   }
   void _changeSource(String src) async {
-    vc.setSource(VideoPlayerController.network(src));
 
+    vc.setSource(VideoPlayerController.network(src));
     vc.initialize();
   }
+
 
   @override
   void dispose() {
@@ -71,10 +73,10 @@ class _PipPageState extends State<PipPage> with WidgetsBindingObserver {
         }
         break;
       case AppLifecycleState.paused:
-        print('用户当前看不到应用程序，没有响应');
+        print('Atualmente, o usuário não está vendo o aplicativo e não está respondendo');
         break;
       case AppLifecycleState.detached:
-        print('应用程序将暂停。');
+        print('O aplicativo será suspenso.');
         break;
       default:
     }
@@ -90,102 +92,113 @@ class _PipPageState extends State<PipPage> with WidgetsBindingObserver {
             aspectRatio: 16 / 9,
             child: VideoBox(
               controller: vc,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment(-0.5, -0.8),
-                    child: Text((widget.videos[0].episode).toString() + ' de ' + widget.movie.episodes.toString() + '  ' + widget.movie.title.toString(),),
-                  ),
-                  Align(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment(-0.5, -0.8),
+                  child: Text((widget.videos[0].episode).toString() + ' de ' + widget.movie.episodes.toString() + '  ' + widget.movie.title.toString(),),
+                ),
+                Align(
                     alignment: Alignment(-0.9, -0.85),
                     child: IconButton(
                         icon: Icon(Icons.arrow_back),
                         onPressed: (){
                           Navigator.pop(context);
                         }
-                        )
+                    )
+                ),
+                Align(
+                  alignment: Alignment(-0.5, 0),
+                  child: IconButton(
+                    iconSize: 40,
+                    disabledColor: Colors.white60,
+                    icon: Icon(Icons.skip_previous),
+                    onPressed: (){},
                   ),
-                  Align(
-                    alignment: Alignment(-0.5, 0),
-                    child: IconButton(
-                      iconSize: 40,
-                      disabledColor: Colors.white60,
-                      icon: Icon(Icons.skip_previous),
-                      onPressed: (){},
-                    ),
+                ),
+                Align(
+                  alignment: Alignment(0.5, 0),
+                  child: IconButton(
+                    iconSize: 40,
+                    disabledColor: Colors.white60,
+                    icon: Icon(Icons.skip_next),
+                    onPressed: (){},
                   ),
-                  Align(
-                    alignment: Alignment(0.5, 0),
-                    child: IconButton(
-                      iconSize: 40,
-                      disabledColor: Colors.white60,
-                      icon: Icon(Icons.skip_next),
-                      onPressed: (){},
-                    ),
-                  ),
-                ],
+                ),
+              ],
             ),
           ),
           Padding(padding: EdgeInsets.all(3.5)),
           Container(
-            width: double.maxFinite,
-            height: height-209.5,
-            child: Stack(
-              children: <Widget>[
-                ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: widget.videos.length,
-                  itemBuilder: (BuildContext context, int index ){
-                    return Container(
-                      height: 50,
-                      child: Stack(
-                        children: <Widget>[
-                          Card(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(Icons.play_circle_outline),
-                                  onPressed: () async{
-                                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                                    prefs.setInt(widget.movie.title, index);
-                                    print((widget.videos[index].url));
-                                    setState(() {
-                                      src = widget.videos[index].url;
-                                      vc.setSource(VideoPlayerController.network(src));
-                                      vc.initialize();
-                                    });
+              width: double.maxFinite,
+              height: height-280,
+              child: Stack(
+                children: <Widget>[
+                  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: widget.videos.length,
+                    itemBuilder: (BuildContext context, int index ){
+                      return Container(
+                          height: 50,
+                          child: Stack(
+                            children: <Widget>[
+                              Card(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    IconButton(
+                                      icon: Icon(Icons.play_circle_outline),
+                                      onPressed: () async{
+                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                        prefs.setInt(widget.movie.title, index);
+                                        print((widget.videos[index].url));
+                                        vc.autoplay = true;
+                                        vc.setSource(VideoPlayerController.network('http://media.papepi.club/?kissmegoodbye=AD6v5dyXDyU80z5LF5DMECKhT41eS_SFbLKFX0WBsJT_7yZO0B-1HAG-gTF0f79iimp8Nfl7Lb0OePyWPTGmJgA_raDro1KifwkZV1h3Y7oiISr9aWGP-dfK7EDVJrqzWacTaHaun5U'));
+                                        vc.initialize();
+
+//                                        Navigator.push(
+//                                          context,
+//                                          MaterialPageRoute(
+//                                            builder: (context) => PipPage(movie: widget.movie,videos: widget.videos, ),
+//                                          ),
+//                                        );
+//                                        _changeSource(widget.videos[index].url);
+//                                        setState(() {
+//                                          src = widget.videos[index].url;
+//                                          vc.setSource(VideoPlayerController.network(src));
+//                                          vc.initialize();
+//                                        });
 //                                    _changeSource(widget.videos[index].url);
 
-                                  },
+                                      },
+                                    ),
+                                    Text('  Episódio '+(index+1).toString()),
+                                  ],
                                 ),
-                                Text('  Episódio '+(index+1).toString()),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              FlatButton(
-                                child: Text('Externo'),
-                                onPressed: (){},
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  FlatButton(
+                                    child: Text('Externo'),
+                                    onPressed: (){},
 
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.file_download),
-                                onPressed: (){
-                                },
-                              ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.file_download),
+                                    onPressed: (){
+                                    },
+                                  ),
+                                ],
+                              )
                             ],
                           )
-                        ],
-                      )
-                    );
-                  },
-                ),
-              ],
-            )
+                      );
+                    },
+                  ),
+                ],
+              )
           )
         ],
       ),

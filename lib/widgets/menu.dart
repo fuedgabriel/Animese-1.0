@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../request/request.dart';
@@ -15,9 +16,8 @@ class MenuWidget extends StatefulWidget{
   _MenuWidgetState createState() => _MenuWidgetState();
 }
 
+
 class _MenuWidgetState extends State<MenuWidget> {
-
-
   var nome = '';
   var email = '';
   var nick = '';
@@ -52,13 +52,9 @@ class _MenuWidgetState extends State<MenuWidget> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountEmail: Text(email),
-            accountName: Text(nick),
+            accountEmail: Text(nick),
             currentAccountPicture: GestureDetector(
               onTap: (){
-
-
-
 
               },
               child: CircleAvatar(
@@ -66,9 +62,31 @@ class _MenuWidgetState extends State<MenuWidget> {
               ),
             ),
             otherAccountsPictures: <Widget>[
+              FlatButton(
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.red)),
+                color: Colors.white,
+                textColor: Colors.red,
+                padding: EdgeInsets.all(8.0),
+                onPressed: () {
+                  if (widget.page == 'Premium') {
+                    Navigator.pop(context);
+                  }
+                  else{
+                    Navigator.of(context).pushNamedAndRemoveUntil('/Premium', (Route<dynamic> route) => false);
+                  }
+                },
+                child: Text(
+                  "P".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 25.0,
+                  ),
+                ),
+              ),
+
               GestureDetector(
-                onTap: () =>
-                {
+                onTap: () => {
                   if(email == 'convidado'){
                     if (widget.page == 'Login') {
                       Navigator.pop(context),
@@ -83,9 +101,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         Navigator.pop(context),
                         Navigator.of(context).pushReplacementNamed('/Login'),
                       }
-
                     }
-
                   }
                   else{
                     showGeneralDialog(
@@ -114,9 +130,12 @@ class _MenuWidgetState extends State<MenuWidget> {
                   }
                 },
                 child: CircleAvatar(
+                  backgroundColor: Colors.white,
                   child: Icon(Icons.add),
                 ),
               ),
+
+
             ],
           ),
 

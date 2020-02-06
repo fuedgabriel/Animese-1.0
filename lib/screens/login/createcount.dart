@@ -210,7 +210,6 @@ class _CreateCount extends State<CreateCount>{
                       dia = birthDate.day.toString();
                       mes = birthDate.month.toString();
                       ano = birthDate.year.toString();
-
                     });
                   }
                 }
@@ -297,7 +296,7 @@ class _CreateCount extends State<CreateCount>{
               }
 
               else if(dia.toString() != '0'){
-                POST.postcreate(_textFieldControllerNome.text, _textFieldControllerNick.text, _textFieldControllerSenha1.text, _textFieldControllerEmail.text);
+                POST.postcreate(_textFieldControllerNome.text, _textFieldControllerNick.text, _textFieldControllerSenha1.text, _textFieldControllerEmail.text, birthDate.toString());
                 showGeneralDialog(
                     barrierColor: Colors.black.withOpacity(0.5),
                     transitionBuilder: (context, a1, a2, widget) {

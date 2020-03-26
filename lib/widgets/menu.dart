@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../request/request.dart';
 
 
 // ignore: must_be_immutable
@@ -10,7 +9,7 @@ class MenuWidget extends StatefulWidget{
 
   MenuWidget({
     this.page,
-});
+  });
 
   @override
   _MenuWidgetState createState() => _MenuWidgetState();
@@ -18,31 +17,6 @@ class MenuWidget extends StatefulWidget{
 
 
 class _MenuWidgetState extends State<MenuWidget> {
-  var nome = '';
-  var email = '';
-  var nick = '';
-  Future _getUser()async{
-    Shared.getLogin(0, 1, 0, 0, 0).then((resp){
-      setState(() {
-        nome = resp;
-      });
-    });
-    Shared.getLogin(0, 0, 1, 0, 0).then((resp){
-      setState(() {
-        nick = resp;
-      });
-    });
-    Shared.getLogin(0, 0, 0, 1, 0).then((resp){
-      setState(() {
-        email = resp;
-      });
-    });
-  }
-
-  _MenuWidgetState(){
-    _getUser();
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -52,98 +26,13 @@ class _MenuWidgetState extends State<MenuWidget> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountEmail: Text(nick),
-            currentAccountPicture: GestureDetector(
-              onTap: (){
-
-              },
-              child: CircleAvatar(
-                child: Text(nome.toString().substring(0,0)),
-              ),
-            ),
-            otherAccountsPictures: <Widget>[
-              FlatButton(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.red)),
-                color: Colors.white,
-                textColor: Colors.red,
-                padding: EdgeInsets.all(8.0),
-                onPressed: () {
-                  if (widget.page == 'Premium') {
-                    Navigator.pop(context);
-                  }
-                  else{
-                    Navigator.of(context).pushNamedAndRemoveUntil('/Premium', (Route<dynamic> route) => false);
-                  }
-                },
-                child: Text(
-                  "P".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 25.0,
-                  ),
-                ),
-              ),
-
-              GestureDetector(
-                onTap: () => {
-                  if(email == 'convidado'){
-                    if (widget.page == 'Login') {
-                      Navigator.pop(context),
-                    }
-                    else{
-                      if(widget.page == 'Inicio'){
-                        Navigator.pop(context),
-                        Navigator.of(context).pushNamed('/Login'),
-
-                      }
-                      else{
-                        Navigator.pop(context),
-                        Navigator.of(context).pushReplacementNamed('/Login'),
-                      }
-                    }
-                  }
-                  else{
-                    showGeneralDialog(
-                        transitionBuilder: (context, a1, a2, widget) {
-                          return Transform.scale(
-                            scale: a1.value,
-                            child: Opacity(
-                              opacity: a1.value,
-                              child: AlertDialog(
-                                shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16.0)),
-                                title: Text('Você já está logado',
-                                  style: TextStyle(
-                                    fontSize: 15.6,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                        transitionDuration: Duration(milliseconds: 500),
-                        barrierDismissible: true,
-                        barrierLabel: '',
-                        context: context,
-                        pageBuilder: (context, animation1, animation2) {var a; return a;}),
-                  }
-                },
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.add),
-                ),
-              ),
-
-
-            ],
+            currentAccountPicture: Image.asset('src/image/logo.png'),
           ),
-
           ListTile(
               leading: Icon(Icons.home),
-              title: Text('Inicio'),
+              title: Text('Início'),
               onTap: () {
-                if (widget.page == 'Inicio') {
+                if (widget.page == 'Home') {
                   Navigator.pop(context);
                 }
                 else{
@@ -152,22 +41,21 @@ class _MenuWidgetState extends State<MenuWidget> {
               }
           ),
           Divider(),
-
           ListTile(
               leading: Icon(Icons.pageview),
-              title: Text('Lista'),
+              title: Text('Sala de aula'),
               onTap: ()  {
-                if (widget.page == 'Lista') {
+                if (widget.page == 'Room') {
                   Navigator.pop(context);
                 }
                 else{
-                  if(widget.page == 'Inicio'){
+                  if(widget.page == 'Home'){
                     Navigator.pop(context);
-                    Navigator.of(context).pushNamed('/Animes');
+                    Navigator.of(context).pushNamed('/Room');
                   }
                   else{
                     Navigator.pop(context);
-                    Navigator.of(context).pushReplacementNamed('/Animes');
+                    Navigator.of(context).pushReplacementNamed('/Room');
                   }
                 }
               }
@@ -176,9 +64,9 @@ class _MenuWidgetState extends State<MenuWidget> {
 
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Meus animes'),
+            title: Text('PErguntas'),
             onTap: () {
-              if (widget.page == 'Favoritos') {
+              if (widget.page == 'Questions') {
                 Navigator.pop(context);
               }
               else{
@@ -188,7 +76,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                 }
                 else{
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacementNamed('/Favoritos');
+                  Navigator.of(context).pushReplacementNamed('/Questions');
                 }
               }
             },

@@ -2,4 +2,7 @@
 
 Assista seus animes no ANIMESE
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="3L1hhNz"><a href="//imgur.com/3L1hhNz">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<video autoplay loop muted="true" poster="https://i.imgur.com/iHzu04nh.jpg">
+    <source src="https://i.imgur.com/iHzu04n.mp4" type="video/mp4">
+    <source src="https://i.imgur.com/iHzu04n.webm" type="video/webm">
+</video>

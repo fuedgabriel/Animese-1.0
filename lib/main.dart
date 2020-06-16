@@ -1,45 +1,47 @@
-
-
-import 'screens/home_page/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'screens/config/theme/bloc/bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'screens/config/config.dart';
-import 'screens/login/LoginPage.dart';
-import 'screens/animes_list/animes_screen.dart';
-import 'screens/suporte/suporte.dart';
-import 'screens/favoritos/favoritos.dart';
-import 'screens/premium/Premium.dart';
+import 'screens/Home/HomePage.dart';
+import 'screens/AnimeList/AnimeList.dart';
+import 'screens/AnimeList/AnimeListFavorite.dart';
+import 'screens/Category/Category.dart';
+import 'widgets/HexColor.dart';
+//import 'package:firebase_analytics/firebase_analytics.dart';
+//import 'package:firebase_analytics/observer.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+//  static FirebaseAnalytics analytics = FirebaseAnalytics();
+//  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      builder: (context) => ThemeBloc(),
-      child: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: _buildWithTheme,
-      ),
-    );
-  }
-
-  Widget _buildWithTheme(BuildContext context, ThemeState state) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      theme: state.themeData,
+      title: 'Animese',
+      theme: ThemeData(
+        scaffoldBackgroundColor: HexColor('#212121'),
+        primaryColor: HexColor('#263238'),
+        fontFamily: 'Georgia',
+        textTheme: TextTheme(
+          headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        ),
+      ),
       routes: <String, WidgetBuilder>{
-        '/Config': (BuildContext context) => Config(),
-        '/Home': (BuildContext context) => HomeScreen(),
-        '/Suporte': (BuildContext context) => Suporte(),
-        '/Login': (BuildContext context) => LoginPage(),
-        '/Animes': (BuildContext context) => AnimesScreen(),
-        '/Favoritos': (BuildContext context) => Favoritos(),
-        '/Premium': (BuildContext context) => PremiumPage(),
+        '/Home': (BuildContext context) => HomePage(),
+        '/AnimeList': (BuildContext context) => AnimesList('Animes'),
+        '/MovieList': (BuildContext context) => AnimesList('Filmes'),
+        '/OvaList': (BuildContext context) => AnimesList('Ovas'),
+        '/AnimeListFavorite': (BuildContext context) => AnimeListFavorite(),
+        '/Category': (BuildContext context) => Category(),
       },
-      home: HomeScreen(),
+      home: HomePage(),
+
     );
   }
 }
+
+
+
+

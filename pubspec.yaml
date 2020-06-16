@@ -1,58 +1,42 @@
 name: animese
 description: Aplicativo de anime
-
-version: 1.0.0+1
+version: 2.1.5+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.12.0+2 #Request
-  shared_preferences: ^0.5.6 #SAlvar arq
-  flutter_bloc: ^0.20.0 #Salvar preferences
-  equatable: ^0.4.0
-  crypto: ^2.1.3 #Criptografia
-  share: ^0.6.3+5
-  video_box: ^0.10.0
-  device_info: ^0.4.1+4
-  mx_player_plugin: ^0.0.3
-  flutter_speed_dial: ^1.2.5
-  #  firebase_dynamic_links: ^0.5.0+9
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  shared_preferences: ^0.5.7  #dados no celular
+  http: ^0.12.1 #Rquisição
+  video_box: ^0.12.0 #Player de vídeo
+  cached_network_image: ^2.2.0 # Loading image
+  wakelock: ^0.1.4+1 #Lock wake
+  firebase_analytics: ^5.0.11 #Analise do aplicativo
+  firebase_admob: ^0.9.3+2 # Propaganda
+
+
+
+
+
+
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.4
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/animese/Icon.png"
 
 
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/logo/NameRe.png
+    - assets/logo/Name.png
+    - assets/logo/NameIcon.png
+    - assets/logo/Icon.png
+    - assets/imgs/loading.gif
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+
   uses-material-design: true
 
-  assets:
-    - assets/logos/facebook.png
-    - assets/logos/google.png
-    - assets/logos/logo.png
-    - assets/animese/name.png
-    - assets/animese/nomeLogo.png
-    - assets/animese/nomeRe.png
-    - assets/logos/mxplayer.png
-    - assets/logos/vlc.png
-    - assets/animese/Icon.png
